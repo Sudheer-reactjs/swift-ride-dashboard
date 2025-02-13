@@ -5,7 +5,7 @@ import { LogoArrowIcon } from '@/lib/svg';
 
 const Logo = () => {
     return (
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-2 py-3">
             <Link href="/">
                 <Image
                     src="/images/logo.png"
