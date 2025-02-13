@@ -87,7 +87,16 @@
     @apply bg-background text-foreground;
   }
 }
-
 body{
   font-family: var(--font-inter);
+  font-weight: 300;
+}
+.bg-sidebar {
+  background: #171717;
+}
+.group[data-side="left"] .group-data-\[side\=left\]\:border-r {
+  border-right-width: 0px !important;
+}
+.crosshide button.absolute.right-4.top-4.rounded-sm {
+  display: none;
 }

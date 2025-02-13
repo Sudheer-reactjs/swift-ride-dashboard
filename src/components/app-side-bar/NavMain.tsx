@@ -50,7 +50,7 @@ export function NavMain({
             >
               <SidebarMenuItem className={isActive ? "" : ""}>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title} className={isActive ? "bg-greenColor" : "font-normal"}>
+                  <SidebarMenuButton tooltip={item.title} className={`px-[8px] py-[6px] h-auto ${isActive ? "bg-greenColor" : "font-normal"}`}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                     <ChevronRight className={`ml-auto transition-transform duration-200 ${isActive ? "rotate-90" : ""}`} />
@@ -63,7 +63,7 @@ export function NavMain({
                       return (
                         <SidebarMenuSubItem key={subItem.title} className={isSubActive ? "" : ""}>
                           <SidebarMenuSubButton asChild>
-                            <a href={subItem.url} className= {` hover:bg-transparent hover:!text-[#059669] ${isSubActive ? "!text-[#059669] " : " !text-[#737373] font-normal"}`}>
+                            <a href={subItem.url} className= {`p-1 h-auto hover:bg-transparent hover:!text-[#059669] ${isSubActive ? "!text-[#059669] " : " !text-[#737373] font-normal"}`}>
                               <span>{subItem.title}</span>
                             </a>
                           </SidebarMenuSubButton>
@@ -77,7 +77,7 @@ export function NavMain({
           ) : (
             <SidebarMenuItem key={item.title} className={isActive ? "" : ""}>
               <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url} className={`flex items-center gap-2  ${isActive ? "bg-greenColor" : "font-normal"}`}>
+                <a href={item.url} className={`px-[8px] py-[6px] h-auto flex items-center gap-2  ${isActive ? "bg-greenColor" : "font-normal"}`}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                   <ChevronRight className="ml-auto transition-transform duration-200" />

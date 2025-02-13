@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-side-bar/app-sidebar";
+import { AppSidebar } from "@/components/app-side-bar/AppSidebar";
+import TopBar from "@/components/app-top-bar/TopBar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,7 +28,12 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar/>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+          <div className="flex flex-1 flex-col gap-4">
+             <TopBar />
+            <div className="flex w-full flex-col gap-4 p-4 pt-0">
+            {children}
+            </div>
+          </div>
         </SidebarProvider>
       </body>
     </html>
