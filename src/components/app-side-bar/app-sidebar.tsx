@@ -1,116 +1,44 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  BookOpen,
-  Bot,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
-import  LogoCard   from "@/components/app-side-bar/logo-card";
-import { NavMain } from "@/components/app-side-bar/nav-main"
+import * as React from "react";
+import LogoCard from "@/components/app-side-bar/logo-card";
+import { NavMain } from "@/components/app-side-bar/nav-main";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { DashboardIcon, VehiclesIcon } from "@/lib/svg";
 
-// This is sample data.
+// Sample data for the sidebar menu
 const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/ ",
-      icon: SquareTerminal,
+      url: "/",
+      icon: DashboardIcon,
     },
     {
-      title: "Playground",
+      title: "Vehicles",
       url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      icon: VehiclesIcon,
       items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+        { title: "Vehicle List", url: "/vehicle-list" },
+        { title: "Vehicle Assignments", url: "/vehicle-assignments" },
+        { title: "Meter History", url: "/meter-history" },
+        { title: "Expense History", url: "/expense-history" },
+        { title: "Replacement Analysis", url: "/replacement-analysis" },
+        { title: "Telematics Devices", url: "/telematics-devices" },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "Inspections",
+      url: "/inspections",
+      icon: DashboardIcon,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -123,5 +51,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
