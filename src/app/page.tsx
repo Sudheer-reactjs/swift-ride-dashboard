@@ -4,7 +4,7 @@ import { RefreshIcon } from "@/lib/svg";
 
 export default function Dashboard() {
   return (
-    <div className=" text-white min-h-screen">
+    <div className="text-white min-h-screen">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <div className="flex items-center gap-10">
@@ -18,61 +18,93 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {/* Priority Trends */}
           <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
-            <CardHeader>
+            <CardHeader className="p-4">
               <CardTitle>Repair Priority Class Trends</CardTitle>
             </CardHeader>
             <CardContent></CardContent>
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {/* Service Reminders */}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+              <CardHeader className="p-4">
                 <CardTitle>Service Reminders</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex justify-around">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-emerald-500">0</div>
-                    <div className="text-sm text-gray-400">Open</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-emerald-500">0</div>
-                    <div className="text-sm text-gray-400">Overdue</div>
-                  </div>
+                  {[
+                    { label: "Open", value: 0 },
+                    { label: "Overdue", value: 0 },
+                  ].map((item, index) => (
+                    <div key={index} className="text-center">
+                      <div
+                        className={`text-4xl font-medium ${
+                          item.value > 0 ? "text-[#FACC15]" : "text-emerald-500"
+                        }`}
+                      >
+                        {item.value}
+                      </div>
+                      <div className="text-xs text-gray-400">{item.label}</div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
             {/* Time to Resolve */}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+              <CardHeader className="p-4">
                 <CardTitle>Time to Resolve</CardTitle>
               </CardHeader>
               <CardContent></CardContent>
             </Card>
             {/* Open Issues */}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+              <CardHeader className="p-4">
                 <CardTitle>Open Issues</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex justify-around">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-emerald-500">0</div>
-                    <div className="text-sm text-gray-400">Open</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-emerald-500">0</div>
-                    <div className="text-sm text-gray-400">Overdue</div>
-                  </div>
+                  {[
+                    { label: "Open", value: 1 },
+                    { label: "Overdue", value: 0 },
+                  ].map((item, index) => (
+                    <div key={index} className="text-center">
+                      <div
+                        className={`text-4xl font-medium ${
+                          item.value > 0 ? "text-[#FACC15]" : "text-emerald-500"
+                        }`}
+                      >
+                        {item.value}
+                      </div>
+                      <div className="text-xs text-gray-400">{item.label}</div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
             {/* Vehicle Renewal Reminders*/}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+              <CardHeader className="p-4">
                 <CardTitle>Vehicle Renewal Reminders</CardTitle>
               </CardHeader>
-              <CardContent></CardContent>
+              <CardContent>
+                <div className="flex justify-around">
+                  {[
+                    { label: "Open", value: 1 },
+                    { label: "Overdue", value: 0 },
+                  ].map((item, index) => (
+                    <div key={index} className="text-center">
+                      <div
+                        className={`text-4xl font-medium ${
+                          item.value > 0 ? "text-[#FACC15]" : "text-emerald-500"
+                        }`}
+                      >
+                        {item.value}
+                      </div>
+                      <div className="text-xs text-gray-400">{item.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
             </Card>
           </div>
         </div>

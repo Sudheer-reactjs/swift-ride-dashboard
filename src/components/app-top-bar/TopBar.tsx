@@ -15,7 +15,7 @@ const TopBar = () => {
     console.log("Searching for:", query);
   };
   return (
-    <div className="flex w-full flex-col gap-4 p-4 bg-bgCard">
+    <div className="flex w-full flex-col gap-4 p-4 bg-bgCard sticky top-0">
       <div className="grid auto-rows-min gap-4 md:grid-cols-2">
         <div className="">
           <SearchBar onSearch={handleSearch} />
