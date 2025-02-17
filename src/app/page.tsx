@@ -1,13 +1,24 @@
 import LocationSelect from "@/components/dashboard/LocationSelect";
-import VehicleStatus from "@/components/dashboard/VehicleStatusComponent";
+import RepairPriorityChart from "@/components/dashboard/RepairPriorityClassesChart";
+import TimeResolveChart from "@/components/dashboard/TimeResolveChart";
+import VehicleStatus from "@/components/dashboard/VehicleStatusChart";
+import FuelCosts from "@/components/dashboard/FuelCostsChart";
+import ServiceCostsChart from "@/components/dashboard/ServiceCostsChart";
+import OtherCosts from "@/components/dashboard/OtherCostsChart";
+import TotalCostsChart from "@/components/dashboard/TotalCostsChart";
+import TopSystemCodesUsage from "@/components/dashboard/TopSystemCodesUsage";
+import LatestMeterReadings from "@/components/dashboard/LatestMeterReadings";
+import CostPerMeterChart from "@/components/dashboard/CostPerMeterChart";
+import TopCategoryCodesChart from "@/components/dashboard/TopCategoryCodesChart";
+import InspectionSubmissionChart from "@/components/dashboard/InspectionSubmissionChart";
+import InspectionSummaryChart from "@/components/dashboard/InspectionSummaryChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RefreshIcon } from "@/lib/svg";
-import Image from "next/image";
 
 export default function Dashboard() {
   return (
     <div className="text-white min-h-screen">
-      <div className="mb-6 flex flex-col md:flex-row items-center justify-between"> 
+      <div className="mb-6 flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <div className="flex items-center gap-10">
           <span className="text-sm text-[#737373] flex items-center gap-2">
@@ -24,23 +35,17 @@ export default function Dashboard() {
               <CardTitle>Repair Priority Class Trends</CardTitle>
             </CardHeader>
             <CardContent>
-              <Image
-                src="/images/map.png"
-                alt="map"
-                width={418}
-                height={100}
-                priority
-              />
+              <RepairPriorityChart />
             </CardContent>
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {/* Service Reminders */}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Service Reminders</CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex justify-around">
+              <CardContent className="flex flex-col items-center justify-center flex-grow">
+                <div className="flex justify-around w-full">
                   {[
                     { label: "Open", value: 0 },
                     { label: "Overdue", value: 0 },
@@ -61,28 +66,22 @@ export default function Dashboard() {
             </Card>
 
             {/* Time to Resolve */}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Time to Resolve</CardTitle>
               </CardHeader>
-              <CardContent>
-                <Image
-                  src="/images/map.png"
-                  alt="map"
-                  width={418}
-                  height={100}
-                  priority
-                />
+              <CardContent className="flex items-center justify-center flex-grow">
+                <TimeResolveChart />
               </CardContent>
             </Card>
 
             {/* Open Issues */}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Open Issues</CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex justify-around">
+              <CardContent className="flex flex-col items-center justify-center flex-grow">
+                <div className="flex justify-around w-full">
                   {[
                     { label: "Open", value: 1 },
                     { label: "Overdue", value: 0 },
@@ -102,13 +101,13 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            {/* Vehicle Renewal Reminders*/}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            {/* Vehicle Renewal Reminders */}
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Vehicle Renewal Reminders</CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex justify-around">
+              <CardContent className="flex flex-col items-center justify-center flex-grow">
+                <div className="flex justify-around w-full">
                   {[
                     { label: "Open", value: 1 },
                     { label: "Overdue", value: 0 },
@@ -136,7 +135,7 @@ export default function Dashboard() {
             <CardHeader className="p-4">
               <CardTitle>Active Work Orders</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="max-h-[120px] overflow-y-auto">
               <div className="">
                 {[
                   {
@@ -181,12 +180,12 @@ export default function Dashboard() {
           </Card>
 
           {/* Contact Renewal Reminders */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col ">
             <CardHeader className="p-4">
               <CardTitle>Contact Renewal Reminders</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="flex justify-around">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex justify-around w-full">
                 {[
                   { label: "Open", value: 0 },
                   { label: "Overdue", value: 0 },
@@ -207,12 +206,12 @@ export default function Dashboard() {
           </Card>
 
           {/* Vehicle Assignments */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col ">
             <CardHeader className="p-4">
               <CardTitle>Vehicle Assignments</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="flex justify-around">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex justify-around w-full">
                 {[
                   { label: "Open", value: 0 },
                   { label: "Overdue", value: 1 },
@@ -237,7 +236,7 @@ export default function Dashboard() {
             <CardHeader className="p-4">
               <CardTitle>Vehicle Status</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="max-h-[1x] 20overflow-y-auto">
               <div className="">
                 {[
                   {
@@ -293,24 +292,24 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {/* Vehicle Locations */}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Vehicle Locations</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="flex justify-around items-center min-h-[100px]">
+              <CardContent className="flex flex-col items-center justify-center flex-grow">
+                <div className="flex justify-around items-center w-full">
                   <p>No Results</p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Critical Faults */}
-            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+            <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
               <CardHeader className="p-4">
                 <CardTitle>Critical Faults</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="flex justify-around items-center min-h-[100px]">
+              <CardContent className="flex flex-col items-center justify-center flex-grow">
+                <div className="flex justify-around items-center w-full">
                   <p>No Results</p>
                 </div>
               </CardContent>
@@ -322,13 +321,7 @@ export default function Dashboard() {
                 <CardTitle>Fuel Costs</CardTitle>
               </CardHeader>
               <CardContent>
-                <Image
-                  src="/images/map.png"
-                  alt="map"
-                  width={418}
-                  height={100}
-                  priority
-                />
+                <FuelCosts /> 
               </CardContent>
             </Card>
 
@@ -338,24 +331,18 @@ export default function Dashboard() {
                 <CardTitle>Service Costs</CardTitle>
               </CardHeader>
               <CardContent>
-                <Image
-                  src="/images/map.png"
-                  alt="map"
-                  width={418}
-                  height={100}
-                  priority
-                />
+                 <ServiceCostsChart />   
               </CardContent>
             </Card>
           </div>
 
           {/* Recent Comments */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
               <CardTitle>Recent Comments</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex justify-around items-center min-h-[200px]">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex justify-around items-center w-full">
                 <p>No comments to show</p>
               </div>
             </CardContent>
@@ -363,19 +350,13 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-12 gap-4">
-          {/* Service Costs */}
+          {/* Other Costs */}
           <Card className="col-span-12 lg:col-span-3 bg-bgCard shadow-none border-0">
             <CardHeader className="p-4">
-              <CardTitle>Service Costs</CardTitle>
+              <CardTitle>Other Costs</CardTitle>
             </CardHeader>
             <CardContent>
-              <Image
-                src="/images/map.png"
-                alt="map"
-                width={418}
-                height={100}
-                priority
-              />
+              <OtherCosts />
             </CardContent>
           </Card>
 
@@ -386,6 +367,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <VehicleStatus />
+              <p className="text-[#E5E7EB] text-center text-xs">  Last 90 Days</p> 
             </CardContent>
           </Card>
 
@@ -395,13 +377,7 @@ export default function Dashboard() {
               <CardTitle>Total Costs</CardTitle>
             </CardHeader>
             <CardContent>
-              <Image
-                src="/images/map.png"
-                alt="map"
-                width={418}
-                height={100}
-                priority
-              />
+             <TotalCostsChart />
             </CardContent>
           </Card>
         </div>
@@ -412,7 +388,10 @@ export default function Dashboard() {
               <CardHeader className="p-4">
                 <CardTitle>Top System Codes by Usage</CardTitle>
               </CardHeader>
-              <CardContent></CardContent>
+              <CardContent>
+                <TopSystemCodesUsage />
+                <p className="text-[#E5E7EB] text-center text-xs">  Last 90 Days</p> 
+              </CardContent>
             </Card>
 
             {/* Latest Meter Readings */}
@@ -421,38 +400,26 @@ export default function Dashboard() {
                 <CardTitle>Latest Meter Readings</CardTitle>
               </CardHeader>
               <CardContent>
-                <Image
-                  src="/images/map.png"
-                  alt="map"
-                  width={418}
-                  height={100}
-                  priority
-                />
+                 <LatestMeterReadings />
               </CardContent>
             </Card>
           </div>
 
           <div className="flex flex-col gap-4">
-            {/* Top System Codes by Usage */}
+            {/* CostPerMeterChart */}
             <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
               <CardHeader className="p-4">
-                <CardTitle>Top System Codes by Usage</CardTitle>
+                <CardTitle>Cost PerMeter Chart</CardTitle>
               </CardHeader>
               <CardContent>
-                <Image
-                  src="/images/map.png"
-                  alt="map"
-                  width={418}
-                  height={100}
-                  priority
-                />
+                <CostPerMeterChart />
               </CardContent>
             </Card>
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Cost Per Meter */}
+              {/* Overdue Inspections */}
               <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
                 <CardHeader className="p-4">
-                  <CardTitle>Cost Per Meter</CardTitle>
+                  <CardTitle>Overdue Inspections</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="flex justify-around">
@@ -481,10 +448,10 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* Overdue Inspections */}
+              {/* All Faults */}
               <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
                 <CardHeader className="p-4">
-                  <CardTitle>Overdue Inspections</CardTitle>
+                  <CardTitle>All Faults</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="flex justify-around">
@@ -515,12 +482,12 @@ export default function Dashboard() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* ROs Needing Approval */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
               <CardTitle>ROs Needing Approval</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center space-x-2">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex flex-col items-center space-x-2 w-full">
                 <span className="font-semibold text-[#34D399] text-[36px]">
                   0:17
                 </span>
@@ -536,12 +503,12 @@ export default function Dashboard() {
             </CardContent>
           </Card>
           {/* On-Time Service Compliance */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
               <CardTitle>On-Time Service Compliance</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="flex justify-around">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex justify-around w-full">
                 {[
                   { label: "All Time", value: 40 },
                   { label: "Last 30 Days", value: 50 },
@@ -557,27 +524,21 @@ export default function Dashboard() {
             </CardContent>
           </Card>
           {/* Inspection Submission */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
-            <CardHeader className="p-4">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
+            <CardHeader className="p-4 ">
               <CardTitle>Inspection Submission</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Image
-                src="/images/map.png"
-                alt="map"
-                width={418}
-                height={100}
-                priority
-              />
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+            <InspectionSubmissionChart />
             </CardContent>
           </Card>
           {/* Inspection Item Failure Rate */}
-          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+          <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
               <CardTitle>Inspection Item Failure Rate</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="flex justify-around">
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+              <div className="flex justify-around w-full">
                 {[
                   { label: "This Week", value: 0 },
                   { label: "Change From Last Week", value: 0 },
@@ -594,46 +555,40 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-         
-                       
+
         <div className="grid grid-cols-12 gap-4">
           {/* Uncategorized Service Tasks */}
-          <Card className="col-span-12 lg:col-span-3 bg-bgCard shadow-none border-0">
+          <Card className="col-span-12 lg:col-span-3 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
               <CardTitle>Uncategorized Service Tasks</CardTitle>
             </CardHeader>
-            <CardContent className="p-6 text-center ">
+            <CardContent className="text-center flex flex-col items-center justify-center flex-grow">
               <p className="text-sm">All Service Tasks are categorized</p>
             </CardContent>
           </Card>
 
-          {/* Vehicle Status */}
+          {/*Top Category Codes by Usage */}
           <Card className="col-span-12 lg:col-span-6 bg-bgCard shadow-none border-0">
             <CardHeader className="p-4">
-              <CardTitle>Vehicle Status</CardTitle>
+              <CardTitle>Top Category Codes by Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <VehicleStatus />
+              <TopCategoryCodesChart /> 
+              <p className="text-[#E5E7EB] text-center text-xs">  Last 90 Days</p> 
             </CardContent>
           </Card>
 
-          {/* Total Costs */}
-          <Card className="col-span-12 lg:col-span-3 bg-bgCard shadow-none border-0">
+          {/* Inspection Summary */}
+          <Card className="col-span-12 lg:col-span-3 bg-bgCard shadow-none border-0 flex flex-col">
             <CardHeader className="p-4">
-              <CardTitle>Total Costs</CardTitle>
+              <CardTitle>Inspection Summary</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Image
-                src="/images/map.png"
-                alt="map"
-                width={418}
-                height={100}
-                priority
-              />
+            <CardContent className="flex flex-col items-center justify-center flex-grow">
+             <InspectionSummaryChart />   
+             <p className="text-[#E5E7EB] text-center text-xs">  Last 90 Days</p>  
             </CardContent>
           </Card>
         </div>
-
       </div>
     </div>
   );

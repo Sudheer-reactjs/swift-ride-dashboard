@@ -90,6 +90,7 @@
 body{
   font-family: var(--font-inter);
   font-weight: 300;
+  font-size: 14px;
 }
 .bg-sidebar {
   background: #171717;
