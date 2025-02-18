@@ -25,10 +25,12 @@ import {
   ChevronsRight,
   Filter,
   Plus,
+  X,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -45,13 +47,104 @@ const vehicles = Array(15).fill({
   watchers: "1",
 });
 
+const vehicleTypes = ["ATV", "Boat", "Bus", "Car", "Forklift", "Generator", "Loader"];
+const vehicleGroups = ["Management", "Logistics", "Operations", "Maintenance"];
+const vehicleStatuses = ["Active", "Inactive", "In Service", "Out of Service"];
+
 const rowsPerPage = 10;
+
+const DropdownFilter = ({
+  label,
+  items,
+  selectedItems,
+  setSelectedItems,
+}: {
+  label: string;
+  items: string[];
+  selectedItems: string[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const toggleSelection = (item: string) => {
+    setSelectedItems((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
+  };
+
+  const removeSelection = (item: string) => {
+    setSelectedItems((prev) => prev.filter((i) => i !== item));
+  };
+
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="flex items-center gap-2 min-w-[200px]">
+          {label}
+          <ChevronDown />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-[25%] p-2 w-[400px]">
+        <div className="relative">
+          <div className="flex flex-wrap items-center gap-1 absolute left-2 top-1 z-10">
+            {selectedItems.map((item) => (
+              <Badge key={item} className="flex items-center gap-1 bg-blue-100 text-blue-600">
+                {item}
+                <button onClick={() => removeSelection(item)}>
+                  <X className="w-3 h-3 text-blue-600 hover:text-red-500" />
+                </button>
+              </Badge>
+            ))}
+          </div>
+          <Input
+            placeholder={selectedItems.length === 0 ? "Select item(s)" : ""}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className={`pr-8 ${selectedItems.length > 0 ? "pl-20" : "pl-2"}`}
+          />
+        </div>
+        <ScrollArea className="max-h-40 mt-2">
+          {filteredItems.map((item) => (
+            <div
+              key={item}
+              className="flex items-center p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+              onClick={() => toggleSelection(item)}
+            >
+              <Checkbox checked={selectedItems.includes(item)} />
+              <span className="ml-2">{item}</span>
+            </div>
+          ))}
+        </ScrollArea>
+        <div className="flex justify-end items-center mt-2">
+          <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            onClick={() => setIsOpen(false)}
+            disabled={selectedItems.length === 0}
+          >
+            Apply
+          </Button>
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
   const displayedVehicles = vehicles.slice(
@@ -66,7 +159,8 @@ const Pages = () => {
         : [...prevSelectedRows, index]
     );
   };
-  const router = useRouter()
+
+  const router = useRouter();
   return (
     <div className="container w-full max-h-full p-6 bg-black text-white rounded-lg shadow-lg overflow-auto">
       {/* Header Actions */}
@@ -82,7 +176,7 @@ const Pages = () => {
         </Button>
       </div>
 
-      {/* Tabs */}
+      
       <div className="flex flex-wrap mb-4">
         {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
           <Button
@@ -107,41 +201,24 @@ const Pages = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full md:w-1/4 bg-black text-white border-black-700 mb-2"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2 mb-2">
-              Vehicle Type
-              <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>SUV</DropdownMenuItem>
-            <DropdownMenuItem>Truck</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2 mb-2">
-              Vehicle Group
-              <ChevronDown className="w-2 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Management</DropdownMenuItem>
-            <DropdownMenuItem>Logistics</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2 mb-2">
-              Vehicle Status <ChevronDown className="w-2 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Active</DropdownMenuItem>
-            <DropdownMenuItem>Inactive</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DropdownFilter
+          label="Vehicle Type"
+          items={vehicleTypes}
+          selectedItems={selectedTypes}
+          setSelectedItems={setSelectedTypes}
+        />
+        <DropdownFilter
+          label="Vehicle Group"
+          items={vehicleGroups}
+          selectedItems={selectedGroups}
+          setSelectedItems={setSelectedGroups}
+        />
+        <DropdownFilter
+          label="Vehicle Status"
+          items={vehicleStatuses}
+          selectedItems={selectedStatuses}
+          setSelectedItems={setSelectedStatuses}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2 mb-2">
@@ -160,7 +237,7 @@ const Pages = () => {
       </div>
 
       {/* Table Container */}
-      <div className="md:overflow-visible rounded-lg border border-gray-800">
+      <div className="md:overflow-visible rounded-lg border bg-[#171717] border-gray-800">
         <Table className="w-full overflow-visible">
           <TableHeader>
             <TableRow>
