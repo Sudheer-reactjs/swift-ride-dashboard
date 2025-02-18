@@ -16,6 +16,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+
 import { Badge } from "@/components/ui/badge";
 import {
   ChevronDown,
@@ -31,6 +32,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -84,7 +86,7 @@ const DropdownFilter = ({
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2 min-w-[200px]">
+        <Button variant="outline" className="flex items-center gap-2 min-w-[150px]">
           {label}
           <ChevronDown />
         </Button>
@@ -112,7 +114,7 @@ const DropdownFilter = ({
           {filteredItems.map((item) => (
             <div
               key={item}
-              className="flex items-center p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+              className="flex items-center p-2 hover:bg-[#171717] rounded-md cursor-pointer"
               onClick={() => toggleSelection(item)}
             >
               <Checkbox checked={selectedItems.includes(item)} />
@@ -145,6 +147,7 @@ const Pages = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
   const displayedVehicles = vehicles.slice(
@@ -199,7 +202,7 @@ const Pages = () => {
           placeholder="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/4 bg-black text-white border-black-700 mb-2"
+          className="w-full md:w-1/4 lg:w-1/5 bg-black text-white border-black-700 mb-2"
         />
         <DropdownFilter
           label="Vehicle Type"
@@ -230,81 +233,97 @@ const Pages = () => {
             <DropdownMenuItem>Inactive</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button variant="outline" className="flex items-center gap-2 mb-2">
+        <Button variant="outline" className="flex items-center gap-2 mb-2" onClick={() => setIsOpen(!isOpen)}>
           <Filter />
           Filters
         </Button>
       </div>
 
       {/* Table Container */}
-      <div className="md:overflow-visible rounded-lg border bg-[#171717] border-gray-800">
-        <Table className="w-full overflow-visible">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="flex items-center gap-2">
-                <Checkbox id="select-all" /> Name
-              </TableHead>
-              <TableHead>Operator</TableHead>
-              <TableHead>Year</TableHead>
-              <TableHead>Make</TableHead>
-              <TableHead>Model</TableHead>
-              <TableHead>VIN</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Group</TableHead>
-              <TableHead>Current Meter</TableHead>
-              <TableHead>License Plate</TableHead>
-              <TableHead>Watchers</TableHead>
+      <div className="flex h-[calc(100vh-100px)] rounded-lg border  bg-[#171717] border-gray-800">
+  {/* Table Container */}
+  <div className={`transition-all duration-300 ${isOpen ? "w-[70%]" : "w-full"} overflow-auto`}>
+    <div className="h-full overflow-x-auto"> {/* Enables scrolling */}
+      <Table className="w-full">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="flex items-center gap-2">
+              <Checkbox id="select-all" /> Name
+            </TableHead>
+            <TableHead>Operator</TableHead>
+            <TableHead>Year</TableHead>
+            <TableHead>Make</TableHead>
+            <TableHead>Model</TableHead>
+            <TableHead>VIN</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Group</TableHead>
+            <TableHead>Current Meter</TableHead>
+            <TableHead>License Plate</TableHead>
+            <TableHead>Watchers</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {displayedVehicles.map((vehicle, index) => (
+            <TableRow key={index} className="bg-black-800 hover:bg-gray-700">
+              <TableCell className="flex items-center gap-2">
+                <Checkbox
+                  id={`checkbox-${index}`}
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleRowSelect(index)}
+                />
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                {vehicle.name}
+              </TableCell>
+              <TableCell>{vehicle.operator}</TableCell>
+              <TableCell>{vehicle.year}</TableCell>
+              <TableCell>{vehicle.make}</TableCell>
+              <TableCell>{vehicle.model}</TableCell>
+              <TableCell>{vehicle.vin}</TableCell>
+              <TableCell>
+                <Badge variant="secondary">{vehicle.status}</Badge>
+              </TableCell>
+              <TableCell>{vehicle.type}</TableCell>
+              <TableCell>{vehicle.group}</TableCell>
+              <TableCell>{vehicle.currentmeter} mi</TableCell>
+              <TableCell>{vehicle.licenseplate}</TableCell>
+              <TableCell>{vehicle.watchers} watchers</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {displayedVehicles.map((vehicle, index) => (
-              <TableRow key={index} className="bg-black-800 hover:bg-gray-700">
-                <TableCell className="flex items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id={`checkbox-${index}`}
-                      checked={selectedRows.includes(index)}
-                      onChange={() => handleRowSelect(index)}
-                    />
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    {vehicle.name}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                    </Avatar>
-                    <div>{vehicle.operator}</div>
-                  </div>
-                </TableCell>
-                <TableCell>{vehicle.year}</TableCell>
-                <TableCell>{vehicle.make}</TableCell>
-                <TableCell>{vehicle.model}</TableCell>
-                <TableCell>{vehicle.vin}</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">{vehicle.status}</Badge>
-                </TableCell>
-                <TableCell>{vehicle.type}</TableCell>
-                <TableCell>{vehicle.group}</TableCell>
-                <TableCell>{vehicle.currentmeter} mi</TableCell>
-                <TableCell>{vehicle.licenseplate}</TableCell>
-                <TableCell>{vehicle.watchers} watchers</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  </div>
+
+  {/* Filter Panel */}
+  {isOpen && (
+    <div className="w-[30%] p-4 bg-[[#171717] border-l border-gray-800 h-full ">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold flex items-center gap-2">
+          <Filter className="w-5 h-5" /> Filters
+        </h3>
+        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+          ✕
+        </Button>
       </div>
+      <div className="mt-4 text-gray-500">No filters applied.</div>
+      <Button className="w-full mt-4 flex items-center gap-2">
+        <Plus className="w-4 h-4" /> Add Filter
+      </Button>
+      <ScrollArea className="mt-6">
+        <div className="text-sm text-gray-500">POPULAR FILTERS</div>
+        <div className="mt-2 flex flex-col space-y-2">
+          <Link href="#" className="text-blue-600 hover:underline">Vehicle</Link>
+          <Link href="#" className="text-blue-600 hover:underline">Vehicle Group</Link>
+        </div>
+      </ScrollArea>
+    </div>
+  )}
+</div>
+
 
       {/* Pagination */}
       <div className="flex flex-col md:flex-row justify-between items-center mt-4">
