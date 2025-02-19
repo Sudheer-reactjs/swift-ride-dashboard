@@ -261,7 +261,7 @@ const Pages = () => {
                 type="text"
                 placeholder="Search views"
                 className="w-full p-2 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
-              />
+              /> 
               
               {/* Saved Views Section */}
               <div className="mt-3 border-t border-gray">
