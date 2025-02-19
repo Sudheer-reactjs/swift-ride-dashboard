@@ -292,7 +292,7 @@ const Pages = () => {
                       className="flex justify-start w-full text-sm bg-black hover:bg-[#171717] p-2 rounded-md"
                     >
                       ✓ {tab}{" "}
-                      <span className="border bg-white  text-black border-gray-600 box-border rounded-sm text-xs">
+                      <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
                         S
                       </span>
                     </Button>
