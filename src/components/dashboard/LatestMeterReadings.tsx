@@ -9,7 +9,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-// Updated chart data with 'miles' and 'hours' as categories
 const chartData = [
   { month: "January", miles: 120000, hours: 50 },
   { month: "February", miles: 150000, hours: 55 },
@@ -19,15 +18,14 @@ const chartData = [
   { month: "June", miles: 140000, hours: 60 },
 ];
 
-// Define chart configuration with label and color for 'miles' and 'hours'
 const chartConfig = {
   miles: {
     label: "Miles",
-    color: "#06B6D4", // Blue color for miles
+    color: "#06B6D4",
   },
   hours: {
     label: "Hours",
-    color: "#facc15", // Yellow color for hours
+    color: "#facc15",
   },
 } satisfies ChartConfig;
 
@@ -40,7 +38,7 @@ export default function Component() {
         margin={{
           left: 12,
           right: 12,
-          bottom: 0, 
+          bottom: 0,
         }}
       >
         <CartesianGrid vertical={false} />
@@ -59,56 +57,54 @@ export default function Component() {
           interval="preserveStartEnd"
           tickMargin={8}
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent hideLabel />}
+        />
         <Line
-          dataKey="Miles"
+          dataKey="miles"
           type="natural"
           stroke="none"
           dot={{
-            fill: chartConfig.miles.color, 
+            fill: chartConfig.miles.color,
             r: 6,
           }}
           activeDot={{
             r: 8,
           }}
         />
-
-
         <Line
-          dataKey="Hours"
+          dataKey="hours"
           type="natural"
           stroke="none"
           dot={{
-            fill: chartConfig.hours.color, 
+            fill: chartConfig.hours.color,
             r: 6,
           }}
           activeDot={{
             r: 8,
           }}
         />
-
-
         <Legend
           verticalAlign="bottom"
-          height={50} 
-          wrapperStyle={{ paddingTop: 20, marginTop: "auto" }} 
-          formatter={(value, entry) => {
-            const color =
-              entry.dataKey === "miles" ? chartConfig.miles.color : chartConfig.hours.color;
+          height={50}
+          wrapperStyle={{ paddingTop: 20, marginTop: "auto" }}
+          formatter={(value: string) => {
+            const key = value.toLowerCase() as keyof typeof chartConfig;
+            const color = chartConfig[key]?.color || "#000";
             return (
               <span style={{ display: "flex", alignItems: "center" }}>
-                {/* Color Dot */}
                 <span
                   style={{
                     display: "inline-block",
                     width: "12px",
                     height: "12px",
                     borderRadius: "50%",
-                    backgroundColor: color, 
+                    backgroundColor: color,
                     marginRight: "8px",
                   }}
                 />
-                {value}
+                {chartConfig[key]?.label || value}
               </span>
             );
           }}
