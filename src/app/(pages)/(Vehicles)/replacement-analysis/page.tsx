@@ -135,7 +135,7 @@ const VehicleCostChart = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-6 size-span">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -151,7 +151,7 @@ const VehicleCostChart = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h2 className="text-neutral-50 font-sans text-[30px] font-bold leading-[36px] tracking-tight">
+      <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
         Vehicle Replacement Analysis
       </h2>
       <div className="col-span-12 lg:col-span-4 flex flex-col bg-bgCard shadow-none border-0 p-4 rounded-lg">

@@ -116,3 +116,12 @@ body{
  font-weight: 600;
 }
  
+@media (max-width: 767px){
+  .size-span span.text-sm {
+    font-size: 10px;
+}
+.size-span input {
+  font-size: 10px;
+  padding: 4px 8px;
+}
+}
