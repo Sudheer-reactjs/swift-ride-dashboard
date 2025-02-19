@@ -49,6 +49,7 @@ import {
   Trash2,
   Users,
   Globe,
+  ListFilter,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -131,7 +132,7 @@ const DropdownFilter = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2 min-w-[150px]"
+          className="flex items-center gap-2 border-[#27272A] min-w-[150px] h-10"
         >
           {label}
           <ChevronDown />
@@ -267,7 +268,7 @@ const Pages = () => {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 mb-2">
-        <div className="flex items-center border-[0.5px] p-[2px] rounded-sm border-black-700">
+        <div className="flex items-center gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
               key={tab}
@@ -299,7 +300,7 @@ const Pages = () => {
             <Card
               ref={dropdownRef}
               className={cn(
-                "absolute  left-0 mt-2 w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-50"
+                "absolute  left-0 mt-1 w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-50"
               )}
             >
               {/* Search Input */}
@@ -311,13 +312,13 @@ const Pages = () => {
                 <Input
                   type="text"
                   placeholder="Search views"
-                  className="w-full p-2 pl-8 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
+                  className="w-full p-2 pl-8 bg-black h-10 text-white rounded-md border-[0.5px] border-[#171717]"
                 />
               </div>
 
               {/* Saved Views Section */}
-              <div className="mt-3 border-t border-gray">
-                <div className="flex items-center justify-between text-sm text-white">
+              <div className="mt-3 border-t border-[#171717]">
+                <div className="flex items-center mt-3 justify-between text-sm text-white">
                   <div>
                     <span>MY SAVED VIEWS</span>
                     <Button
@@ -329,24 +330,26 @@ const Pages = () => {
                     </Button>
                   </div>
 
-                  <Button variant="ghost" onClick={() => setOpen(true)}>
+                  <Button variant="ghost" className="text-[12px]" onClick={() => setOpen(true)}>
                     + Add View
                   </Button>
                 </div>
-                <p className="text-white text-sm mt-2 ml-9">
+                <div className="flex flex-col items-center justify-center">
+                <p className="text-white text-sm my-2">
                   You havent created any views
                 </p>
+                </div>
               </div>
 
               {/* Standard Views Section */}
               <div className="mt-4">
                 <span className="text-sm text-white">STANDARD VIEWS</span>
-                <div className="flex flex-col mt-2 space-y-2">
+                <div className="flex flex-col mt-2 space-y-2 ">
                   {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
                     <Button
                       key={tab}
                       variant="ghost"
-                      className="flex justify-start w-full text-sm bg-black hover:bg-[#171717] p-2 rounded-md"
+                      className="flex justify-start w-full text-sm  bg-black hover:bg-[#171717] p-2 rounded-md"
                     >
                       ✓ {tab}{" "}
                       <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
@@ -362,14 +365,14 @@ const Pages = () => {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex space-x-4 mb-1 flex-wrap">
+      <div className="flex space-x-2 mb-1 flex-wrap">
         <div className="relative w-full md:w-1/4 lg:w-1/5 mb-2">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <Input
             placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-black text-white border-black-700 w-full"
+            className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
         <DropdownFilter
@@ -377,6 +380,7 @@ const Pages = () => {
           items={vehicleTypes}
           selectedItems={selectedTypes}
           setSelectedItems={setSelectedTypes}
+          
         />
         <DropdownFilter
           label="Vehicle Group"
@@ -392,7 +396,7 @@ const Pages = () => {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2 mb-2">
+            <Button variant="outline" className="flex items-center gap-2 mb-2 h-10">
               Watcher <ChevronDown className="w-2 h-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -403,7 +407,7 @@ const Pages = () => {
         </DropdownMenu>
         <Button
           variant="outline"
-          className="flex items-center gap-2 mb-2"
+          className="flex items-center gap-2 h-10 mb-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           <Filter />
@@ -412,7 +416,7 @@ const Pages = () => {
       </div>
 
       {/* Table Container */}
-      <div className="flex rounded-lg border  bg-[#171717] border-gray-800">
+      <div className="flex rounded-lg border  bg-[#171717] border-[#27272A]">
         {/* Table Container */}
         <div
           className={`transition-all duration-300 ${
@@ -498,9 +502,9 @@ const Pages = () => {
         {/* Filter Panel */}
         {isOpen && (
           <div className="w-[30%] p-4 bg-[[#171717] border-l border-gray-800 h-full ">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold flex items-center gap-2">
-                <Filter className="w-5 h-5" /> Filters
+            <div className="flex my-2 items-center justify-between">
+              <h3 className="text-2xl font-semibold flex items-center gap-2">
+                <ListFilter className="w-6 h-6" /> Filters
               </h3>
               <Button
                 variant="ghost"
@@ -555,7 +559,7 @@ const Pages = () => {
 
                   <Button
                     disabled
-                    className=" bg-gray-300 text-gray-500 cursor-not-allowed"
+                    className=" bg-gray-300 text-white cursor-not-allowed"
                   >
                     Apply
                   </Button>
@@ -563,7 +567,7 @@ const Pages = () => {
               </div>
             ) : (
               <>
-                <div className="mt-4 text-gray-500">No filters applied.</div>
+                <div className="mt-4 text-white">No filters applied.</div>
                 <Button
                   className="w-full mt-4 flex items-center gap-2"
                   onClick={() => setAddFilter(true)}
@@ -571,7 +575,7 @@ const Pages = () => {
                   <Plus className="w-4 h-4" /> Add Filter
                 </Button>
                 <ScrollArea className="mt-6">
-                  <div className="text-sm text-gray-500">POPULAR FILTERS</div>
+                  <div className="text-sm text-white">POPULAR FILTERS</div>
                   <div className="mt-2 flex flex-col space-y-2">
                     <Link href="#" className="text-blue-600 hover:underline">
                       Vehicle
@@ -646,27 +650,27 @@ const Pages = () => {
           <DialogContent className="sm:max-w-screen-md bg-[#171717] text-white rounded-lg shadow-lg">
             {/* Header */}
             <div className="flex justify-between items-center py-4 border-b border-gray">
-              <DialogTitle className="text-lg font-semibold">
+              <DialogTitle className="text-xl font-semibold">
                 New Saved View
               </DialogTitle>
               <button
                 onClick={() => setOpen(false)}
                 className="text-gray-400 hover:text-white"
               >
-                <X size={18} />
+                <X size={25} />
               </button>
             </div>
 
             {/* Body */}
-            <div className="p-4 space-y-4">
+            <div className=" space-y-4">
               {/* Name Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-[#FAFAFA]">
                   Name <span className="text-red-500">*</span>
                 </label>
                 <Input
                   placeholder="Please Select"
-                  className="mt-1 bg-black border-none text-white"
+                  className="mt-1 bg-[#09090B] border-[#27272A] text-white"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -674,12 +678,12 @@ const Pages = () => {
 
               {/* Description Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-[#FAFAFA]">
                   Description
                 </label>
                 <Textarea
                   placeholder="Help others understand the purpose of this view (Optional)"
-                  className="mt-1 bg-black border-none text-white"
+                  className="mt-1 bg-[#09090B] border-[#27272A] text-[#FAFAFA]"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -687,23 +691,23 @@ const Pages = () => {
 
               {/* Shared With */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-[#FAFAFA]">
                   Shared with
                 </label>
                 <Select onValueChange={(value) => setSelected(value)}>
-                  <SelectTrigger className="mt-1 bg-black border-none text-white flex items-center">
+                  <SelectTrigger className="mt-1 bg-[#09090B] border-[#27272A] text-white flex items-center">
                     <div className="flex items-center">
                       {getIcon()}
                       <SelectValue placeholder="Private" />
                     </div>
                   </SelectTrigger>
-                  <SelectContent className="bg-black border-gray-700 text-white">
+                  <SelectContent className="bg-black border-[#27272A] text-white">
                     <SelectItem value="private">Private</SelectItem>
                     <SelectItem value="team">Team</SelectItem>
                     <SelectItem value="public">Public</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-[18px] text-[#A1A1AA] mt-1">
                   {selected === "private"
                     ? "Visible only to you"
                     : selected === "team"
@@ -714,15 +718,15 @@ const Pages = () => {
             </div>
 
             {/* Buttons */}
-            <div className="p-4 flex justify-end space-x-2">
+            <div className="p-4 flex justify-end space-x-3">
               <Button
                 variant="ghost"
                 onClick={() => setOpen(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-[#FAFAFA] h-10 w-[65px] hover:text-white"
               >
                 Cancel
               </Button>
-              <Button className="bg-green-600 text-white hover:bg-green-500">
+              <Button className="bg-[#065F46] text-white h-10 w-[65px] hover:bg-green-900">
                 Save
               </Button>
             </div>
