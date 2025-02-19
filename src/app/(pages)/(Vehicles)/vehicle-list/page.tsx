@@ -226,19 +226,21 @@ const Pages = () => {
         <div className="flex items-center border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
-            key={tab}
-            variant={selectedTab === tab ? "secondary" : "ghost"}
-            onClick={() => setSelectedTab(tab)}
-            className={cn(
-              "text-sm flex items-center rounded-md px-3 py-2 transition-all",
-              selectedTab === tab ? "bg-[#171717] text-white" : "hover:bg-[#171717] "
-            )}
-          >
-            <div className="flex justify-center items-center min-w-16">
-              {tab}
-              {selectedTab === tab && <span className="ml-1">...</span>}
-            </div>
-          </Button>
+              key={tab}
+              variant={selectedTab === tab ? "secondary" : "ghost"}
+              onClick={() => setSelectedTab(tab)}
+              className={cn(
+                "text-sm flex items-center rounded-md px-3 py-2 transition-all",
+                selectedTab === tab
+                  ? "bg-[#171717] text-white"
+                  : "hover:bg-[#171717] "
+              )}
+            >
+              <div className="flex justify-center items-center min-w-16">
+                {tab}
+                {selectedTab === tab && <span className="ml-1">...</span>}
+              </div>
+            </Button>
           ))}
         </div>
         <div className="relative">
@@ -261,8 +263,8 @@ const Pages = () => {
                 type="text"
                 placeholder="Search views"
                 className="w-full p-2 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
-              /> 
-              
+              />
+
               {/* Saved Views Section */}
               <div className="mt-3 border-t border-gray">
                 <div className="flex items-center justify-between text-sm text-white">
@@ -287,7 +289,7 @@ const Pages = () => {
                     <Button
                       key={tab}
                       variant="ghost"
-                      className="flex justify-start w-full text-sm bg-[#171717] hover:bg-gray-800 p-2 rounded-md"
+                      className="flex justify-start w-full text-sm bg-black hover:bg-[#171717] p-2 rounded-md"
                     >
                       ✓ {tab}{" "}
                       <span className="border bg-white  text-black border-gray-600 box-border rounded-sm text-xs">
@@ -385,7 +387,8 @@ const Pages = () => {
                     key={index}
                     className="bg-black-800 hover:bg-gray-700"
                   >
-                    <TableCell className="flex items-center gap-2">
+                    <TableCell >
+                      <div className="flex items-center gap-2">
                       <Checkbox
                         id={`checkbox-${index}`}
                         checked={selectedRows.includes(index)}
@@ -399,8 +402,19 @@ const Pages = () => {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       {vehicle.name}
+                      </div>
                     </TableCell>
-                    <TableCell>{vehicle.operator}</TableCell>
+                    <TableCell  >
+                      <div className="flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>{vehicle.operator}
+                      </div>
+                      </TableCell>
                     <TableCell>{vehicle.year}</TableCell>
                     <TableCell>{vehicle.make}</TableCell>
                     <TableCell>{vehicle.model}</TableCell>
