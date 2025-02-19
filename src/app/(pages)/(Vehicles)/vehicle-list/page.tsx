@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ChevronDown,
@@ -33,6 +33,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -49,9 +50,29 @@ const vehicles = Array(15).fill({
   watchers: "1",
 });
 
-const vehicleTypes = ["ATV", "Boat", "Bus", "Car", "Forklift", "Generator", "Loader"];
-const vehicleGroups = ["Management", "Logistics", "Operations", "Maintenance"];
-const vehicleStatuses = ["Active", "Inactive", "In Service", "Out of Service"];
+const vehicleTypes = [
+  "ATV",
+  "Boat",
+  "Bus",
+  "Car",
+  "Forklift",
+  "Generator",
+  "Loader",
+];
+const vehicleGroups = [
+  "Management",
+  "Logistics",
+  "Operations",
+  "Maintenance",
+  "Security",
+];
+const vehicleStatuses = [
+  "Active",
+  "Inactive",
+  "In Service",
+  "Out of Service",
+  "Archived",
+];
 
 const rowsPerPage = 10;
 
@@ -86,7 +107,10 @@ const DropdownFilter = ({
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2 min-w-[150px]">
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 min-w-[150px]"
+        >
           {label}
           <ChevronDown />
         </Button>
@@ -95,10 +119,13 @@ const DropdownFilter = ({
         <div className="relative">
           <div className="flex flex-wrap items-center gap-1 absolute left-2 top-1 z-10">
             {selectedItems.map((item) => (
-              <Badge key={item} className="flex items-center gap-1 bg-blue-100 text-blue-600">
+              <Badge
+                key={item}
+                className="flex items-center gap-1 bg-blue-100 text-[#047857]"
+              >
                 {item}
                 <button onClick={() => removeSelection(item)}>
-                  <X className="w-3 h-3 text-blue-600 hover:text-red-500" />
+                  <X className="w-3 h-3 text-[#047857] hover:text-[#047857]" />
                 </button>
               </Badge>
             ))}
@@ -110,7 +137,7 @@ const DropdownFilter = ({
             className={`pr-8 ${selectedItems.length > 0 ? "pl-20" : "pl-2"}`}
           />
         </div>
-        <ScrollArea className="max-h-40 mt-2">
+        <ScrollArea className="max-h-40 mt-2 overflow-y-auto">
           {filteredItems.map((item) => (
             <div
               key={item}
@@ -148,6 +175,8 @@ const Pages = () => {
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [addTab, setAddTab] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
   const displayedVehicles = vehicles.slice(
@@ -163,9 +192,23 @@ const Pages = () => {
     );
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setAddTab(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const router = useRouter();
   return (
-    <div className="container w-full max-h-full p-6 bg-black text-white rounded-lg shadow-lg overflow-auto">
+    <>
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
         <h2 className="text-2xl font-semibold">Vehicles</h2>
@@ -179,25 +222,88 @@ const Pages = () => {
         </Button>
       </div>
 
-      
-      <div className="flex flex-wrap mb-4">
-        {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
-          <Button
+      <div className="flex flex-wrap items-center gap-2 mb-4 ">
+        <div className="flex items-center border-[0.5px] p-[2px] rounded-sm border-black-700">
+          {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+            <Button
             key={tab}
             variant={selectedTab === tab ? "secondary" : "ghost"}
             onClick={() => setSelectedTab(tab)}
+            className={cn(
+              "text-sm flex items-center rounded-md px-3 py-2 transition-all",
+              selectedTab === tab ? "bg-[#171717] text-white" : "hover:bg-[#171717] "
+            )}
+          >
+            <div className="flex justify-center items-center min-w-16">
+              {tab}
+              {selectedTab === tab && <span className="ml-1">...</span>}
+            </div>
+          </Button>
+          ))}
+        </div>
+        <div className="relative">
+          <Button
+            variant="ghost"
+            onClick={() => setAddTab(!addTab)}
             className="text-sm"
           >
-            {tab}
+            + Add Tab
           </Button>
-        ))}
-        <Button variant="ghost" className="text-sm">
-          + Add Tab
-        </Button>
+          {addTab && (
+            <Card
+              ref={dropdownRef}
+              className={cn(
+                "absolute left-0 mt-2 w-80 bg-black text-white border border-[#171717] rounded-md shadow-lg p-4 z-50"
+              )}
+            >
+              {/* Search Input */}
+              <Input
+                type="text"
+                placeholder="Search views"
+                className="w-full p-2 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
+              />
+              
+              {/* Saved Views Section */}
+              <div className="mt-3 border-t border-gray">
+                <div className="flex items-center justify-between text-sm text-white">
+                  <span>MY SAVED VIEWS</span>
+                  <Button variant="ghost" size="icon" className="text-white">
+                    ...
+                  </Button>
+                  <Button variant="ghost" className="text-white text-sm">
+                    + Add Filter
+                  </Button>
+                </div>
+                <p className="text-gray-500 text-sm mt-2">
+                  You havent created any views
+                </p>
+              </div>
+
+              {/* Standard Views Section */}
+              <div className="mt-4">
+                <span className="text-sm text-gray-400">STANDARD VIEWS</span>
+                <div className="flex flex-col mt-2 space-y-2">
+                  {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+                    <Button
+                      key={tab}
+                      variant="ghost"
+                      className="flex justify-start w-full text-sm bg-[#171717] hover:bg-gray-800 p-2 rounded-md"
+                    >
+                      ✓ {tab}{" "}
+                      <span className="border bg-white  text-black border-gray-600 box-border rounded-sm text-xs">
+                        S
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          )}
+        </div>
       </div>
 
       {/* Filters & Search */}
-      <div className="flex items-center space-x-4 mb-4 flex-wrap">
+      <div className="flex space-x-4 mb-4 flex-wrap">
         <Input
           placeholder="Search"
           value={search}
@@ -233,97 +339,120 @@ const Pages = () => {
             <DropdownMenuItem>Inactive</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button variant="outline" className="flex items-center gap-2 mb-2" onClick={() => setIsOpen(!isOpen)}>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 mb-2"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <Filter />
           Filters
         </Button>
       </div>
 
       {/* Table Container */}
-      <div className="flex h-[calc(100vh-100px)] rounded-lg border  bg-[#171717] border-gray-800">
-  {/* Table Container */}
-  <div className={`transition-all duration-300 ${isOpen ? "w-[70%]" : "w-full"} overflow-auto`}>
-    <div className="h-full overflow-x-auto"> {/* Enables scrolling */}
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="flex items-center gap-2">
-              <Checkbox id="select-all" /> Name
-            </TableHead>
-            <TableHead>Operator</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Make</TableHead>
-            <TableHead>Model</TableHead>
-            <TableHead>VIN</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Group</TableHead>
-            <TableHead>Current Meter</TableHead>
-            <TableHead>License Plate</TableHead>
-            <TableHead>Watchers</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {displayedVehicles.map((vehicle, index) => (
-            <TableRow key={index} className="bg-black-800 hover:bg-gray-700">
-              <TableCell className="flex items-center gap-2">
-                <Checkbox
-                  id={`checkbox-${index}`}
-                  checked={selectedRows.includes(index)}
-                  onChange={() => handleRowSelect(index)}
-                />
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                {vehicle.name}
-              </TableCell>
-              <TableCell>{vehicle.operator}</TableCell>
-              <TableCell>{vehicle.year}</TableCell>
-              <TableCell>{vehicle.make}</TableCell>
-              <TableCell>{vehicle.model}</TableCell>
-              <TableCell>{vehicle.vin}</TableCell>
-              <TableCell>
-                <Badge variant="secondary">{vehicle.status}</Badge>
-              </TableCell>
-              <TableCell>{vehicle.type}</TableCell>
-              <TableCell>{vehicle.group}</TableCell>
-              <TableCell>{vehicle.currentmeter} mi</TableCell>
-              <TableCell>{vehicle.licenseplate}</TableCell>
-              <TableCell>{vehicle.watchers} watchers</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  </div>
-
-  {/* Filter Panel */}
-  {isOpen && (
-    <div className="w-[30%] p-4 bg-[[#171717] border-l border-gray-800 h-full ">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold flex items-center gap-2">
-          <Filter className="w-5 h-5" /> Filters
-        </h3>
-        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-          ✕
-        </Button>
-      </div>
-      <div className="mt-4 text-gray-500">No filters applied.</div>
-      <Button className="w-full mt-4 flex items-center gap-2">
-        <Plus className="w-4 h-4" /> Add Filter
-      </Button>
-      <ScrollArea className="mt-6">
-        <div className="text-sm text-gray-500">POPULAR FILTERS</div>
-        <div className="mt-2 flex flex-col space-y-2">
-          <Link href="#" className="text-blue-600 hover:underline">Vehicle</Link>
-          <Link href="#" className="text-blue-600 hover:underline">Vehicle Group</Link>
+      <div className="flex rounded-lg border  bg-[#171717] border-gray-800">
+        {/* Table Container */}
+        <div
+          className={`transition-all duration-300 ${
+            isOpen ? "w-[70%]" : "w-full"
+          }  `}
+        >
+          <div className="">
+            {" "}
+            {/* Enables scrolling */}
+            <Table className="w-full ">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="flex items-center gap-2">
+                    <Checkbox id="select-all" /> Name
+                  </TableHead>
+                  <TableHead>Operator</TableHead>
+                  <TableHead>Year</TableHead>
+                  <TableHead>Make</TableHead>
+                  <TableHead>Model</TableHead>
+                  <TableHead>VIN</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Group</TableHead>
+                  <TableHead>Current Meter</TableHead>
+                  <TableHead>License Plate</TableHead>
+                  <TableHead>Watchers</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {displayedVehicles.map((vehicle, index) => (
+                  <TableRow
+                    key={index}
+                    className="bg-black-800 hover:bg-gray-700"
+                  >
+                    <TableCell className="flex items-center gap-2">
+                      <Checkbox
+                        id={`checkbox-${index}`}
+                        checked={selectedRows.includes(index)}
+                        onChange={() => handleRowSelect(index)}
+                      />
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      {vehicle.name}
+                    </TableCell>
+                    <TableCell>{vehicle.operator}</TableCell>
+                    <TableCell>{vehicle.year}</TableCell>
+                    <TableCell>{vehicle.make}</TableCell>
+                    <TableCell>{vehicle.model}</TableCell>
+                    <TableCell>{vehicle.vin}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{vehicle.status}</Badge>
+                    </TableCell>
+                    <TableCell>{vehicle.type}</TableCell>
+                    <TableCell>{vehicle.group}</TableCell>
+                    <TableCell>{vehicle.currentmeter} mi</TableCell>
+                    <TableCell>{vehicle.licenseplate}</TableCell>
+                    <TableCell>{vehicle.watchers} watchers</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-      </ScrollArea>
-    </div>
-  )}
-</div>
 
+        {/* Filter Panel */}
+        {isOpen && (
+          <div className="w-[30%] p-4 bg-[[#171717] border-l border-gray-800 h-full ">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <Filter className="w-5 h-5" /> Filters
+              </h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+              >
+                ✕
+              </Button>
+            </div>
+            <div className="mt-4 text-gray-500">No filters applied.</div>
+            <Button className="w-full mt-4 flex items-center gap-2">
+              <Plus className="w-4 h-4" /> Add Filter
+            </Button>
+            <ScrollArea className="mt-6">
+              <div className="text-sm text-gray-500">POPULAR FILTERS</div>
+              <div className="mt-2 flex flex-col space-y-2">
+                <Link href="#" className="text-blue-600 hover:underline">
+                  Vehicle
+                </Link>
+                <Link href="#" className="text-blue-600 hover:underline">
+                  Vehicle Group
+                </Link>
+              </div>
+            </ScrollArea>
+          </div>
+        )}
+      </div>
 
       {/* Pagination */}
       <div className="flex flex-col md:flex-row justify-between items-center mt-4">
@@ -379,7 +508,7 @@ const Pages = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

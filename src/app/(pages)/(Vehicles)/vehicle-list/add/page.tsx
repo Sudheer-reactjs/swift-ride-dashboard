@@ -76,7 +76,9 @@ const AddVehicle = () => {
           </div>
 
           {/* Form */}
-          <div className="bg-[#171717] p-6 rounded-lg">
+        { activeTab === "Details" && (
+          <>
+         <div className="bg-[#171717] p-6 rounded-lg">
             <h2 className="text-2xl font-semibold">Identification</h2>
             <hr className="my-5" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -415,6 +417,7 @@ const AddVehicle = () => {
               </Select>
             </div>
           </div>
+          </>)}
           <div className="flex justify-between mt-5 mb-6">
               <Button variant="outline">Cancel</Button>
             <div className="flex gap-4">
