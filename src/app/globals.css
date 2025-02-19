@@ -87,6 +87,9 @@
     @apply bg-background text-foreground;
   }
 }
+*{
+  outline: none;
+}
 body{
   font-family: var(--font-inter);
   font-weight: 300;
