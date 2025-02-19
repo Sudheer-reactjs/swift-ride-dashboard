@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useRef, useState } from "react";
@@ -96,6 +97,7 @@ const vehicleStatuses = [
   "Out of Service",
   "Archived",
 ];
+const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
 const rowsPerPage = 10;
 
@@ -126,7 +128,14 @@ const DropdownFilter = ({
   const filteredItems = items.filter((item) =>
     item.toLowerCase().includes(search.toLowerCase())
   );
-
+  const chipContainerRef = useRef<HTMLDivElement>(null);
+  const [inputHeight, setInputHeight] = useState(0);
+  console.log('inputHeight:', inputHeight);
+  useEffect(() => {
+    if (chipContainerRef.current) {
+      setInputHeight(chipContainerRef.current.clientHeight * 2)
+    }
+  }, [selectedItems]);
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
@@ -138,48 +147,67 @@ const DropdownFilter = ({
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="ml-[25%] p-2 w-[400px]">
+      <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-gray-700 rounded-lg shadow-lg">
+        {/* Search Input with Selected Items */}
         <div className="relative">
-          <div className="flex flex-wrap items-center gap-1 absolute left-2 top-1 z-10">
-            {selectedItems.map((item) => (
-              <Badge
-                key={item}
-                className="flex items-center gap-1 bg-blue-100 text-[#047857]"
-              >
-                {item}
-                <button onClick={() => removeSelection(item)}>
-                  <X className="w-3 h-3 text-[#047857] hover:text-[#047857]" />
-                </button>
-              </Badge>
-            ))}
+          <div
+            ref={chipContainerRef}
+            className="absolute min-h-1 max-h-96 left-3 top-1/2 transform -translate-y-1/2 flex flex-wrap gap-1"
+          >
+            {selectedItems.length > 0 &&
+              selectedItems.map((item) => (
+                <span
+                  key={item}
+                  className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md"
+                >
+                  {item}
+                </span>
+              ))}
           </div>
           <Input
-            placeholder={selectedItems.length === 0 ? "Select item(s)" : ""}
+            placeholder={selectedItems.length > 0 ? "" : "Select item(s)"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className={`pr-8 ${selectedItems.length > 0 ? "pl-20" : "pl-2"}`}
+            className={`h-[${inputHeight}px] w-full bg-[#171717] text-white border border-gray-600 rounded-md focus:ring-0 focus:outline-none`}
           />
         </div>
-        <ScrollArea className="max-h-40 mt-2 overflow-y-auto">
+
+        {/* Scrollable List */}
+        <ScrollArea className="max-h-52 mt-2 overflow-y-auto">
           {filteredItems.map((item) => (
             <div
               key={item}
-              className="flex items-center p-2 hover:bg-[#171717] rounded-md cursor-pointer"
+              className={`p-2 text-white rounded-md cursor-pointer transition ${
+                selectedItems.includes(item)
+                  ? "bg-gray-900"
+                  : "hover:bg-[#262626]"
+              }`}
               onClick={() => toggleSelection(item)}
             >
-              <Checkbox checked={selectedItems.includes(item)} />
-              <span className="ml-2">{item}</span>
+              {item}
             </div>
           ))}
         </ScrollArea>
-        <div className="flex justify-end items-center mt-2">
-          <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)}>
+
+        {/* Action Buttons */}
+        <div className="flex justify-between items-center mt-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsOpen(false)}
+            className="w-full bg-[#171717] text-white border border-gray-600 hover:bg-[#262626]"
+          >
             Cancel
           </Button>
           <Button
             size="sm"
             onClick={() => setIsOpen(false)}
             disabled={selectedItems.length === 0}
+            className={`w-full ml-2 ${
+              selectedItems.length === 0
+                ? "opacity-50 cursor-not-allowed bg-gray-700"
+                : "bg-gray-500 hover:bg-gray-400"
+            }`}
           >
             Apply
           </Button>
@@ -197,6 +225,7 @@ const Pages = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -330,14 +359,18 @@ const Pages = () => {
                     </Button>
                   </div>
 
-                  <Button variant="ghost" className="text-[12px]" onClick={() => setOpen(true)}>
+                  <Button
+                    variant="ghost"
+                    className="text-[12px]"
+                    onClick={() => setOpen(true)}
+                  >
                     + Add View
                   </Button>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                <p className="text-white text-sm my-2">
-                  You havent created any views
-                </p>
+                  <p className="text-white text-sm my-2">
+                    You havent created any views
+                  </p>
                 </div>
               </div>
 
@@ -380,7 +413,6 @@ const Pages = () => {
           items={vehicleTypes}
           selectedItems={selectedTypes}
           setSelectedItems={setSelectedTypes}
-          
         />
         <DropdownFilter
           label="Vehicle Group"
@@ -394,17 +426,13 @@ const Pages = () => {
           selectedItems={selectedStatuses}
           setSelectedItems={setSelectedStatuses}
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2 mb-2 h-10">
-              Watcher <ChevronDown className="w-2 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Active</DropdownMenuItem>
-            <DropdownMenuItem>Inactive</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DropdownFilter
+          label="Watchers"
+          items={vehicleWatchers}
+          selectedItems={selectedWatchers}
+          setSelectedItems={setSelectedWatchers}
+        />
+
         <Button
           variant="outline"
           className="flex items-center gap-2 h-10 mb-2"
@@ -523,13 +551,13 @@ const Pages = () => {
                 {filters.map((filter) => (
                   <div
                     key={filter.id}
-                    className="p-3 border mt-5 rounded-sm w-full border-gray-800 relative"
+                    className="p-5 border mt-5 rounded-sm w-full border-[#27272A] relative"
                   >
                     <div className="flex justify-between items-center mb-2">
                       <span className="font-medium text-white">New Filter</span>
                       <button
                         onClick={() => setAddFilter(false)}
-                        className="text-gray-400 hover:text-red-500"
+                        className="text-gray-400"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -552,15 +580,12 @@ const Pages = () => {
                 <div className="flex items-center justify-between">
                   <button
                     onClick={addNewFilter}
-                    className="text-blue-500 flex items-center space-x-1 text-sm"
+                    className="text-[#047857] flex items-center space-x-1 text-lg"
                   >
-                    <Plus size={14} /> <span>Add Filter</span>
+                    <Plus size={18} /> <span>Add Filter</span>
                   </button>
 
-                  <Button
-                    disabled
-                    className=" bg-gray-300 text-white cursor-not-allowed"
-                  >
+                  <Button disabled className=" bg-[#047857] text-white ">
                     Apply
                   </Button>
                 </div>
@@ -577,10 +602,10 @@ const Pages = () => {
                 <ScrollArea className="mt-6">
                   <div className="text-sm text-white">POPULAR FILTERS</div>
                   <div className="mt-2 flex flex-col space-y-2">
-                    <Link href="#" className="text-blue-600 hover:underline">
+                    <Link href="#" className="text-[#047857] hover:underline">
                       Vehicle
                     </Link>
-                    <Link href="#" className="text-blue-600 hover:underline">
+                    <Link href="#" className="text-[#047857] hover:underline">
                       Vehicle Group
                     </Link>
                   </div>
