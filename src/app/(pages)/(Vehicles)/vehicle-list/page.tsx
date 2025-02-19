@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -19,6 +20,22 @@ import {
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -27,6 +44,11 @@ import {
   Filter,
   Plus,
   X,
+  Lock,
+  Search,
+  Trash2,
+  Users,
+  Globe,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -177,6 +199,15 @@ const Pages = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [addFilter, setAddFilter] = useState(false);
+  const [filters, setFilters] = useState([{ id: 1, field: "" }]);
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [selected, setSelected] = useState("private");
+  const addNewFilter = () => {
+    setFilters([...filters, { id: filters.length + 1, field: "" }]);
+  };
 
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
   const displayedVehicles = vehicles.slice(
@@ -206,6 +237,19 @@ const Pages = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const getIcon = () => {
+    switch (selected) {
+      case "private":
+        return <Lock size={16} className="text-gray-400 mr-2" />;
+      case "team":
+        return <Users size={16} className="text-gray-400 mr-2" />;
+      case "public":
+        return <Globe size={16} className="text-gray-400 mr-2" />;
+      default:
+        return null;
+    }
+  };
+
   const router = useRouter();
   return (
     <>
@@ -222,7 +266,7 @@ const Pages = () => {
         </Button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mb-4 ">
+      <div className="flex flex-wrap items-center gap-2 mb-2">
         <div className="flex items-center border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
@@ -255,35 +299,48 @@ const Pages = () => {
             <Card
               ref={dropdownRef}
               className={cn(
-                "absolute left-0 mt-2 w-80 bg-black text-white border border-[#171717] rounded-md shadow-lg p-4 z-50"
+                "absolute  left-0 mt-2 w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-50"
               )}
             >
               {/* Search Input */}
-              <Input
-                type="text"
-                placeholder="Search views"
-                className="w-full p-2 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
-              />
+              <div className="relative">
+                <Search
+                  size={16}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+                />
+                <Input
+                  type="text"
+                  placeholder="Search views"
+                  className="w-full p-2 pl-8 bg-black text-white rounded-md border-[0.5px] border-[#171717]"
+                />
+              </div>
 
               {/* Saved Views Section */}
               <div className="mt-3 border-t border-gray">
                 <div className="flex items-center justify-between text-sm text-white">
-                  <span>MY SAVED VIEWS</span>
-                  <Button variant="ghost" size="icon" className="text-white">
-                    ...
-                  </Button>
-                  <Button variant="ghost" className="text-white text-sm">
-                    + Add Filter
+                  <div>
+                    <span>MY SAVED VIEWS</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-white box-border "
+                    >
+                      ...
+                    </Button>
+                  </div>
+
+                  <Button variant="ghost" onClick={() => setOpen(true)}>
+                    + Add View
                   </Button>
                 </div>
-                <p className="text-gray-500 text-sm mt-2">
+                <p className="text-white text-sm mt-2 ml-9">
                   You havent created any views
                 </p>
               </div>
 
               {/* Standard Views Section */}
               <div className="mt-4">
-                <span className="text-sm text-gray-400">STANDARD VIEWS</span>
+                <span className="text-sm text-white">STANDARD VIEWS</span>
                 <div className="flex flex-col mt-2 space-y-2">
                   {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
                     <Button
@@ -305,13 +362,16 @@ const Pages = () => {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex space-x-4 mb-4 flex-wrap">
-        <Input
-          placeholder="Search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/4 lg:w-1/5 bg-black text-white border-black-700 mb-2"
-        />
+      <div className="flex space-x-4 mb-1 flex-wrap">
+        <div className="relative w-full md:w-1/4 lg:w-1/5 mb-2">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Input
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 bg-black text-white border-black-700 w-full"
+          />
+        </div>
         <DropdownFilter
           label="Vehicle Type"
           items={vehicleTypes}
@@ -387,34 +447,35 @@ const Pages = () => {
                     key={index}
                     className="bg-black-800 hover:bg-gray-700"
                   >
-                    <TableCell >
+                    <TableCell>
                       <div className="flex items-center gap-2">
-                      <Checkbox
-                        id={`checkbox-${index}`}
-                        checked={selectedRows.includes(index)}
-                        onChange={() => handleRowSelect(index)}
-                      />
-                      <Avatar>
-                        <AvatarImage
-                          src="https://github.com/shadcn.png"
-                          alt="@shadcn"
+                        <Checkbox
+                          id={`checkbox-${index}`}
+                          checked={selectedRows.includes(index)}
+                          onChange={() => handleRowSelect(index)}
                         />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      {vehicle.name}
+                        <Avatar>
+                          <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        {vehicle.name}
                       </div>
                     </TableCell>
-                    <TableCell  >
+                    <TableCell>
                       <div className="flex items-center gap-2">
-                      <Avatar>
-                        <AvatarImage
-                          src="https://github.com/shadcn.png"
-                          alt="@shadcn"
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>{vehicle.operator}
+                        <Avatar>
+                          <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        {vehicle.operator}
                       </div>
-                      </TableCell>
+                    </TableCell>
                     <TableCell>{vehicle.year}</TableCell>
                     <TableCell>{vehicle.make}</TableCell>
                     <TableCell>{vehicle.model}</TableCell>
@@ -444,26 +505,84 @@ const Pages = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setAddFilter(false);
+                }}
               >
                 ✕
               </Button>
             </div>
-            <div className="mt-4 text-gray-500">No filters applied.</div>
-            <Button className="w-full mt-4 flex items-center gap-2">
-              <Plus className="w-4 h-4" /> Add Filter
-            </Button>
-            <ScrollArea className="mt-6">
-              <div className="text-sm text-gray-500">POPULAR FILTERS</div>
-              <div className="mt-2 flex flex-col space-y-2">
-                <Link href="#" className="text-blue-600 hover:underline">
-                  Vehicle
-                </Link>
-                <Link href="#" className="text-blue-600 hover:underline">
-                  Vehicle Group
-                </Link>
+            <hr />
+            {addFilter ? (
+              <div className="space-y-4  h-screen w-full  ">
+                {filters.map((filter) => (
+                  <div
+                    key={filter.id}
+                    className="p-3 border mt-5 rounded-sm w-full border-gray-800 relative"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-medium text-white">New Filter</span>
+                      <button
+                        onClick={() => setAddFilter(false)}
+                        className="text-gray-400 hover:text-red-500"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                    <div className="relative">
+                      <Search className="absolute left-3 top-3 text-gray-400 w-4 h-4" />
+                      <Select>
+                        <SelectTrigger className="pl-10 w-full">
+                          <SelectValue placeholder="Select field" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="option1">Option 1</SelectItem>
+                          <SelectItem value="option2">Option 2</SelectItem>
+                          <SelectItem value="option3">Option 3</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                ))}
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={addNewFilter}
+                    className="text-blue-500 flex items-center space-x-1 text-sm"
+                  >
+                    <Plus size={14} /> <span>Add Filter</span>
+                  </button>
+
+                  <Button
+                    disabled
+                    className=" bg-gray-300 text-gray-500 cursor-not-allowed"
+                  >
+                    Apply
+                  </Button>
+                </div>
               </div>
-            </ScrollArea>
+            ) : (
+              <>
+                <div className="mt-4 text-gray-500">No filters applied.</div>
+                <Button
+                  className="w-full mt-4 flex items-center gap-2"
+                  onClick={() => setAddFilter(true)}
+                >
+                  <Plus className="w-4 h-4" /> Add Filter
+                </Button>
+                <ScrollArea className="mt-6">
+                  <div className="text-sm text-gray-500">POPULAR FILTERS</div>
+                  <div className="mt-2 flex flex-col space-y-2">
+                    <Link href="#" className="text-blue-600 hover:underline">
+                      Vehicle
+                    </Link>
+                    <Link href="#" className="text-blue-600 hover:underline">
+                      Vehicle Group
+                    </Link>
+                  </div>
+                </ScrollArea>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -522,6 +641,94 @@ const Pages = () => {
           </div>
         </div>
       </div>
+      {open && (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent className="sm:max-w-screen-md bg-[#171717] text-white rounded-lg shadow-lg">
+            {/* Header */}
+            <div className="flex justify-between items-center py-4 border-b border-gray">
+              <DialogTitle className="text-lg font-semibold">
+                New Saved View
+              </DialogTitle>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-4 space-y-4">
+              {/* Name Input */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  placeholder="Please Select"
+                  className="mt-1 bg-black border-none text-white"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
+              {/* Description Input */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300">
+                  Description
+                </label>
+                <Textarea
+                  placeholder="Help others understand the purpose of this view (Optional)"
+                  className="mt-1 bg-black border-none text-white"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+
+              {/* Shared With */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300">
+                  Shared with
+                </label>
+                <Select onValueChange={(value) => setSelected(value)}>
+                  <SelectTrigger className="mt-1 bg-black border-none text-white flex items-center">
+                    <div className="flex items-center">
+                      {getIcon()}
+                      <SelectValue placeholder="Private" />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent className="bg-black border-gray-700 text-white">
+                    <SelectItem value="private">Private</SelectItem>
+                    <SelectItem value="team">Team</SelectItem>
+                    <SelectItem value="public">Public</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-gray-400 mt-1">
+                  {selected === "private"
+                    ? "Visible only to you"
+                    : selected === "team"
+                    ? "Visible to your team"
+                    : "Visible to everyone"}
+                </p>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="p-4 flex justify-end space-x-2">
+              <Button
+                variant="ghost"
+                onClick={() => setOpen(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                Cancel
+              </Button>
+              <Button className="bg-green-600 text-white hover:bg-green-500">
+                Save
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };
