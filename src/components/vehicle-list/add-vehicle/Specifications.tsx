@@ -577,7 +577,7 @@ const Specifications = () => {
                     <p>Method of drawing fuel into the engine (e.g. throttle body, multiport, direct, etc.)</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> 
             </Label>
             <Select>
               <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
