@@ -13,6 +13,7 @@ import {
 import Maintenance from "@/components/vehicle-list/add-vehicle/Maintenance";
 import Lifecycle from "@/components/vehicle-list/add-vehicle/Lifecycle";
 import Financial from "@/components/vehicle-list/add-vehicle/Financial";
+import Specifications from "@/components/vehicle-list/add-vehicle/Specifications";
 const AddVehicle = () => {
   const [activeTab, setActiveTab] = useState("Details");
 
@@ -103,6 +104,7 @@ const AddVehicle = () => {
             {activeTab === "Maintenance" && <Maintenance />} 
             {activeTab === "Lifecycle" && <Lifecycle />}  
             {activeTab === "Financial" && <Financial />}  
+            {activeTab === "Specifications" && <Specifications />} 
             {/* Add other tab components here */}
           </div>
               
