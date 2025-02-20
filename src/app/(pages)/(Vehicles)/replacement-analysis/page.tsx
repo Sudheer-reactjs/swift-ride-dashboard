@@ -51,7 +51,9 @@ const VehicleCostChart = () => {
   const [purchasePrice, setPurchasePrice] = useState(50000);
   const [disposalCost, setDisposalCost] = useState(1000);
   const [salvageValue, setSalvageValue] = useState(10); // percentage
-  const [depreciationMethod, setDepreciationMethod] = useState("sum-of-years");
+  const [depreciationMethod, setDepreciationMethod] = useState<
+    string | undefined
+  >(undefined);
 
   // Service costs per year
   const [serviceCosts, setServiceCosts] = useState(Array(8).fill(1500));
@@ -311,19 +313,34 @@ const VehicleCostChart = () => {
                 <CardTitle className="!mt-8 !mb-6 text-[16px] font-medium ">
                   Method of Depreciation
                 </CardTitle>
+
                 <RadioGroup
                   value={depreciationMethod}
                   onValueChange={setDepreciationMethod}
-                  className="flex gap-6"
+                  className="flex gap-4 md:gap-8"
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="double-declining" id="r1" />
-                    <Label htmlFor="r1">Double Declining</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="sum-of-years" id="r2" />
-                    <Label htmlFor="r2">Sum of Years</Label>
-                  </div>
+                  {[
+                    { value: "Double Declining", label: "Double Declining" },
+                    { value: "sum-of-years", label: "Sum of Years" },
+                  ].map((item) => (
+                    <label
+                      key={item.value}
+                      htmlFor={item.value}
+                      onClick={() => setDepreciationMethod(item.value)}
+                      className="flex flex-col text-left cursor-pointer transition-all"
+                    >
+                      <div className="flex items-center">
+                        <RadioGroupItem
+                          value={item.value}
+                          id={item.value}
+                          className="hidden"
+                        />
+                        <span className="text-white font-medium custom-cricle m-0 pl-6">
+                          {item.label}
+                        </span>
+                      </div>
+                    </label>
+                  ))}
                 </RadioGroup>
               </div>
             </CardContent>
