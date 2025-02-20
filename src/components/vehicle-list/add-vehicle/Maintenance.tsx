@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Details = () => {
+const Maintenance = () => {
     return (
         <div>
-            dd
+            dsfsddffs
         </div>
     );
 }
 
-export default Details;
+export default Maintenance;
