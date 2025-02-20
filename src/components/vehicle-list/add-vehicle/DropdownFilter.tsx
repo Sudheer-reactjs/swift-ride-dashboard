@@ -99,7 +99,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({ label, items, selectedI
             size="sm"
             onClick={() => setIsOpen(false)}
             disabled={selectedItems.length === 0}
-            className={`w-full ml-2 ${
+            className={`w-full h10 ml-2 ${
               selectedItems.length === 0
                 ? "opacity-50 cursor-not-allowed bg-gray-700"
                 : "bg-gray-500 hover:bg-gray-400"

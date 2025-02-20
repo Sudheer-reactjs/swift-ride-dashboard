@@ -1,25 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectTrigger,
@@ -29,36 +12,25 @@ import {
 } from "@/components/ui/select";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
+  DialogContent, 
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
   Filter,
   Plus,
   X,
   Lock,
-  Search,
-  Trash2,
+  Search,  
   Users,
   Globe,
-  ListFilter,
 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import Link from "next/link";
+
+
 import { cn } from "@/lib/utils";
-import DropdownFilter from "./_components/DropdownFilter";
+import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
+import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -100,15 +72,9 @@ const vehicleStatuses = [
 ];
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
-const rowsPerPage = 10;
-
-
-
 const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
@@ -116,28 +82,14 @@ const Pages = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [addFilter, setAddFilter] = useState(false);
-  const [filters, setFilters] = useState([{ id: 1, field: "" }]);
+ 
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState("private");
-  const addNewFilter = () => {
-    setFilters([...filters, { id: filters.length + 1, field: "" }]);
-  };
 
-  const totalPages = Math.ceil(vehicles.length / rowsPerPage);
-  const displayedVehicles = vehicles.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
-
-  const handleRowSelect = (index: number) => {
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(index)
-        ? prevSelectedRows.filter((i) => i !== index)
-        : [...prevSelectedRows, index]
-    );
+  const toggleFilterPanel = () => {
+    setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -175,7 +127,7 @@ const Pages = () => {
         <h2 className="text-2xl font-semibold">Vehicles</h2>
         <Button
           variant="outline"
-          className="flex items-center"
+          className="flex items-center h-10 w-[136px]"
           onClick={() => router.push("/vehicle-list/add")}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -248,10 +200,10 @@ const Pages = () => {
 
                   <Button
                     variant="ghost"
-                    className="text-[12px]"
+                    className="text-sm"
                     onClick={() => setOpen(true)}
                   >
-                    + Add View
+                    + Add Filter
                   </Button>
                 </div>
                 <div className="flex flex-col items-center justify-center">
@@ -331,232 +283,14 @@ const Pages = () => {
       </div>
 
       {/* Table Container */}
-      <div className="flex rounded-lg border  bg-[#171717] border-[#27272A]">
-        {/* Table Container */}
-        <div
-          className={`transition-all duration-300 ${
-            isOpen ? "w-[70%]" : "w-full"
-          }  `}
-        >
-          <div className="">
-            {" "}
-            {/* Enables scrolling */}
-            <Table className="w-full ">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="flex items-center gap-2">
-                    <Checkbox id="select-all" /> Name
-                  </TableHead>
-                  <TableHead>Operator</TableHead>
-                  <TableHead>Year</TableHead>
-                  <TableHead>Make</TableHead>
-                  <TableHead>Model</TableHead>
-                  <TableHead>VIN</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Group</TableHead>
-                  <TableHead>Current Meter</TableHead>
-                  <TableHead>License Plate</TableHead>
-                  <TableHead>Watchers</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {displayedVehicles.map((vehicle, index) => (
-                  <TableRow
-                    key={index}
-                    className="bg-black-800 hover:bg-gray-700"
-                  >
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          id={`checkbox-${index}`}
-                          checked={selectedRows.includes(index)}
-                          onChange={() => handleRowSelect(index)}
-                        />
-                        <Avatar>
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.name}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Avatar>
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.operator}
-                      </div>
-                    </TableCell>
-                    <TableCell>{vehicle.year}</TableCell>
-                    <TableCell>{vehicle.make}</TableCell>
-                    <TableCell>{vehicle.model}</TableCell>
-                    <TableCell>{vehicle.vin}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">{vehicle.status}</Badge>
-                    </TableCell>
-                    <TableCell>{vehicle.type}</TableCell>
-                    <TableCell>{vehicle.group}</TableCell>
-                    <TableCell>{vehicle.currentmeter} mi</TableCell>
-                    <TableCell>{vehicle.licenseplate}</TableCell>
-                    <TableCell>{vehicle.watchers} watchers</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-
-        {/* Filter Panel */}
-        {isOpen && (
-          <div className="w-[30%] p-4 bg-[[#171717] border-l border-gray-800 h-full ">
-            <div className="flex my-2 items-center justify-between">
-              <h3 className="text-2xl font-semibold flex items-center gap-2">
-                <ListFilter className="w-6 h-6" /> Filters
-              </h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  setIsOpen(false);
-                  setAddFilter(false);
-                }}
-              >
-                ✕
-              </Button>
-            </div>
-            <hr />
-            {addFilter ? (
-              <div className="space-y-4  h-screen w-full  ">
-                {filters.map((filter) => (
-                  <div
-                    key={filter.id}
-                    className="p-5 border mt-5 rounded-sm w-full border-[#27272A] relative"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-white">New Filter</span>
-                      <button
-                        onClick={() => setAddFilter(false)}
-                        className="text-gray-400"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 text-gray-400 w-4 h-4" />
-                      <Select>
-                        <SelectTrigger className="pl-10 w-full">
-                          <SelectValue placeholder="Select field" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="option1">Option 1</SelectItem>
-                          <SelectItem value="option2">Option 2</SelectItem>
-                          <SelectItem value="option3">Option 3</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                ))}
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={addNewFilter}
-                    className="text-[#047857] flex items-center space-x-1 text-lg"
-                  >
-                    <Plus size={18} /> <span>Add Filter</span>
-                  </button>
-
-                  <Button disabled className=" bg-[#047857] text-white ">
-                    Apply
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="mt-4 text-white">No filters applied.</div>
-                <Button
-                  className="w-full mt-4 flex items-center gap-2"
-                  onClick={() => setAddFilter(true)}
-                >
-                  <Plus className="w-4 h-4" /> Add Filter
-                </Button>
-                <ScrollArea className="mt-6">
-                  <div className="text-sm text-white">POPULAR FILTERS</div>
-                  <div className="mt-2 flex flex-col space-y-2">
-                    <Link href="#" className="text-[#047857] hover:underline">
-                      Vehicle
-                    </Link>
-                    <Link href="#" className="text-[#047857] hover:underline">
-                      Vehicle Group
-                    </Link>
-                  </div>
-                </ScrollArea>
-              </>
-            )}
-          </div>
-        )}
-      </div>
+      <VehicleTable 
+      vehicles={vehicles}
+      isOpen={isOpen}
+      toggleFilterPanel={toggleFilterPanel}
+       />
 
       {/* Pagination */}
-      <div className="flex flex-col md:flex-row justify-between items-center mt-4">
-        <p className="text-sm">
-          {selectedRows.length} of {vehicles.length} row(s) selected.
-        </p>
-
-        <div className="flex items-center gap-2">
-          <div className="flex items-center justify-evenly gap-2">
-            <p>Rows per page</p>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-2 mb-2"
-                >
-                  10 <ChevronDown className="w-2 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>1</DropdownMenuItem>
-                <DropdownMenuItem>2</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex items-center justify-evenly gap-2">
-            <p>
-              Page {currentPage} of {totalPages}
-            </p>
-            <Button variant="outline">
-              <ChevronsLeft className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="outline"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="outline"
-              disabled={currentPage === totalPages}
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-            <Button variant="outline">
-              <ChevronsRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      
       {open && (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="sm:max-w-screen-md bg-[#171717] text-white rounded-lg shadow-lg">
