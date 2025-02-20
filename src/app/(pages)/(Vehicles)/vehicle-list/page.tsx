@@ -58,6 +58,7 @@ import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import DropdownFilter from "./_components/DropdownFilter";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -101,121 +102,7 @@ const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
 const rowsPerPage = 10;
 
-const DropdownFilter = ({
-  label,
-  items,
-  selectedItems,
-  setSelectedItems,
-}: {
-  label: string;
-  items: string[];
-  selectedItems: string[];
-  setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState("");
 
-  const toggleSelection = (item: string) => {
-    setSelectedItems((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-    );
-  };
-
-  const removeSelection = (item: string) => {
-    setSelectedItems((prev) => prev.filter((i) => i !== item));
-  };
-
-  const filteredItems = items.filter((item) =>
-    item.toLowerCase().includes(search.toLowerCase())
-  );
-  const chipContainerRef = useRef<HTMLDivElement>(null);
-  const [inputHeight, setInputHeight] = useState(0);
-  console.log('inputHeight:', inputHeight);
-  useEffect(() => {
-    if (chipContainerRef.current) {
-      setInputHeight(chipContainerRef.current.clientHeight * 2)
-    }
-  }, [selectedItems]);
-  return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 border-[#27272A] min-w-[150px] h-10"
-        >
-          {label}
-          <ChevronDown />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-gray-700 rounded-lg shadow-lg">
-        {/* Search Input with Selected Items */}
-        <div className="relative">
-          <div
-            ref={chipContainerRef}
-            className="absolute min-h-1 max-h-96 left-3 top-1/2 transform -translate-y-1/2 flex flex-wrap gap-1"
-          >
-            {selectedItems.length > 0 &&
-              selectedItems.map((item) => (
-                <span
-                  key={item}
-                  className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md"
-                >
-                  {item}
-                </span>
-              ))}
-          </div>
-          <Input
-            placeholder={selectedItems.length > 0 ? "" : "Select item(s)"}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className={`h-[${inputHeight}px] w-full bg-[#171717] text-white border border-gray-600 rounded-md focus:ring-0 focus:outline-none`}
-          />
-        </div>
-
-        {/* Scrollable List */}
-        <ScrollArea className="max-h-52 mt-2 overflow-y-auto">
-          {filteredItems.map((item) => (
-            <div
-              key={item}
-              className={`p-2 text-white rounded-md cursor-pointer transition ${
-                selectedItems.includes(item)
-                  ? "bg-gray-900"
-                  : "hover:bg-[#262626]"
-              }`}
-              onClick={() => toggleSelection(item)}
-            >
-              {item}
-            </div>
-          ))}
-        </ScrollArea>
-
-        {/* Action Buttons */}
-        <div className="flex justify-between items-center mt-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsOpen(false)}
-            className="w-full bg-[#171717] text-white border border-gray-600 hover:bg-[#262626]"
-          >
-            Cancel
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => setIsOpen(false)}
-            disabled={selectedItems.length === 0}
-            className={`w-full ml-2 ${
-              selectedItems.length === 0
-                ? "opacity-50 cursor-not-allowed bg-gray-700"
-                : "bg-gray-500 hover:bg-gray-400"
-            }`}
-          >
-            Apply
-          </Button>
-        </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
 
 const Pages = () => {
   const [search, setSearch] = useState("");
