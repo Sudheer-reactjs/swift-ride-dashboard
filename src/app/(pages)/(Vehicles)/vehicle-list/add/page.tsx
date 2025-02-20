@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import VehicleDetails from "@/components/vehicle-list/add-vehicle/VehicleDetails";
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Maintenance from "@/components/vehicle-list/add-vehicle/Maintenance";
 const AddVehicle = () => {
   const [activeTab, setActiveTab] = useState("Details");
 
@@ -27,23 +33,35 @@ const AddVehicle = () => {
     console.log("Save clicked");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSaveAndAddAnother = () => {
     // Add save and add another logic here
     console.log("Save and add another clicked");
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="p-4 flex items-center text-2xl">
-        <span>Vehicles</span>
-        <ChevronRight className="w-6 h-6" />
-        <span>New Vehicle</span>
-      </div>
-
-      <div className="flex">
+    <div className="flex w-full flex-col gap-6 size-span">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbPage className="text-[#A1A1AA] ">
+              Vehicles
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="text-[#FAFAFA] font-light">
+              Vehicle Replacement Analysis
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
+      New Vehicle
+      </h2>        
+      <div className="flex w-full flex-col lg:flex-row gap-6 lg:gap-14 size-span">
         {/* Sidebar */}
-        <aside className="w-64 p-6">
-          <h2 className="text-xl font-semibold mb-4">New Vehicle</h2>
+        <aside className="w-full lg:w-64">
           <nav className="space-y-1">
             {tabs.map((tab) => (
               <button
@@ -62,15 +80,15 @@ const AddVehicle = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1">
           {/* Top Buttons */}
-          <div className="flex justify-end mb-6 space-x-4">
-            <Button variant="outline" onClick={handleCancel}>
+          <div className="flex justify-end mb-6 space-x-2 m:dspace-x-4">
+            <Button variant="outline" onClick={handleCancel} className="border-0 h-10">
               Cancel
             </Button>
-            <Button variant="outline">Add Multiple Vehicles</Button>
+            <Button variant="outline" className="h-10">Add Multiple Vehicles</Button>
             <Button
-              className="bg-emerald-800 text-white hover:bg-emerald-700"
+              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
               onClick={handleSave}
             >
               Save Vehicle
@@ -80,24 +98,24 @@ const AddVehicle = () => {
           {/* Content */}
           <div className="min-h-[calc(100vh-300px)]">
             {activeTab === "Details" && <VehicleDetails />}
+            {activeTab === "Maintenance" && <Maintenance />} 
             {/* Add other tab components here */}
           </div>
-
+              
           {/* Bottom Buttons */}
-          <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={handleCancel}>
+          <hr className="my-5" />
+          <div className="flex justify-between">
+          <Button variant="outline" onClick={handleCancel} className="border-0 h-10">
               Cancel
             </Button>
-            <div className="space-x-4">
-              <Button variant="outline" onClick={handleSaveAndAddAnother}>
-                Save & Add Another
-              </Button>
-              <Button
-                className="bg-emerald-800 text-white hover:bg-emerald-700"
-                onClick={handleSave}
-              >
-                Save Vehicle
-              </Button>
+            <div className="space-x-2 m:dspace-x-4">
+            <Button variant="outline" className="h-10">Add Multiple Vehicles</Button>
+            <Button
+              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
+              onClick={handleSave}
+            >
+              Save Vehicle
+            </Button>
             </div>
           </div>
         </main>
