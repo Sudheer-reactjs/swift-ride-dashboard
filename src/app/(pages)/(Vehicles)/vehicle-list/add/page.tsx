@@ -11,6 +11,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Maintenance from "@/components/vehicle-list/add-vehicle/Maintenance";
+import Lifecycle from "@/components/vehicle-list/add-vehicle/Lifecycle";
+import Financial from "@/components/vehicle-list/add-vehicle/Financial";
 const AddVehicle = () => {
   const [activeTab, setActiveTab] = useState("Details");
 
@@ -59,25 +61,25 @@ const AddVehicle = () => {
       <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
       New Vehicle
       </h2>        
-      <div className="flex w-full flex-col lg:flex-row gap-6 lg:gap-14 size-span">
-        {/* Sidebar */}
-        <aside className="w-full lg:w-64">
-          <nav className="space-y-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                className={`w-full text-left py-2 px-4 rounded transition-all ${
-                  activeTab === tab
-                    ? "text-emerald-500 bg-neutral-900"
-                    : "hover:text-emerald-500 hover:bg-neutral-900"
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-          </nav>
-        </aside>
+      <div className="w-full flex flex-col lg:flex-row gap-6 lg:gap-14 size-span">
+  {/* Sidebar */}
+  <aside className="w-full lg:w-64 lg:sticky lg:top-20 self-start overflow-y-auto">
+    <nav className="space-y-1">
+      {tabs.map((tab) => (
+        <button
+          key={tab}
+          className={`w-full text-left py-2 px-4 rounded transition-all ${
+            activeTab === tab
+              ? "text-emerald-500 bg-neutral-900"
+              : "hover:text-emerald-500 hover:bg-neutral-900"
+          }`}
+          onClick={() => setActiveTab(tab)}
+        >
+          {tab}
+        </button>
+      ))}
+    </nav>
+  </aside>
 
         {/* Main Content */}
         <main className="flex-1">
@@ -96,9 +98,11 @@ const AddVehicle = () => {
           </div>
 
           {/* Content */}
-          <div className="min-h-[calc(100vh-300px)]">
+          <div >
             {activeTab === "Details" && <VehicleDetails />}
             {activeTab === "Maintenance" && <Maintenance />} 
+            {activeTab === "Lifecycle" && <Lifecycle />}  
+            {activeTab === "Financial" && <Financial />}  
             {/* Add other tab components here */}
           </div>
               

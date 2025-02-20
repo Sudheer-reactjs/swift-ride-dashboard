@@ -115,7 +115,32 @@ body{
  font-size: 14px; 
  font-weight: 600;
 }
- 
+.custom-cricle {
+  position: relative;
+}
+.custom-cricle:before {
+  position: absolute;
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: solid 1px #fff;
+  border-radius: 50%;
+  left: 0;
+  top: 3px;
+}
+[data-state="checked"] ~ .custom-cricle:after {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #059669;
+  border-radius: 50%;
+  left: 3px;
+  top: 6px;
+}
+[data-state="checked"] ~ .custom-cricle:before {
+  border: solid 1px #059669;
+}
 @media (max-width: 767px){
   .size-span span.text-sm {
     font-size: 10px;

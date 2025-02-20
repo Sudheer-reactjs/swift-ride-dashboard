@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 
 const Maintenance = () => {
   const [selectedOption, setSelectedOption] = useState("double-declining");
@@ -22,24 +21,41 @@ const Maintenance = () => {
         <RadioGroup
           defaultValue={selectedOption}
           onValueChange={setSelectedOption}
-          className="flex flex-col gap-4 md:gap-8 cursor-pointer"
+          className="flex flex-col gap-4 md:gap-8"
         >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="double-declining" id="r1" />
-            <div>
-              <Label htmlFor="r1" className="text-neutral-50 text-sm font-medium  leading-[14px] mb-1">None</Label>
-              <p className="text-zinc-400 text-sm font-normal leading-tight">
-                No Service Reminders will be created
+          {[
+            {
+              value: "None",
+              label: "None",
+              description: "No Service Reminders will be created",
+            },
+            {
+              value: "sum-of-years",
+              label: "Choose an existing Service Program",
+              description: "",
+            },
+          ].map((item) => (
+            <label
+              key={item.value}
+              htmlFor={item.value}
+              onClick={() => setSelectedOption(item.value)}
+              className="flex flex-col text-left cursor-pointer transition-all "
+            >
+              <div className="flex items-center">
+                <RadioGroupItem
+                  value={item.value}
+                  id={item.value}
+                  className="hidden"
+                />
+                <span className="text-white font-medium custom-cricle m-0 pl-6">
+                  {item.label}
+                </span>
+              </div>
+              <p className="text-gray-400 text-sm mt-1 pl-6">
+                {item.description}
               </p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="sum-of-years" id="r2" />
-            <div>
-              <Label htmlFor="r2">Choose an existing Service Program</Label>
-            </div>
-          </div>
+            </label>
+          ))}
         </RadioGroup>
 
         {/* Show select dropdown only when 'Choose an existing Service Program' is selected */}
