@@ -17,7 +17,14 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
+  CheckSquare,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
 import * as Tabs from "@radix-ui/react-tabs";
@@ -47,7 +54,7 @@ const VehicleDetail = () => {
       <div className="flex justify-between py-4  items-center max-h-24 m-4 rounded-lg">
         <div className="flex items-center justify-between  gap-4 ">
           <Image
-            src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg"
+            src="https://placehold.co/80x80"
             alt="Vehicle"
             width={80}
             height={70}
@@ -135,37 +142,49 @@ const VehicleDetail = () => {
         </Tabs.List>
       </Tabs.Root>
       <div className="grid grid-cols-12 gap-4 w-full">
-      <div className="lg:col-span-6 col-span-12">
-          <Card className="bg-[#171717] text-white  border-gray-800">
+        <div className="lg:col-span-6 col-span-12">
+          <Card className="bg-[#171717] text-white ">
             <CardHeader>
               <CardTitle className="text-lg">Details</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4 text-sm">
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Name</span>
-                  <span className="text-white">1100 [2018 Toyota Prius]</span>
+                <div className="grid grid-cols-12 border-b border-gray pb-2">
+                  <div className="col-span-6 text-gray-400">Name</div>
+                  <div className="col-span-6 text-white">
+                    1100 [2018 Toyota Prius]
+                  </div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Meter</span>
-                  <span className="text-white">20,811 mi</span>
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Meter</div>
+                  <div className="col-span-6 text-white">20,811 mi</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Status</span>
-                  <span className="flex items-center gap-2">
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Status</div>
+                  <div className="col-span-6 text-white flex items-center gap-2">
                     <Badge variant="secondary">Active</Badge>
                     <span className="text-green-400 cursor-pointer">
                       History
                     </span>
-                  </span>
+                  </div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Group</span>
-                  <span className="text-white">Management</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Group</div>
+                  <div className="col-span-6 text-white flex items-center justify-between">
+                    <span >
+                    Management
+                    </span>
+                    <span className="text-green-400 cursor-pointer">
+                      History
+                    </span>
+                    </div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Operator</span>
-                  <span className="flex items-center gap-2">
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Operator</div>
+                  <div className="col-span-6 text-white flex items-center gap-2">
                     <Avatar className="w-6 h-6">
                       <AvatarImage
                         src="https://github.com/shadcn.png"
@@ -174,76 +193,89 @@ const VehicleDetail = () => {
                       <AvatarFallback>JS</AvatarFallback>
                     </Avatar>
                     Jacob Silva
-                  </span>
+                  </div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Type</span>
-                  <span className="text-white">Car</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Type</div>
+                  <div className="col-span-6 text-white">Car</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Fuel Type</span>
-                  <span className="text-white">--</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Fuel Type</div>
+                  <div className="col-span-6 text-white">--</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">VIN/SN</span>
-                  <span className="text-white">
-                    JTDKBRFU9J3059307{" "}
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">VIN/SN</div>
+                  <div className="col-span-6 text-white flex items-center gap-2">
+                    JTDKBRFU9J3059307
                     <Button
-                      variant={"ghost"}
-                      className="text-green-400  cursor-pointer"
+                      variant="ghost"
+                      className="text-green-400 cursor-pointer"
                     >
                       Decode VIN
                     </Button>
-                  </span>
+                  </div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">License Plate</span>
-                  <span className="text-white">6TJR244</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">License Plate</div>
+                  <div className="col-span-6 text-white">6TJR244</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Year</span>
-                  <span className="text-white">2018</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Year</div>
+                  <div className="col-span-6 text-white">2018</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Make</span>
-                  <span className="text-white">Toyota</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Make</div>
+                  <div className="col-span-6 text-white">Toyota</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Model</span>
-                  <span className="text-white">Prius</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Model</div>
+                  <div className="col-span-6 text-white">Prius</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Trim</span>
-                  <span className="text-white">Two</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Trim</div>
+                  <div className="col-span-6 text-white">Two</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <div className="w-[190px] text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 w-[190px] text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
                     Registration State/Province
                   </div>
-                  <span className="text-white">--</span>
+                  <div className="col-span-6 text-white">--</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Color</span>
-                  <span className="text-white">Silver</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Color</div>
+                  <div className="col-span-6 text-white">Silver</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Ownership</span>
-                  <span className="text-white">Owned</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Ownership</div>
+                  <div className="col-span-6 text-white">Owned</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">Body SubType</span>
-                  <span className="text-white">--</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">Body SubType</div>
+                  <div className="col-span-6 text-white">--</div>
                 </div>
-                <div className="flex justify-between border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">MSRP</span>
-                  <span className="text-white">$24,950.00</span>
+
+                <div className="grid grid-cols-12 border-b border-gray-800 pb-2">
+                  <div className="col-span-6 text-gray-400">MSRP</div>
+                  <div className="col-span-6 text-white">$24,950.00</div>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
         <div className="lg:col-span-6 col-span-12">
-        <div className="h-96 p-4 bg-neutral-900 rounded-md flex flex-col gap-8">
+          <div className="h-[395px] p-4 bg-neutral-900 rounded-md flex flex-col gap-8">
             <div className="self-stretch h-[352px] flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-center gap-6 inline-flex">
                 <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -297,44 +329,16 @@ const VehicleDetail = () => {
               <div className="self-stretch h-[76px] flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-between items-center inline-flex">
                   <div>
-                    <span className="text-emerald-500 text-sm font-medium font-['Inter'] leading-[14px]">
-                      #5
-                    </span>
+                    <span className="text-emerald-500 text-sm ">#5</span>
                     <span className="text-neutral-50 text-sm font-medium font-['Inter'] leading-[14px]">
                       {" "}
                       - Brake light
                     </span>
                   </div>
-                  <div data-svg-wrapper className="relative">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7.9974 8.66634C8.36559 8.66634 8.66406 8.36786 8.66406 7.99967C8.66406 7.63148 8.36559 7.33301 7.9974 7.33301C7.62921 7.33301 7.33073 7.63148 7.33073 7.99967C7.33073 8.36786 7.62921 8.66634 7.9974 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M12.6641 8.66634C13.0323 8.66634 13.3307 8.36786 13.3307 7.99967C13.3307 7.63148 13.0323 7.33301 12.6641 7.33301C12.2959 7.33301 11.9974 7.63148 11.9974 7.99967C11.9974 8.36786 12.2959 8.66634 12.6641 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3.33073 8.66634C3.69892 8.66634 3.9974 8.36786 3.9974 7.99967C3.9974 7.63148 3.69892 7.33301 3.33073 7.33301C2.96254 7.33301 2.66406 7.63148 2.66406 7.99967C2.66406 8.36786 2.96254 8.66634 3.33073 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  <div className="relative">
+                    <Button variant={"ghost"} className="h-2 w-2 px-3 pb-3">
+                      ...
+                    </Button>
                   </div>
                 </div>
                 <div className="self-stretch h-[30px] flex-col justify-start items-start gap-1.5 flex">
@@ -342,9 +346,12 @@ const VehicleDetail = () => {
                     <span className="text-neutral-400 text-xs font-normal font-['Inter'] leading-3">
                       Reported 1 week, 3 days ago by{" "}
                     </span>
-                    <span className="text-emerald-500 text-xs font-normal font-['Inter'] leading-3">
+                    <Link
+                      href={"/fdf"}
+                      className="text-emerald-500 text-xs hover:underline "
+                    >
                       Jacob Silva{" "}
-                    </span>
+                    </Link>
                   </div>
                   <div className="self-stretch text-neutral-400 text-xs font-normal font-['Inter'] leading-3">
                     Driver side brake light is out
@@ -357,85 +364,46 @@ const VehicleDetail = () => {
               <div className="self-stretch h-[124px] flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0">
-                    <span className="text-emerald-500 text-sm font-medium font-['Inter'] leading-[14px]">
+                    <Link
+                      href={"/fdsf"}
+                      className="text-emerald-500 hover:underline"
+                    >
                       #6
-                    </span>
+                    </Link>
                     <span className="text-neutral-50 text-sm font-medium font-['Inter'] leading-[14px]">
                       {" "}
                       - [Inspection] Wiper blades need to be replaced soon
                     </span>
                   </div>
                   <div className="h-7 flex-col justify-start items-center inline-flex">
-                    <div className="px-3 py-1.5 bg-zinc-800 rounded-md justify-center items-center gap-2 inline-flex">
-                      <div data-svg-wrapper className="relative">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="flex items-center gap-2 bg-black text-white border-gray-600 hover:bg-gray-800"
                         >
-                          <path
-                            d="M6 7.33333L8 9.33333L14.6667 2.66667M14 8V12.6667C14 13.0203 13.8595 13.3594 13.6095 13.6095C13.3594 13.8595 13.0203 14 12.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H10.6667"
-                            stroke="#FAFAFA"
-                            strokeWidth="1.33"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                      <div className="text-neutral-50 text-xs font-medium font-['Inter'] leading-3">
-                        Resolve
-                      </div>
-                      <div data-svg-wrapper className="relative">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M4 6L8 10L12 6"
-                            stroke="#FAFAFA"
-                            strokeWidth="1.33"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                    </div>
+                          <CheckSquare size={18} />
+                          Resolve
+                          <ChevronDown size={16} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className="bg-black border border-gray-600 text-white"
+                      >
+                        <DropdownMenuItem className="hover:bg-gray-700">
+                          Mark as Resolved
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="hover:bg-gray-700">
+                          Reopen Issue
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                   <div data-svg-wrapper className="relative">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7.9974 8.66634C8.36559 8.66634 8.66406 8.36786 8.66406 7.99967C8.66406 7.63148 8.36559 7.33301 7.9974 7.33301C7.62921 7.33301 7.33073 7.63148 7.33073 7.99967C7.33073 8.36786 7.62921 8.66634 7.9974 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M12.6641 8.66634C13.0323 8.66634 13.3307 8.36786 13.3307 7.99967C13.3307 7.63148 13.0323 7.33301 12.6641 7.33301C12.2959 7.33301 11.9974 7.63148 11.9974 7.99967C11.9974 8.36786 12.2959 8.66634 12.6641 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3.33073 8.66634C3.69892 8.66634 3.9974 8.36786 3.9974 7.99967C3.9974 7.63148 3.69892 7.33301 3.33073 7.33301C2.96254 7.33301 2.66406 7.63148 2.66406 7.99967C2.66406 8.36786 2.96254 8.66634 3.33073 8.66634Z"
-                        stroke="#FAFAFA"
-                        strokeWidth="1.33"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  <Button variant={"ghost"} className="h-2 w-2 px-3 pb-3">
+                      ...
+                    </Button>
                   </div>
                 </div>
                 <div className="self-stretch h-[66px] flex-col justify-start items-start gap-1.5 flex">
@@ -448,10 +416,10 @@ const VehicleDetail = () => {
                     </span>
                   </div>
                   <div className="self-stretch text-neutral-400 text-xs font-normal font-['Inter'] leading-3">
-                    Generated by the failed inspection item "Windshield and
-                    Wipers/Washers" on the "Driver
+                    Generated by the failed inspection item &quot;Windshield and
+                    Wipers/Washers&quot; on the &quot;Driver
                     <br />
-                    Vehicle Inspection Report (Simple)" form submitted by Sani
+                    Vehicle Inspection Report (Simple)&quot; form submitted by Sani
                     Abdullah on Jan 30, 2025 at 11:32 AM EST
                   </div>
                 </div>
@@ -461,6 +429,96 @@ const VehicleDetail = () => {
               </div>
             </div>
           </div>
+          <Card className="bg-black text-white border-gray-700 w-full ">
+      <CardHeader className="flex flex-row justify-between items-center">
+        <CardTitle className="text-lg">Service Reminders</CardTitle>
+        <div className="flex items-center gap-4 text-green-400 text-sm">
+          <button className="hover:underline">+ Add Service Reminder</button>
+          <button className="hover:underline">View all</button>
+        </div>
+      </CardHeader>
+
+      <CardContent>
+        {/* Status Summary */}
+        <div className="flex justify-between text-sm border-b border-gray-700 pb-3">
+          <div className="text-center">
+            <p className="text-gray-400">Overdue</p>
+            <p className="text-white font-semibold">0</p>
+          </div>
+          <div className="text-center">
+            <p className="text-gray-400">Due Soon</p>
+            <p className="text-white font-semibold">2</p>
+          </div>
+          <div className="text-center">
+            <p className="text-gray-400">Snoozed</p>
+            <p className="text-white font-semibold">0</p>
+          </div>
+        </div>
+
+        {/* Reminder 1 */}
+        <div className="flex justify-between items-center border-b border-gray-700 py-3">
+          <div>
+            <p className="font-semibold">#9144366 - Engine Oil & Filter Replacement</p>
+            <p className="text-gray-400 text-sm">Every 6 month(s) or 10,000 miles</p>
+            <p className="text-gray-400 text-sm">Due Soon: 3 months from now • 467 miles remaining</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Resolve Button with Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700">
+                  <CheckSquare size={16} />
+                  Resolve
+                  <ChevronDown size={14} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-black border border-gray-600 text-white">
+                <DropdownMenuItem className="hover:bg-gray-700">Mark as Resolved</DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-gray-700">Snooze</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* More Options Button */}
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <MoreHorizontal size={18} />
+            </Button>
+          </div>
+        </div>
+
+        {/* Reminder 2 */}
+        <div className="flex justify-between items-center border-b border-gray-700 py-3">
+          <div>
+            <p className="font-semibold">#9144366 - Engine Oil & Filter Replacement</p>
+            <p className="text-gray-400 text-sm">Every 6 month(s) or 10,000 miles</p>
+            <p className="text-gray-400 text-sm">Due Soon: 3 months from now • 467 miles remaining</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Resolve Button with Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700">
+                  <CheckSquare size={16} />
+                  Resolve
+                  <ChevronDown size={14} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-black border border-gray-600 text-white">
+                <DropdownMenuItem className="hover:bg-gray-700">Mark as Resolved</DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-gray-700">Snooze</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* More Options Button */}
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <MoreHorizontal size={18} />
+            </Button>
+          </div>
+        </div>
+
+      </CardContent>
+    </Card>
         </div>
       </div>
     </div>
