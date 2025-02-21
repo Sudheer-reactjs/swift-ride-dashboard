@@ -279,7 +279,7 @@ const VehicleDetail = () => {
           </Card>
 
           {/* right side 2nd card */}
-          <div className="bg-[#171717] mt-4 p-4 min-h-32 rounded-lg text-white w-full">
+          <div className="bg-[#171717] mt-4 p-4 min-h-36 rounded-lg text-white w-full">
             <div className="flex flex-wrap justify-between items-center mb-3">
               <h2 className="text-lg font-semibold">Integrations</h2>
             </div>
@@ -288,7 +288,7 @@ const VehicleDetail = () => {
             </div>
           </div>
           {/* right side 3rd card */}
-          <div className="bg-[#171717] mt-4 p-4 min-h-32 rounded-lg text-white w-full">
+          <div className="bg-[#171717] mt-4 p-4 min-h-36  rounded-lg text-white w-full">
             <div className="flex flex-wrap justify-between items-center mb-3">
               <h2 className="text-lg font-semibold">Linked Assets</h2>
               <div className="flex items-center gap-4 text-[#059669] text-sm">
@@ -300,7 +300,7 @@ const VehicleDetail = () => {
             </div>
           </div>
           {/* right side 4th card */}
-          <div className="bg-[#171717] mt-4 p-4 min-h-32 rounded-lg text-white w-full">
+          <div className="bg-[#171717] mt-4 p-4 min-h-36  rounded-lg text-white w-full">
             <div className="flex flex-wrap justify-between items-center mb-3">
               <h2 className="text-lg font-semibold">Linked Assets</h2>
             </div>
@@ -735,7 +735,7 @@ const VehicleDetail = () => {
           </div>
 
           {/* left side fifth card */}
-          <div className="bg-[#171717] mt-4 p-4 rounded-lg text-white w-full">
+          <div className="bg-[#171717] mt-4 p-4 min-h-36  rounded-lg text-white w-full">
             <div className="flex flex-wrap justify-between items-center mb-3">
               <h2 className="text-lg font-semibold">Inspection</h2>
               <div className="flex items-center gap-4 text-[#059669] text-sm">
@@ -747,14 +747,14 @@ const VehicleDetail = () => {
             </div>
           </div>
           {/* left side Sixth card */}
-          <div className="bg-[#171717] mt-4 p-4 rounded-lg text-white w-full">
+          <div className="bg-[#171717] mt-4 p-4 min-h-36  rounded-lg text-white w-full">
             <div className="flex flex-wrap justify-between items-center mb-3">
               <h2 className="text-lg font-semibold">Critical Faults</h2>
               <div className="flex items-center gap-4 text-[#059669] text-sm">
                 <button className="hover:underline">View all</button>
               </div>
             </div>
-            <div className="text-center text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
+            <div className="text-center  text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
               There are no Critical Faults for this Vehicle
             </div>
           </div>
