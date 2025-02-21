@@ -26,34 +26,34 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
       <div className="lg:col-span-6 col-span-12">
         {/* Details Card */}
         <Card className="bg-[#171717] border-none text-white">
-          <CardHeader>
+          <CardHeader className='pt-4'>
             <CardTitle className="text-base">Details</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4 text-sm">
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Name</div>
                 <div className="col-span-6 text-white">1100 [2018 Toyota Prius]</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Meter</div>
                 <div className="col-span-6 text-white">20,811 mi</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Status</div>
                 <div className="col-span-6 text-white flex items-center gap-2">
                   <Badge variant="secondary">Active</Badge>
                   <span className="text-[#10b981] cursor-pointer">History</span>
                 </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Group</div>
                 <div className="col-span-6 text-white flex items-center justify-between">
                   <span>Management</span>
                   <span className="text-[#10b981] cursor-pointer">History</span>
                 </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Operator</div>
                 <div className="col-span-6 text-white flex items-center gap-2">
                   <Avatar className="w-6 h-6">
@@ -63,15 +63,15 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                   Jacob Silva
                 </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Type</div>
                 <div className="col-span-6 text-white">Car</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Fuel Type</div>
                 <div className="col-span-6 text-white">--</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">VIN/SN</div>
                 <div className="col-span-6 text-white flex items-center gap-2">
                   JTDKBRFU9J3059307
@@ -80,49 +80,49 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                   </Button>
                 </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">License Plate</div>
                 <div className="col-span-6 text-white">6TJR244</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Year</div>
                 <div className="col-span-6 text-white">2018</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Make</div>
                 <div className="col-span-6 text-white">Toyota</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Model</div>
                 <div className="col-span-6 text-white">Prius</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Trim</div>
                 <div className="col-span-6 text-white">Two</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 w-[190px] text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
                   Registration State/Province
                 </div>
                 <div className="col-span-6 text-white">--</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Color</div>
                 <div className="col-span-6 text-white">Silver</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Ownership</div>
                 <div className="col-span-6 text-white">Owned</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Body Type</div>
                 <div className="col-span-6 text-white">Hatchback</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Body SubType</div>
                 <div className="col-span-6 text-white">--</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">MSRP</div>
                 <div className="col-span-6 text-white">$24,950.00</div>
               </div>
@@ -296,7 +296,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
 
         {/* Service Reminders Card */}
         <Card className="bg-[#171717] text-white mt-4 border-none w-full">
-          <CardHeader className="flex flex-row justify-between items-center">
+          <CardHeader className="flex flex-row  justify-between items-center">
             <CardTitle className="text-base">Service Reminders</CardTitle>
             <div className="flex items-center gap-4 text-[#10b981] text-sm">
               <button className="hover:underline">+ Add Service Reminder</button>
