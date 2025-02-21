@@ -25,7 +25,7 @@ import SensorDataSnapshots from "@/components/vehicle-list/vehicle-detail/Sensor
 import FinancialDetail from "@/components/vehicle-list/vehicle-detail/FinancialDetail";
 
 const VehicleDetail = () => {
-  const [activeTab, setActiveTab] = useState("specs");
+  const [activeTab, setActiveTab] = useState("overview");
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
