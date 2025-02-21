@@ -869,12 +869,12 @@ const VehicleDetail = () => {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="relative w-full h-[300px]">
               <Image
                 src="https://surl.li/vxovnq"
-                width={590}
-                height={300}
                 alt="Cost of Ownership"
+                fill
+                className="object-cover"
               />
             </div>
           </Card>
@@ -903,12 +903,12 @@ const VehicleDetail = () => {
               </div>
             </div>
 
-            <div>
+            <div className="relative w-full h-[300px]">
               <Image
                 src="https://surl.li/vxovnq"
-                width={590}
-                height={300}
                 alt="Cost of Ownership"
+                fill
+                className="object-cover"
               />
             </div>
           </Card>
@@ -937,12 +937,12 @@ const VehicleDetail = () => {
               </div>
             </div>
 
-            <div>
+            <div className="relative w-full h-[300px]">
               <Image
                 src="https://surl.li/vxovnq"
-                width={590}
-                height={300}
                 alt="Cost of Ownership"
+                fill
+                className="object-cover"
               />
             </div>
           </Card>
