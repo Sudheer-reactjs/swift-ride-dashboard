@@ -12,7 +12,7 @@ const Specs = () => {
           <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Details</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -59,7 +59,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Weight</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -84,7 +84,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Performance</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -107,7 +107,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Fuel Economy</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -134,7 +134,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Fuel</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -165,7 +165,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Oil</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -187,7 +187,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Engine</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -266,7 +266,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Transmission</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -307,7 +307,7 @@ const Specs = () => {
          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Wheels & Tires</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>

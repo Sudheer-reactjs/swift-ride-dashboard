@@ -11,7 +11,7 @@ const FinancialDetail = () => {
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Lifecycle Details</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
@@ -87,7 +87,7 @@ const FinancialDetail = () => {
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Purchase Details</CardTitle>
-              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>

@@ -32,7 +32,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <CardContent>
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
-                <div className="col-span-6 text-gray-400">Name</div>
+                <div className="col-span-6 text-gray-400 ">Name</div>
                 <div className="col-span-6 text-white">1100 [2018 Toyota Prius]</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
@@ -43,14 +43,14 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                 <div className="col-span-6 text-gray-400">Status</div>
                 <div className="col-span-6 text-white flex items-center gap-2">
                   <Badge variant="secondary">Active</Badge>
-                  <span className="text-[#10b981] cursor-pointer">History</span>
-                </div>
+                  <span className="text-[#10b981] cursor-pointer text-sm">History</span>
+                </div> 
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">Group</div>
                 <div className="col-span-6 text-white flex items-center justify-between">
                   <span>Management</span>
-                  <span className="text-[#10b981] cursor-pointer">History</span>
+                  <span className="text-[#10b981] cursor-pointer text-sm">History</span>
                 </div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
@@ -181,11 +181,11 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                   Open Issues
                 </div>
               </div>
-              <div className="justify-start items-center gap-1 flex">
-                <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter']">
+              <div className="justify-start items-center flex">
+                <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                   + Add Issue
                 </Button>
-                <Button variant="ghost" className="text-emerald-500 text-xs font-medium">
+                <Button variant="ghost" className="text-emerald-500 text-xs font-medium p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                   View all
                 </Button>
               </div>
@@ -214,7 +214,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                 </div>
               </div>
             </div>
-            <div className="self-stretch h-[76px] flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch flex-col justify-start items-start gap-2 flex">
               <div className="self-stretch justify-between items-center inline-flex">
                 <div>
                   <span className="text-emerald-500 text-sm">#5</span>
@@ -226,7 +226,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
                   <Button variant="ghost" className="h-2 w-2 px-3 pb-3">...</Button>
                 </div>
               </div>
-              <div className="self-stretch h-[30px] flex-col justify-start items-start gap-1.5 flex">
+              <div className="self-stretch  flex-col justify-start items-start gap-1.5 flex">
                 <div className="self-stretch">
                   <span className="text-neutral-400 text-xs font-normal font-['Inter'] leading-3">
                     Reported 1 week, 3 days ago by{" "}
@@ -299,8 +299,8 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <CardHeader className="flex flex-row  justify-between items-center">
             <CardTitle className="text-base">Service Reminders</CardTitle>
             <div className="flex items-center gap-4 text-[#10b981] text-sm">
-              <button className="hover:underline">+ Add Service Reminder</button>
-              <button className="hover:underline">View all</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">+ Add Service Reminder</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
             </div>
           </CardHeader>
           <CardContent>
@@ -377,8 +377,8 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Renewal Reminders</h2>
             <div className="flex items-center gap-4 text-[#059669] text-sm">
-              <button className="hover:underline">+ Add Renewal Reminder</button>
-              <button className="hover:underline">View all</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">+ Add Renewal Reminder</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 divide-x divide-[#262626] border border-[#262626] rounded-md text-sm mb-3">
@@ -411,8 +411,8 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Incomplete Work Orders</h2>
             <div className="flex items-center gap-4 text-[#059669] text-sm">
-              <button className="hover:underline">+ Add Work Order</button>
-              <button className="hover:underline">View all</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">+ Add Work Order</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 divide-x divide-[#262626] border border-[#262626] rounded-md text-sm mb-3">
@@ -455,7 +455,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Inspection</h2>
             <div className="flex items-center gap-4 text-[#059669] text-sm">
-              <button className="hover:underline">View all</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
             </div>
           </div>
           <div className="text-center text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
@@ -468,7 +468,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Critical Faults</h2>
             <div className="flex items-center gap-4 text-[#059669] text-sm">
-              <button className="hover:underline">View all</button>
+              <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
             </div>
           </div>
           <div className="text-center text-zinc-400 text-sm font-normal font-['Inter'] leading-tight">
@@ -480,7 +480,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
         <Card className="bg-[#171717] border-none mt-4 p-4 rounded-lg text-white w-full">
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Recalls</h2>
-            <button className="text-[#059669] text-sm hover:underline">View all</button>
+            <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 divide-x divide-[#262626] border border-[#262626] rounded-md text-sm mb-3">
             <div className="grow shrink basis-0 p-2 flex-col justify-start items-start inline-flex">
@@ -522,7 +522,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
         <Card className="bg-[#171717] border-none mt-4 p-4 rounded-lg text-white w-full">
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Cost of Ownership</h2>
-            <button className="text-[#059669] text-sm hover:underline">View all</button>
+            <button className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">View all</button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 divide-x divide-[#262626] border border-[#262626] rounded-md text-sm mb-3">
             <div className="grow shrink basis-0 p-2 flex-col justify-start items-start inline-flex">
