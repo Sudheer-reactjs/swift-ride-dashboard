@@ -21,14 +21,14 @@ import Link from "next/link";
 import * as Tabs from "@radix-ui/react-tabs";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import Overview from "@/components/vehicle-detail/overview";
-import Specs from "@/components/vehicle-detail/specs";
-import Financial from "@/components/vehicle-detail/Financial";
-import ServiceHistory from "@/components/vehicle-detail/ServiceHistory";
-import InspectionHistory from "@/components/vehicle-detail/InspectionHistory";
-import WorkOrders from "@/components/vehicle-detail/WorkOrders";
-import ServiceReminders from "@/components/vehicle-detail/ServiceReminders";
-import SensorDataSnapshots from "@/components/vehicle-detail/SensorDataSnapshots";
+import Overview from "@/components/vehicle-list/vehicle-detail/overview";
+import Specs from "@/components/vehicle-list/vehicle-detail/specs";
+import ServiceHistory from "@/components/vehicle-list/vehicle-detail/ServiceHistory";
+import InspectionHistory from "@/components/vehicle-list/vehicle-detail/InspectionHistory";
+import WorkOrders from "@/components/vehicle-list/vehicle-detail/WorkOrders";
+import ServiceReminders from "@/components/vehicle-list/vehicle-detail/ServiceReminders";
+import SensorDataSnapshots from "@/components/vehicle-list/vehicle-detail/SensorDataSnapshots";
+import FinancialDetail from "@/components/vehicle-list/vehicle-detail/FinancialDetail";
 
 const VehicleDetail = () => {
   const [activeTab, setActiveTab] = useState("specs");
@@ -143,7 +143,7 @@ const VehicleDetail = () => {
       <div className="grid grid-cols-12 gap-4 w-full">
         {activeTab === "overview" && <Overview />}
         {activeTab === "specs" && <Specs />}
-        {activeTab === "financial" && <Financial/>}
+        {activeTab === "financial" && <FinancialDetail/>}
         {activeTab === "sensor-data" && <SensorDataSnapshots />}  
         {activeTab === "service-history" && <ServiceHistory/>}
         {activeTab === "inspection-history" && <InspectionHistory/>}
