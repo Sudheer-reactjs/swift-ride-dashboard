@@ -94,7 +94,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
           <TableBody>
             {paginatedVehicles.map((vehicle, index) => (
                <Link key={index} href={`vehicle-list/vehicle-detail/${vehicle.vin}`} passHref legacyBehavior>
-              <TableRow key={index} className="bg-black-800">
+              <TableRow key={index} className="bg-black-800 cursor-pointer">
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Checkbox id={`checkbox-${index}`} checked={selectedRows.includes(index)} onChange={() => handleRowSelect(index)} />
