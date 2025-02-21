@@ -1,15 +1,9 @@
 "use client";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Bell,
   ChevronDown,
+  ChevronLeft,
   GitBranch,
   MoreHorizontal,
   Pencil,
@@ -35,48 +29,37 @@ const VehicleDetail = () => {
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbPage className="text-[#A1A1AA] ">
-              Vehicles
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage className="text-[#FAFAFA] font-light">
-              Vehicle Detail
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <div className="flex justify-between py-4  items-center max-h-24 m-4 rounded-lg">
+     <Link href="/vehicle-list" className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal">
+       <ChevronLeft  className="text-[#A1A1AA]"/> Vehicles</Link>
+      <div className="flex justify-between items-center  rounded-lg">
         <div className="flex items-center justify-between  gap-4 ">
           <Image
-            src="https://placehold.co/80x80"
+            src="/images/profile.png"
             alt="Vehicle"
             width={80}
-            height={70}
-            className="rounded-lg"
+            height={80}
+            className="rounded-lg object-cover"
           />
           <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-bold">1100 [2018 Toyota Prius]</h2>
-            <p className="">
+            <div>
+            <h2 className="text-lg font-semibold">1100 [2018 Toyota Prius]</h2>
+            <p className="text-neutral-50 text-xs ">
               Car • 2018 Toyota Prius • JTDKBRFU9J3059307 • 6TJR244
             </p>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="">• 20,811 mi</span>
+            </div>
+            <div className="flex items-center gap-2 md:gap-4 mt-2 text-neutral-50 text-xs font-normal">
+              <span className="">20,811 mi</span>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />
                 Active
               </div>
               <div className="flex items-center gap-2">
-                <span className="">• Management</span>{" "}
+                <span className="">Management</span>{" "}
                 <GitBranch className="w-3 h-3" />
               </div>
               <Link
                 href={"/fdsf"}
-                className="text-[#047857] cursor-pointer hover:underline"
+                className="text-emerald-500 text-xs font-normal underline leading-3"
               >
                 Jacob Silva
               </Link>
@@ -94,8 +77,8 @@ const VehicleDetail = () => {
           <Button className="h-10" variant="outline">
             <Pencil className="w-4 h-4" /> Edit
           </Button>
-          <Button className="bg-[#047857] h-10 hover:bg-[#047857">
-            <Plus className="w-4 h-4" /> Add
+          <Button className="flex gap-2 bg-[#047857] text-neutral-50 text-sm font-medium h-10 hover:bg-[#047857">
+            <Plus className="w-4 h-4" /> Add <ChevronDown/>
           </Button>
         </div>
       </div>
@@ -103,9 +86,9 @@ const VehicleDetail = () => {
       <Tabs.Root
         value={activeTab}
         onValueChange={setActiveTab}
-        className="w-[90%] border-b border-gray-700 "
+        className="w-[90%] border-b  border-[#262626]  "
       >
-        <Tabs.List className="flex space-x-4 px-4">
+        <Tabs.List className="flex">
           {[
             { id: "overview", label: "Overview" },
             { id: "specs", label: "Specs" },
@@ -120,9 +103,9 @@ const VehicleDetail = () => {
               key={tab.id}
               value={tab.id}
               className={cn(
-                "px-4 py-2 text-sm font-medium transition-colors",
-                "text-gray-400 hover:text-white",
-                "data-[state=active]:text-green-400 data-[state=active]:border-b-2 data-[state=active]:border-green-400"
+                " px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
+                "text-neutral-300 border-b-2 border-transparent hover:text-white",
+                "data-[state=active]:text-emerald-600 data-[state=active]:border-b-2 data-[state=active]:border-emerald-600"
               )}
             >
               {tab.label}
@@ -131,9 +114,9 @@ const VehicleDetail = () => {
           <Tabs.Trigger
             value="more"
             className={cn(
-              "px-4 py-2 text-sm font-medium flex items-center gap-1",
-              "text-gray-400 hover:text-white",
-              "data-[state=active]:text-green-400 data-[state=active]:border-b-2 data-[state=active]:border-green-400"
+              "px-2.5 py-2 flex items-center gap-1 text-xs font-normal",
+              "text-neutral-300 border-b-2 border-transparent  hover:text-white",
+              "data-[state=active]:text-emerald-600 data-[state=active]:border-b-2 data-[state=active]:border-emerald-600"
             )}
           >
             More <ChevronDown size={16} />
