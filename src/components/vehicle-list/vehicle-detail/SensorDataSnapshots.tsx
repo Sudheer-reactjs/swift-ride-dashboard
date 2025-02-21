@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 
 export default function Snapshots() {
   return (
-    <div className="col-span-12 flex   h-screen bg-[#171717] text-white">
+    <div className="col-span-12 flex rounded-lg   h-screen bg-[#171717] text-white">
       {/* Sidebar */}
       <div className="w-full md:w-1/3 h-full p-4 md:border-b-0 border-r border-gray-700 flex flex-col">
         <div className="flex justify-between items-center mb-4">
