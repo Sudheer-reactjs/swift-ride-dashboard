@@ -120,7 +120,7 @@ const FinancialDetail = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> 
       </div>
 
       <div className="col-span-12 lg:col-span-6">
