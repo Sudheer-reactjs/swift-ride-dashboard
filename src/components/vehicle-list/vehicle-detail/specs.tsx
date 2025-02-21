@@ -255,6 +255,100 @@ const Specs = () => {
             </div>
           </CardContent>
         </Card>
+        {/*Left side second card */}
+        <Card className="bg-[#171717] mt-4 border-none text-white">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+            <CardTitle className="text-lg">Transmission</CardTitle>
+            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+                Edit
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 text-sm">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Transmission Description</div>
+                <div className="col-span-6 text-white">CVT</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Transmission Brand</div>
+                <div className="col-span-6 text-white">--</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Transmission Type</div>
+                <div className="col-span-6 text-white">Continuosly Variable</div>
+              </div>              
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Transmission Gears</div>
+                <div className="col-span-6 text-white">--</div>
+              </div>              
+            </div>
+          </CardContent>
+        </Card>
+        {/*Left side third card */}
+        <Card className="bg-[#171717] mt-4 border-none text-white">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+            <CardTitle className="text-lg">Wheels & Tires</CardTitle>
+            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+                Edit
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 text-sm">
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Drive Type</div>
+                <div className="col-span-6 text-white">FWD</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Brake System</div>
+                <div className="col-span-6 text-white">Hydraulic</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Front Track Width</div>
+                <div className="col-span-6 text-white">60,2</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Rear Track Width</div>
+                <div className="col-span-6 text-white">60,6</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Wheelbase</div>
+                <div className="col-span-6 text-white">103,6 in</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Front Wheel Diameter</div>
+                <div className="col-span-6 text-white">15</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Rear Wheel Diameter</div>
+                <div className="col-span-6 text-white">15</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Rear Axie</div>
+                <div className="col-span-6 text-white">--</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Front Tire Type</div>
+                <div className="col-span-6 text-white">P19</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Front Tire PSI</div>
+                <div className="col-span-6 text-white">--</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Rear Tire Type</div>
+                <div className="col-span-6 text-white">P192</div>
+              </div>
+              <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
+                <div className="col-span-6 text-gray-400">Rear Tire PSI</div>
+                <div className="col-span-6 text-white">--</div>
+              </div>             
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </>
   )
