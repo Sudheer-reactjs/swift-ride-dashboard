@@ -1,18 +1,18 @@
-import React from 'react'
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const Specs = () => {
   return (
     <>
-    {/* right side cards */}
+      {/* right side cards */}
       <div className="lg:col-span-6 col-span-12">
         {/*Right side First card */}
-      <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+          <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Details</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Details</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -55,11 +55,11 @@ const Specs = () => {
           </CardContent>
         </Card>
         {/*Right side second card  */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Weight</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Weight</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -71,20 +71,20 @@ const Specs = () => {
                 <div className="col-span-6 text-white">3 075 ib</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Gross Vehicle
-                Weight Rating</div>
+                <div className="col-span-6 text-gray-400">
+                  Gross Vehicle Weight Rating
+                </div>
                 <div className="col-span-6 text-white">58,1 in</div>
               </div>
-              
             </div>
           </CardContent>
         </Card>
         {/*Right side 3rd card  */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4  border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Performance</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Performance</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -99,16 +99,15 @@ const Specs = () => {
                 <div className="col-span-6 text-gray-400">Max Payload</div>
                 <div className="col-span-6 text-white">825 ib</div>
               </div>
-              
             </div>
           </CardContent>
         </Card>
         {/*Right side 4th card  */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Fuel Economy</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Fuel Economy</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -127,16 +126,15 @@ const Specs = () => {
                 <div className="col-span-6 text-gray-400">EPA Combined</div>
                 <div className="col-span-6 text-white">50</div>
               </div>
-              
             </div>
           </CardContent>
         </Card>
         {/*Right side 5th card  */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Fuel</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Fuel</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -148,22 +146,26 @@ const Specs = () => {
                 <div className="col-span-6 text-white">54</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Fuel Tank 1 Capacity</div>
+                <div className="col-span-6 text-gray-400">
+                  Fuel Tank 1 Capacity
+                </div>
                 <div className="col-span-6 text-white">11.3 gal</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Fuel Tank 2 Capacity</div>
+                <div className="col-span-6 text-gray-400">
+                  Fuel Tank 2 Capacity
+                </div>
                 <div className="col-span-6 text-white">--</div>
-              </div>              
+              </div>
             </div>
           </CardContent>
         </Card>
         {/*Right side 6th card  */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Oil</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Oil</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -173,7 +175,7 @@ const Specs = () => {
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Oil Capacity</div>
                 <div className="col-span-6 text-white">42</div>
-              </div>                          
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -181,11 +183,11 @@ const Specs = () => {
       {/* left side cards */}
       <div className="lg:col-span-6 col-span-12">
         {/*Left side First card */}
-      <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Engine</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Engine</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -194,7 +196,9 @@ const Specs = () => {
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Engine Summary</div>
-                <div className="col-span-6 text-white">1.8L Hybrid I4 121hp</div>
+                <div className="col-span-6 text-white">
+                  1.8L Hybrid I4 121hp
+                </div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Engine Band</div>
@@ -230,7 +234,9 @@ const Specs = () => {
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Fuel Induction</div>
-                <div className="col-span-6 text-white">Sequential Multiport Fuel Injection</div>
+                <div className="col-span-6 text-white">
+                  Sequential Multiport Fuel Injection
+                </div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Max HP</div>
@@ -256,11 +262,11 @@ const Specs = () => {
           </CardContent>
         </Card>
         {/*Left side second card */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Transmission</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Transmission</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -268,30 +274,40 @@ const Specs = () => {
           <CardContent>
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Transmission Description</div>
+                <div className="col-span-6 text-gray-400">
+                  Transmission Description
+                </div>
                 <div className="col-span-6 text-white">CVT</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Transmission Brand</div>
+                <div className="col-span-6 text-gray-400">
+                  Transmission Brand
+                </div>
                 <div className="col-span-6 text-white">--</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Transmission Type</div>
-                <div className="col-span-6 text-white">Continuosly Variable</div>
-              </div>              
+                <div className="col-span-6 text-gray-400">
+                  Transmission Type
+                </div>
+                <div className="col-span-6 text-white">
+                  Continuosly Variable
+                </div>
+              </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Transmission Gears</div>
+                <div className="col-span-6 text-gray-400">
+                  Transmission Gears
+                </div>
                 <div className="col-span-6 text-white">--</div>
-              </div>              
+              </div>
             </div>
           </CardContent>
         </Card>
         {/*Left side third card */}
-        <Card className="bg-[#171717] mt-4 border-none text-white">
-          <CardHeader>
+        <Card className="bg-[#171717] mb-4 border-none text-white">
+         <CardHeader className="pt-4">
             <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Wheels & Tires</CardTitle>
-            <Button variant="ghost" className="text-[#10b981] cursor-pointer">
+              <CardTitle className="text-base">Wheels & Tires</CardTitle>
+              <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                 Edit
               </Button>
             </div>
@@ -307,7 +323,9 @@ const Specs = () => {
                 <div className="col-span-6 text-white">Hydraulic</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Front Track Width</div>
+                <div className="col-span-6 text-gray-400">
+                  Front Track Width
+                </div>
                 <div className="col-span-6 text-white">60,2</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
@@ -319,11 +337,15 @@ const Specs = () => {
                 <div className="col-span-6 text-white">103,6 in</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Front Wheel Diameter</div>
+                <div className="col-span-6 text-gray-400">
+                  Front Wheel Diameter
+                </div>
                 <div className="col-span-6 text-white">15</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
-                <div className="col-span-6 text-gray-400">Rear Wheel Diameter</div>
+                <div className="col-span-6 text-gray-400">
+                  Rear Wheel Diameter
+                </div>
                 <div className="col-span-6 text-white">15</div>
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
@@ -345,13 +367,13 @@ const Specs = () => {
               <div className="grid grid-cols-12 border-b border-[#262626] pb-2">
                 <div className="col-span-6 text-gray-400">Rear Tire PSI</div>
                 <div className="col-span-6 text-white">--</div>
-              </div>             
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default Specs;
