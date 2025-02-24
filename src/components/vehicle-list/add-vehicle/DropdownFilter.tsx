@@ -89,7 +89,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
             placeholder={selectedItems.length > 0 ? "" : "Select item(s)"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className={`w-full bg-[#171717] text-white border border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3`}
+            className={`w-full bg-[#171717] text-white border min-h-10 border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3`}
             style={{
               height: `${inputHeight}px`,
               paddingTop: selectedItems.length > 0 ? "40px" : "0px",
@@ -123,7 +123,6 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
           <Button
             size="sm"
             onClick={() => setIsOpen(false)}
-           
             className={`w-full h-10 ml-2 bg-[#FAFAFA] text-black hover:bg-[#E5E5E5]`}
           >
             Apply
