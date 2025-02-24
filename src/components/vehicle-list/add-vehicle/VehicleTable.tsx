@@ -70,65 +70,63 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
     <div className="flex rounded-lg border bg-[#171717] border-[#27272A]">
       {/* Table Container */}
       <div className={`transition-all duration-300 ${isOpen ? "w-[70%]" : "w-full"}`}>
-        <div className="overflow-auto">
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="flex items-center gap-2">
-                  <Checkbox id="select-all" checked={selectedRows.length === vehicles.length} onChange={handleSelectAll} /> Name
-                </TableHead>
-                <TableHead>Operator</TableHead>
-                <TableHead>Year</TableHead>
-                <TableHead>Make</TableHead>
-                <TableHead>Model</TableHead>
-                <TableHead>VIN</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Group</TableHead>
-                <TableHead>Current Meter</TableHead>
-                <TableHead>License Plate</TableHead>
-                <TableHead>Watchers</TableHead>
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="flex items-center gap-2">
+                <Checkbox id="select-all" checked={selectedRows.length === vehicles.length} onChange={handleSelectAll} /> Name
+              </TableHead>
+              <TableHead>Operator</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Make</TableHead>
+              <TableHead>Model</TableHead>
+              <TableHead>VIN</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Group</TableHead>
+              <TableHead>Current Meter</TableHead>
+              <TableHead>License Plate</TableHead>
+              <TableHead>Watchers</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paginatedVehicles.map((vehicle, index) => (
+               <Link key={index} href={`vehicle-list/vehicle-detail/${vehicle.vin}`} passHref legacyBehavior>
+              <TableRow key={index} className="bg-black-800">
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Checkbox id={`checkbox-${index}`} checked={selectedRows.includes(index)} onChange={() => handleRowSelect(index)} />
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {vehicle.name}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {vehicle.operator}
+                  </div>
+                </TableCell>
+                <TableCell>{vehicle.year}</TableCell>
+                <TableCell>{vehicle.make}</TableCell>
+                <TableCell>{vehicle.model}</TableCell>
+                <TableCell>{vehicle.vin}</TableCell>
+                <TableCell><Badge variant="secondary">{vehicle.status}</Badge></TableCell>
+                <TableCell>{vehicle.type}</TableCell>
+                <TableCell>{vehicle.group}</TableCell>
+                <TableCell>{vehicle.currentmeter} mi</TableCell>
+                <TableCell>{vehicle.licenseplate}</TableCell>
+                <TableCell>{vehicle.watchers} watchers</TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedVehicles.map((vehicle, index) => (
-                <Link key={index} href={`vehicle-list/vehicle-detail/${vehicle.vin}`} passHref legacyBehavior>
-                  <TableRow key={index} className="bg-black-800">
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Checkbox id={`checkbox-${index}`} checked={selectedRows.includes(index)} onChange={() => handleRowSelect(index)} />
-                        <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.name}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.operator}
-                      </div>
-                    </TableCell>
-                    <TableCell>{vehicle.year}</TableCell>
-                    <TableCell>{vehicle.make}</TableCell>
-                    <TableCell>{vehicle.model}</TableCell>
-                    <TableCell>{vehicle.vin}</TableCell>
-                    <TableCell><Badge variant="secondary">{vehicle.status}</Badge></TableCell>
-                    <TableCell>{vehicle.type}</TableCell>
-                    <TableCell>{vehicle.group}</TableCell>
-                    <TableCell>{vehicle.currentmeter} mi</TableCell>
-                    <TableCell>{vehicle.licenseplate}</TableCell>
-                    <TableCell>{vehicle.watchers} watchers</TableCell>
-                  </TableRow>
-                </Link>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </Link>
+            ))}
+          </TableBody>
+        </Table>
       </div>
       {isOpen && (
         <div className="w-[30%] p-4 bg-[#171717] border-l border-gray-800 h-full">
