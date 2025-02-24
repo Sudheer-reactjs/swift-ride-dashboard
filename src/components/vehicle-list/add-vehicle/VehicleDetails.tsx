@@ -179,7 +179,7 @@ const Details = () => {
           <div className="col-span-12 lg:col-span-6 space-y-1">
             <Label className="text-sm text-gray-400">Trim</Label>
             <Select>
-              <SelectTrigger className="mt-1 bg-black text-white border-gray-700">
+              <SelectTrigger className="mt-1 bg-black text-white border-zinc-800 h-10">
                 <SelectValue placeholder="Please Select" />
               </SelectTrigger>
               <SelectContent>

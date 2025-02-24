@@ -15,6 +15,8 @@ import Lifecycle from "@/components/vehicle-list/add-vehicle/Lifecycle";
 import Financial from "@/components/vehicle-list/add-vehicle/Financial";
 import Specifications from "@/components/vehicle-list/add-vehicle/Specifications";
 import Setting from "@/components/vehicle-list/add-vehicle/Setting";
+import { useRouter } from "next/navigation";
+
 const AddVehicle = () => {
   const [activeTab, setActiveTab] = useState("Details");
 
@@ -42,7 +44,7 @@ const AddVehicle = () => {
     // Add save and add another logic here
     console.log("Save and add another clicked");
   };
-
+  const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-6 size-span">
       <Breadcrumb>
@@ -90,7 +92,7 @@ const AddVehicle = () => {
             <Button variant="outline" onClick={handleCancel} className="border-0 h-10">
               Cancel
             </Button>
-            <Button variant="outline" className="h-10">Add Multiple Vehicles</Button>
+            <Button variant="outline" className="h-10" onClick={() => router.push("/vehicle-list/add-multiple-vehicle")}>Add Multiple Vehicles</Button>
             <Button
               className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
               onClick={handleSave}
@@ -117,7 +119,7 @@ const AddVehicle = () => {
               Cancel
             </Button>
             <div className="space-x-2 m:dspace-x-4">
-            <Button variant="outline" className="h-10">Add Multiple Vehicles</Button>
+            <Button variant="outline" className="h-10">Save & Add Another</Button>
             <Button
               className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
               onClick={handleSave}

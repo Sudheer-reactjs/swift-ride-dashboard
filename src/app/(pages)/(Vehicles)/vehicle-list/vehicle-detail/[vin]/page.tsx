@@ -23,9 +23,12 @@ import WorkOrders from "@/components/vehicle-list/vehicle-detail/WorkOrders";
 import ServiceReminders from "@/components/vehicle-list/vehicle-detail/ServiceReminders";
 import SensorDataSnapshots from "@/components/vehicle-list/vehicle-detail/SensorDataSnapshots";
 import FinancialDetail from "@/components/vehicle-list/vehicle-detail/FinancialDetail";
+import { useParams } from "next/navigation";
 
 const VehicleDetail = () => {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("service-history");
+  const {vin} = useParams();
+  console.log(vin);
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
