@@ -95,7 +95,7 @@ const page = () => {
         </div>
 
         <div className="lg:col-span-8 col-span-12">
-          <Card className=" bg-[#171717] text-white p-6 rounded-lg shadow-lg">
+          <Card className=" bg-[#171717] text-white py-6 rounded-lg shadow-lg">
             <CardContent>
               <h3 className="text-lg text-gray-300 mb-3">Line Items</h3>
               <div className="grid grid-cols-3 gap-2 border border-gray-700  rounded-lg text-center text-base">
@@ -202,12 +202,16 @@ const page = () => {
                   <span>Parts</span>
                   <span >$49.38</span>
                 </div>
-                <div className="my-4"></div>
-                <div className="flex justify-between mt-2 text-gray-400">
+                
+                <div className="flex justify-end  gap-16 mt-2 text-[#FAFAFA]">
                   <span>Discount (0.0%)</span>
                   <span className="text-white">-$0.00</span>
                 </div>
-                <div className="flex justify-between font-semibold text-lg mt-3">
+                <div className="flex justify-end  gap-16 mt-2 text-[#FAFAFA]">
+                  <span>Tax (0.0%)</span>
+                  <span className="text-white">-$0.00</span>
+                </div>
+                <div className="flex justify-end gap-16 font-semibold text-lg mt-3">
                   <span>Total</span>
                   <span>$94.88</span>
                 </div>
