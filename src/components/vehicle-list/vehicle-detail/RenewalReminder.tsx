@@ -87,7 +87,7 @@ const RenewalReminder = () => {
               {filteredData.map((item, index) => (
                 <Link
                   key={index}
-                  href={`/vehicle-list/service-history/sff`}
+                  href={`#`}
                   passHref
                   legacyBehavior
                 >

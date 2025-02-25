@@ -61,7 +61,7 @@ const moreTabs = [
 ];
 
 const VehicleDetail = () => {
-  const [activeTab, setActiveTab] = useState("renewal-reminders");
+  const [activeTab, setActiveTab] = useState("overview");
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
   const {vin} = useParams();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
