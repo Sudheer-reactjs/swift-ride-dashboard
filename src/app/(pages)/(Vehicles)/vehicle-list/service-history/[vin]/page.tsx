@@ -7,6 +7,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { CornerUpLeft, Image, MessageSquareText, Printer, StickyNote } from "lucide-react";
 
 const page = () => {
   return (
@@ -32,9 +34,15 @@ const page = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div></div>
-      <div className="grid grid-cols-12 gap-4 w-full">
-        <div className="lg:col-span-4 col-span-12">
+      <div className="flex items-center justify-between bg-black text-white p-3 rounded-lg">
+      <h2 className="text-3xl font-semibold">Service Entry #52839203</h2>
+      <Button variant="outline" className="border-[#27272A] bg-[#09090B] h-10 text-white">
+        <Printer className="w-4 h-4 mr-2" /> Print
+      </Button>
+    </div>
+      <div className="grid grid-cols-12 gap-4 relative max-w-[calc(100%-50px)]">
+        {/* right side */}
+        <div className="col-span-12 lg:col-span-4">
           <Card className="bg-[#171717] mb-4 border-none text-white">
             <CardHeader className="pt-4">
               <div className="flex justify-between items-center">
@@ -68,10 +76,10 @@ const page = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
-                  <div className="col-span-6 md:col-span-12 text-gray-400">
-                    Odometr
+                  <div className="col-span-6  text-gray-400">
+                    Odometer
                   </div>
-                  <div className="col-span-6 text-white">11 278 mi</div>
+                  <div className="col-span-6 text-white">11,278 mi</div>
                 </div>
                 <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                   <div className="col-span-6 text-gray-400">Created By</div>
@@ -92,18 +100,27 @@ const page = () => {
               </div>
             </CardContent>
           </Card>
+          <div className="bg-[#171717] mt-4 p-4 min-h-36 rounded-lg text-white w-full">
+          <div className="flex flex-wrap justify-between items-center mb-3">
+            <h2 className="text-base font-semibold">Integrations</h2>
+          </div>
+          <div className="text-center text-zinc-400 text-sm mt-8 font-normal font-['Inter'] leading-tight">
+          No issues to show. If this service entry resolves any issues, you can add them by editing the service entry.
+          </div>
+        </div>
         </div>
 
-        <div className="lg:col-span-8 col-span-12">
-          <Card className=" bg-[#171717] text-white py-6 rounded-lg shadow-lg">
+        <div className="col-span-12 lg:col-span-8">
+          {/* centre  */}
+          <Card className="bg-[#171717] text-white py-6 rounded-lg shadow-lg">
             <CardContent>
               <h3 className="text-lg text-gray-300 mb-3">Line Items</h3>
-              <div className="grid grid-cols-3 gap-2 border border-gray-700  rounded-lg text-center text-base">
-                <div className="pr-3 border-r border-gray-700">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 border border-gray-700 rounded-lg text-center text-base">
+                <div className="pr-3 md:border-r border-gray-700">
                   <p className="text-gray-400">Labor</p>
                   <p className="text-xl font-semibold">$45.50</p>
                 </div>
-                <div className="pr-3 border-r border-gray-700">
+                <div className="pr-3 md:border-r border-gray-700">
                   <p className="text-gray-400">Parts</p>
                   <p className="text-xl font-semibold">$49.38</p>
                 </div>
@@ -113,8 +130,8 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="mt-4 text-base rounded-lg pt-4">
-                <table className="w-full ">
+              <div className="mt-4 text-base rounded-lg pt-4 overflow-x-auto">
+                <table className="w-full min-w-[600px]">
                   <thead>
                     <tr className="text-[#A1A1AA] ">
                       <th className="text-left p-2">Item</th>
@@ -148,13 +165,15 @@ const page = () => {
                         <td className="border-gray-50 py-6 text-left font-medium">
                           <div className="flex w-full flex-col gap-2">
                             <div className="w-full flex items-center">
-                              <div className=" flex items-center">
-                                <abbr className="break-words max-w-full text-md text-[#FAFAFA] text-left normal-case font-sans m-0">
+                              <div className="flex items-center">
+                                <abbr
+                                  className="break-words max-w-full text-md text-[#FAFAFA] text-left normal-case font-sans m-0"                                
+                                >
                                   {row.item}
                                 </abbr>
                               </div>
                             </div>
-                            <div className="flex pt-4  gap-6">
+                            <div className="flex pt-4 gap-6">
                               <div>
                                 <div className="text-[#A3A3A3] text-sm font-normal">
                                   Reason for Repair
@@ -189,25 +208,25 @@ const page = () => {
                 </table>
               </div>
 
-              <div className="mt-4 space-y-2">                
+              <div className="mt-4 space-y-2">
                 <div className="flex justify-end gap-16 text-gray-400">
                   <span className="text-[#FAFAFA] text-xl">Subtotal</span>
                   <span className="text-white">$94.88</span>
                 </div>
                 <div className="flex justify-end gap-16 text-[#737373]">
                   <span>Labor</span>
-                  <span >$45.50</span>
+                  <span>$45.50</span>
                 </div>
-                <div className="flex justify-end  gap-16 text-[#737373]">
+                <div className="flex justify-end gap-16 text-[#737373]">
                   <span>Parts</span>
-                  <span >$49.38</span>
+                  <span>$49.38</span>
                 </div>
-                
-                <div className="flex justify-end  gap-16 mt-2 text-[#FAFAFA]">
+
+                <div className="flex justify-end gap-16 mt-2 text-[#FAFAFA]">
                   <span>Discount (0.0%)</span>
                   <span className="text-white">-$0.00</span>
                 </div>
-                <div className="flex justify-end  gap-16 mt-2 text-[#FAFAFA]">
+                <div className="flex justify-end gap-16 mt-2 text-[#FAFAFA]">
                   <span>Tax (0.0%)</span>
                   <span className="text-white">-$0.00</span>
                 </div>
@@ -218,8 +237,24 @@ const page = () => {
               </div>
             </CardContent>
           </Card>
+        </div>        
+
+        <div className="bg-[#171717] p-4 h-screen border-l absolute right-[-60px] z-[1] rounded-lg border-[#262626] flex flex-col items-center space-y-2">
+    <Button className="p-1" variant="ghost">
+      <CornerUpLeft className="w-4 h-4" />
+    </Button>
+    <Button className="p-1" variant="ghost">
+      <MessageSquareText className="w-4 h-4" />
+    </Button>
+    <Button className="p-1" variant="ghost">
+      <Image className="w-4 h-4" aria-label="Image" />
+    </Button>
+    <Button className="p-1" variant="ghost">
+      <StickyNote className="w-4 h-4" />
+    </Button>
         </div>
-      </div>
+        </div>
+      
     </div>
   );
 };
