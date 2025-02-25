@@ -58,7 +58,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2 border-[#27272A] min-w-[150px] h-10"
+          className="flex items-center gap-2 border-[#27272A]  h-10"
         >
           {label}
           <ChevronDown />
