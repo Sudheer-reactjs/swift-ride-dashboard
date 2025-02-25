@@ -88,7 +88,7 @@ const ServiceReminders = () => {
           </TableHeader>
           <TableBody>
             {filteredData.map((item, index) => (
-              <Link key={index} href={`#`} passHref legacyBehavior>
+              <Link key={index} href={`/vehicle-list/service-reminder/sff`} passHref legacyBehavior>
               <TableRow key={index} className="cursor-pointer hover:bg-[#262626]">
                 <TableCell>
                   <div>Engine Oil & Filter Replacement</div>
