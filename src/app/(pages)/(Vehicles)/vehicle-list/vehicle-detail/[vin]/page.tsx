@@ -2,12 +2,21 @@
 import { Button } from "@/components/ui/button";
 import {
   Bell,
+  Calendar,
   ChevronDown,
   ChevronLeft,
+  CircleGauge,
+  CreditCard,
+  FileSpreadsheet,
+  Fuel,
   GitBranch,
   MoreHorizontal,
   Pencil,
   Plus,
+  TextSearch,
+  TriangleAlert,
+  UserPlus,
+  Wrench,
 } from "lucide-react";
 
 import Image from "next/image";
@@ -33,7 +42,12 @@ import Recalls from "@/components/vehicle-list/vehicle-detail/Recalls";
 import Faults from "@/components/vehicle-list/vehicle-detail/Faults";
 import LocationHistory from "@/components/vehicle-list/vehicle-detail/LocationHistory";
 import PartsHistory from "@/components/vehicle-list/vehicle-detail/PartsHistory";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 // List of all possible tabs including the ones in the dropdown
 const allTabs = [
   { id: "overview", label: "Overview" },
@@ -63,6 +77,7 @@ const moreTabs = [
 const VehicleDetail = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
+  const [open, setOpen] = useState(false);
   const {vin} = useParams();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   console.log(vin);
@@ -146,9 +161,57 @@ const VehicleDetail = () => {
           <Button className="h-10" variant="outline">
             <Pencil className="w-4 h-4" /> Edit
           </Button>
-          <Button className="flex gap-2 bg-[#047857] text-neutral-50 text-sm font-medium h-10 hover:bg-[#047857">
-            <Plus className="w-4 h-4" /> Add <ChevronDown/>
-          </Button>
+          <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="default" className="bg-[#047857] hover:bg-[#047857] text-white flex items-center gap-1">
+          <Plus size={16} />
+          <span>Add</span>
+          <ChevronDown size={14} />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-[#09090B] border-[#27272A] text-white w-56 mr-11 mt-1">
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <UserPlus  size={16} className="text-white" />
+          <span>Add Vehicle Assignment</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <Fuel  size={16} className="text-white" />
+          <span>Add Fuel Entry</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <CreditCard size={16} className="text-white" />
+          <span>Add Expense Entry</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <Wrench size={16} className="text-white" />
+          <span>Add Service Entry</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <TriangleAlert  size={16} className="text-white" />
+          <span>Add Issue</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <TextSearch  size={16} className="text-white" />
+          <span>Add Inspection Submission</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <FileSpreadsheet size={16} className="text-white" />
+          <span>Add Work Order</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <Bell  size={16} className="text-white" />
+          <span>Add Service Reminder</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <Calendar size={16} className="text-white" />
+          <span>Add Vehicle Renewal Reminder</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+          <CircleGauge size={16} className="text-white" />
+          <span>Add Meter Entry</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
         </div>
       </div>
 

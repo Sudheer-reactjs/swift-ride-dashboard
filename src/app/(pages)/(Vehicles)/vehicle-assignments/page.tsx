@@ -6,6 +6,8 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb";
+import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Page = () => {
     return (
@@ -25,9 +27,15 @@ const Page = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <div className='flex felxwrap justify-between'>
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
         Vehicle Assignments
         </h2>
+        <Button variant="outline" className="h-10">
+            <Plus />
+            Add Vehicle
+          </Button>
+        </div>
     </div>
     );
 }
