@@ -10,18 +10,14 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent, 
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Filter,
   Plus,
   X,
   Lock,
-  Search,  
+  Search,
   Users,
   Globe,
   PlusIcon,
@@ -81,7 +77,7 @@ const Pages = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
- 
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -134,111 +130,112 @@ const Pages = () => {
         </Button>
       </div>
 
-      <div className="flex flex-col w-full">
-      <div className="flex flex-wrap gap-2 mb-2">
-        {/* Main tabs container - will wrap on small screens */}
-        <div className="inline-flex flex-wrap items-center gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
-          {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
-            <Button
-              key={tab}
-              variant={selectedTab === tab ? "secondary" : "ghost"}
-              onClick={() => setSelectedTab(tab)}
-              className={cn(
-                "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
-                selectedTab === tab
-                  ? "bg-[#171717] text-white"
-                  : "hover:bg-[#171717]"
-              )}
-            >
-              <div className="flex justify-center items-center min-w-0 sm:min-w-16">
-                {tab}
-                {selectedTab === tab && <span className="ml-1">...</span>}
-              </div>
-            </Button>
-          ))}
-        </div>
-        
-        {/* Add tab button */}
-        <div className="relative">
-          <Button
-            variant="ghost"
-            onClick={() => setAddTab(!addTab)}
-            className="text-xs sm:text-sm px-2 py-1 sm:py-2 bg-[#1C1917] lg:bg-none rounded-full"
-          >
-            <PlusIcon className="h-3 w-3 mr-1" /><span className="hidden lg:flex">Add Tab</span> 
-          </Button>
-          {addTab &&  (
-            <Card
-              ref={dropdownRef}
-              className={cn(
-                "absolute  mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
-              )}
-            >
-              {/* Search Input */}
-              <div className="relative">
-                <Search
-                  size={16}
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
-                <Input
-                  type="text"
-                  placeholder="Search views"
-                  className="w-full p-2 pl-8 bg-black h-10 text-white rounded-md border-[0.5px] border-[#171717]"
-                />
-              </div>
+        <div className="flex  gap-2 mb-2">
+          {/* Main tabs container - will wrap on small screens */}
+          <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
+            {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+              <Button
+                key={tab}
+                variant={selectedTab === tab ? "secondary" : "ghost"}
+                onClick={() => setSelectedTab(tab)}
+                className={cn(
+                  "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
+                  selectedTab === tab
+                    ? "bg-[#171717] text-white"
+                    : "hover:bg-[#171717]"
+                )}
+              >
+                <div className="flex justify-center items-center min-w-0 sm:min-w-16">
+                  {tab}
+                  {selectedTab === tab && <span className="ml-1">...</span>}
+                </div>
+              </Button>
+            ))}
+          </div>
 
-              {/* Saved Views Section */}
-              <div className="mt-3 border-t border-[#171717]">
-                <div className="flex items-center mt-3 justify-between text-sm text-white">
-                  <div>
-                    <span>MY SAVED VIEWS</span>
+          {/* Add tab button */}
+          <div className="relative">
+            <Button
+              variant="ghost"
+              onClick={() => setAddTab(!addTab)}
+              className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 bg-[#1C1917] lg:bg-black rounded-full min-w-[32px] lg:min-w-[auto]"
+            >
+              <PlusIcon className="h-3 w-3" />
+              <span className="hidden lg:flex ml-1">Add Tab</span>
+            </Button>
+            {addTab && (
+              <Card
+                ref={dropdownRef}
+                className={cn(
+                  "absolute  mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
+                )}
+              >
+                {/* Search Input */}
+                <div className="relative">
+                  <Search
+                    size={16}
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Search views"
+                    className="w-full p-2 pl-8 bg-black h-10 text-white rounded-md border-[0.5px] border-[#171717]"
+                  />
+                </div>
+
+                {/* Saved Views Section */}
+                <div className="mt-3 border-t border-[#171717]">
+                  <div className="flex items-center mt-3 justify-between text-sm text-white">
+                    <div>
+                      <span>MY SAVED VIEWS</span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-white box-border "
+                      >
+                        ...
+                      </Button>
+                    </div>
+
                     <Button
                       variant="ghost"
-                      size="icon"
-                      className="text-white box-border "
+                      className="text-sm"
+                      onClick={() => setOpen(true)}
                     >
-                      ...
+                      + Add Filter
                     </Button>
                   </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p className="text-white text-sm my-2">
+                      You havent created any views
+                    </p>
+                  </div>
+                </div>
 
-                  <Button
-                    variant="ghost"
-                    className="text-sm"
-                    onClick={() => setOpen(true)}
-                  >
-                    + Add Filter
-                  </Button>
+                {/* Standard Views Section */}
+                <div className="mt-4">
+                  <span className="text-sm text-white">STANDARD VIEWS</span>
+                  <div className="flex flex-col mt-2 space-y-2 ">
+                    {["All", "Assigned", "Unassigned", "Archived"].map(
+                      (tab) => (
+                        <Button
+                          key={tab}
+                          variant="ghost"
+                          className="flex justify-start w-full text-sm  bg-black hover:bg-[#171717] p-2 rounded-md"
+                        >
+                          ✓ {tab}{" "}
+                          <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
+                            S
+                          </span>
+                        </Button>
+                      )
+                    )}
+                  </div>
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                  <p className="text-white text-sm my-2">
-                    You havent created any views
-                  </p>
-                </div>
-              </div>
-
-              {/* Standard Views Section */}
-              <div className="mt-4">
-                <span className="text-sm text-white">STANDARD VIEWS</span>
-                <div className="flex flex-col mt-2 space-y-2 ">
-                  {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
-                    <Button
-                      key={tab}
-                      variant="ghost"
-                      className="flex justify-start w-full text-sm  bg-black hover:bg-[#171717] p-2 rounded-md"
-                    >
-                      ✓ {tab}{" "}
-                      <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
-                        S
-                      </span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </Card>
-          )}
+              </Card>
+            )}
+          </div>
         </div>
-        </div>
-      </div>
 
       {/* Filters & Search */}
       <div className="flex space-x-2 mb-1 ">
@@ -252,31 +249,31 @@ const Pages = () => {
           />
         </div>
         <div className="hidden xl:flex flex-wrap gap-2">
-        <DropdownFilter
-          label="Vehicle Type"
-          items={vehicleTypes}
-          selectedItems={selectedTypes}
-          setSelectedItems={setSelectedTypes}
-        />
-        <DropdownFilter
-          label="Vehicle Group"
-          items={vehicleGroups}
-          selectedItems={selectedGroups}
-          setSelectedItems={setSelectedGroups}
-        />
-        <DropdownFilter
-          label="Vehicle Status"
-          items={vehicleStatuses}
-          selectedItems={selectedStatuses}
-          setSelectedItems={setSelectedStatuses}
-        />
-        <DropdownFilter
-          label="Watchers"
-          items={vehicleWatchers}
-          selectedItems={selectedWatchers}
-          setSelectedItems={setSelectedWatchers}
-        />
-</div>
+          <DropdownFilter
+            label="Vehicle Type"
+            items={vehicleTypes}
+            selectedItems={selectedTypes}
+            setSelectedItems={setSelectedTypes}
+          />
+          <DropdownFilter
+            label="Vehicle Group"
+            items={vehicleGroups}
+            selectedItems={selectedGroups}
+            setSelectedItems={setSelectedGroups}
+          />
+          <DropdownFilter
+            label="Vehicle Status"
+            items={vehicleStatuses}
+            selectedItems={selectedStatuses}
+            setSelectedItems={setSelectedStatuses}
+          />
+          <DropdownFilter
+            label="Watchers"
+            items={vehicleWatchers}
+            selectedItems={selectedWatchers}
+            setSelectedItems={setSelectedWatchers}
+          />
+        </div>
         <Button
           variant="outline"
           className="flex items-center gap-2 h-10 mb-2"
@@ -288,14 +285,14 @@ const Pages = () => {
       </div>
 
       {/* Table Container */}
-      <VehicleTable 
-      vehicles={vehicles}
-      isOpen={isOpen}
-      toggleFilterPanel={toggleFilterPanel}
-       />
+      <VehicleTable
+        vehicles={vehicles}
+        isOpen={isOpen}
+        toggleFilterPanel={toggleFilterPanel}
+      />
 
       {/* Pagination */}
-      
+
       {open && (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="sm:max-w-screen-md bg-[#171717] text-white rounded-lg shadow-lg">
