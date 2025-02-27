@@ -9,7 +9,7 @@ const Logo = () => {
             <Link href="/">
                 <Image
                     src="/images/logo.png"
-                    alt="banner"
+                    alt="Logo"
                     width={111}
                     height={32}
                     priority                     
