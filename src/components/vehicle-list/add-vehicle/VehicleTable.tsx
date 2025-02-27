@@ -67,10 +67,10 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
 
   return (
     <>
-    <div className="w-full overflow-auto flex rounded-lg border bg-[#171717] border-[#27272A]">
+    <div className="w-full overflow-auto flex rounded-lg border bg-[#171717] border-[#27272A] relative ">
       {/* Table Container */}
-      <div className={`transition-all duration-300 ${isOpen ? "w-[70vw]" : "w-full"}`}>
-        <Table className="w-full  overflow-auto hover:cursor-pointer">
+      <div className={`w-full transition-all duration-300`}>
+        <Table className="w-full overflow-auto hover:cursor-pointer  min-w-[1200px]">
           <TableHeader>
             <TableRow>
               <TableHead className="flex items-center gap-2 ">
@@ -129,7 +129,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
         </Table>
       </div>
       {isOpen && (
-        <div className="w-[30%] p-4 bg-[#171717] border-l border-gray-800 h-full">
+        <div className="absolute top-0 right-0 p-4 bg-[#171717] border-l border-gray-800 h-full">
           <div className="flex my-2 items-center justify-between">
             <h3 className="text-2xl font-semibold flex items-center gap-2">
               <ListFilter className="w-6 h-6" /> Filters

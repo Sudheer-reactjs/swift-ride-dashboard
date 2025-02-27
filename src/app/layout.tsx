@@ -28,7 +28,7 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar/>
-          <div className="w-full flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col w-full md:w-[calc(100%-256px)]">
              <TopBar />
             <div className="flex w-full flex-col gap-4 p-4">
             {children}
