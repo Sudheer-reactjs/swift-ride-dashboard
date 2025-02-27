@@ -24,6 +24,7 @@ import {
   Search,  
   Users,
   Globe,
+  PlusIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -133,40 +134,44 @@ const Pages = () => {
         </Button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mb-2">
-        <div className="flex items-center  gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
+      <div className="flex flex-col w-full">
+      <div className="flex flex-wrap gap-2 mb-2">
+        {/* Main tabs container - will wrap on small screens */}
+        <div className="inline-flex flex-wrap items-center gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
               key={tab}
               variant={selectedTab === tab ? "secondary" : "ghost"}
               onClick={() => setSelectedTab(tab)}
               className={cn(
-                "text-sm flex items-center rounded-md px-3 py-2 transition-all",
+                "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
                 selectedTab === tab
                   ? "bg-[#171717] text-white"
-                  : "hover:bg-[#171717] "
+                  : "hover:bg-[#171717]"
               )}
             >
-              <div className="flex justify-center items-center min-w-16">
+              <div className="flex justify-center items-center min-w-0 sm:min-w-16">
                 {tab}
                 {selectedTab === tab && <span className="ml-1">...</span>}
               </div>
             </Button>
           ))}
         </div>
+        
+        {/* Add tab button */}
         <div className="relative">
           <Button
             variant="ghost"
             onClick={() => setAddTab(!addTab)}
-            className="text-sm"
+            className="text-xs sm:text-sm px-2 py-1 sm:py-2 bg-[#1C1917] lg:bg-none rounded-full"
           >
-            + Add Tab
+            <PlusIcon className="h-3 w-3 mr-1" /><span className="hidden lg:flex">Add Tab</span> 
           </Button>
-          {addTab && (
+          {addTab &&  (
             <Card
               ref={dropdownRef}
               className={cn(
-                "absolute  left-0 mt-1 w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-50"
+                "absolute  mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
               )}
             >
               {/* Search Input */}
@@ -232,11 +237,12 @@ const Pages = () => {
             </Card>
           )}
         </div>
+        </div>
       </div>
 
       {/* Filters & Search */}
-      <div className="flex space-x-2 mb-1 flex-wrap">
-        <div className="relative w-full md:w-1/4 lg:w-1/5 mb-2">
+      <div className="flex space-x-2 mb-1 ">
+        <div className="relative w-full md:w-1/2 lg:w-1/5 mb-2">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <Input
             placeholder="Search"
@@ -245,7 +251,7 @@ const Pages = () => {
             className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="hidden xl:flex flex-wrap gap-2">
         <DropdownFilter
           label="Vehicle Type"
           items={vehicleTypes}

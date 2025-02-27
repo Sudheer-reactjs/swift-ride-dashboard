@@ -67,33 +67,33 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
 
   return (
     <>
-    <div className="flex rounded-lg border bg-[#171717] border-[#27272A]">
+    <div className="w-full overflow-auto flex rounded-lg border bg-[#171717] border-[#27272A]">
       {/* Table Container */}
-      <div className={`transition-all duration-300 ${isOpen ? "w-[70%]" : "w-full"}`}>
-        <Table className="w-full">
+      <div className={`transition-all duration-300 ${isOpen ? "w-[70vw]" : "w-full"}`}>
+        <Table className="w-full  overflow-auto hover:cursor-pointer">
           <TableHeader>
             <TableRow>
-              <TableHead className="flex items-center gap-2">
+              <TableHead className="flex items-center gap-2 ">
                 <Checkbox id="select-all" checked={selectedRows.length === vehicles.length} onChange={handleSelectAll} /> Name
               </TableHead>
-              <TableHead>Operator</TableHead>
-              <TableHead>Year</TableHead>
-              <TableHead>Make</TableHead>
-              <TableHead>Model</TableHead>
-              <TableHead>VIN</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Group</TableHead>
-              <TableHead>Current Meter</TableHead>
-              <TableHead>License Plate</TableHead>
-              <TableHead>Watchers</TableHead>
+              <TableHead className="">Operator</TableHead>
+              <TableHead className="">Year</TableHead>
+              <TableHead className="">Make</TableHead>
+              <TableHead className="">Model</TableHead>
+              <TableHead className="">VIN</TableHead>
+              <TableHead className="">Status</TableHead>
+              <TableHead className="">Type</TableHead>
+              <TableHead className="">Group</TableHead>
+              <TableHead className="">Current Meter</TableHead>
+              <TableHead className="">License Plate</TableHead>
+              <TableHead className="">Watchers</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedVehicles.map((vehicle, index) => (
                <Link key={index} href={`vehicle-list/vehicle-detail/${vehicle.vin}`} passHref legacyBehavior>
               <TableRow key={index} className="bg-black-800">
-                <TableCell>
+                <TableCell className="min-w-64">
                   <div className="flex items-center gap-2">
                     <Checkbox id={`checkbox-${index}`} checked={selectedRows.includes(index)} onChange={() => handleRowSelect(index)} />
                     <Avatar>
@@ -103,7 +103,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
                     {vehicle.name}
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="min-w-44">
                   <div className="flex items-center gap-2">
                     <Avatar>
                       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -112,16 +112,16 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
                     {vehicle.operator}
                   </div>
                 </TableCell>
-                <TableCell>{vehicle.year}</TableCell>
-                <TableCell>{vehicle.make}</TableCell>
-                <TableCell>{vehicle.model}</TableCell>
-                <TableCell>{vehicle.vin}</TableCell>
-                <TableCell><Badge variant="secondary">{vehicle.status}</Badge></TableCell>
-                <TableCell>{vehicle.type}</TableCell>
-                <TableCell>{vehicle.group}</TableCell>
-                <TableCell>{vehicle.currentmeter} mi</TableCell>
-                <TableCell>{vehicle.licenseplate}</TableCell>
-                <TableCell>{vehicle.watchers} watchers</TableCell>
+                <TableCell className="">{vehicle.year}</TableCell>
+                <TableCell className="">{vehicle.make}</TableCell>
+                <TableCell className="">{vehicle.model}</TableCell>
+                <TableCell className="">{vehicle.vin}</TableCell>
+                <TableCell className=""><Badge variant="secondary">{vehicle.status}</Badge></TableCell>
+                <TableCell className="">{vehicle.type}</TableCell>
+                <TableCell className="">{vehicle.group}</TableCell>
+                <TableCell className="">{vehicle.currentmeter} mi</TableCell>
+                <TableCell className="">{vehicle.licenseplate}</TableCell>
+                <TableCell className="">{vehicle.watchers} watchers</TableCell>
               </TableRow>
               </Link>
             ))}
@@ -212,7 +212,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
         </div>
       )}
     </div>
-    <div className="flex flex-col md:flex-row justify-between items-center mt-4">
+    <div className="flex flex-wrap justify-between items-center mt-4">
     <p className="text-sm">{selectedRows.length} of {vehicles.length} row(s) selected.</p>
     <div className="flex items-center gap-2">
       <DropdownMenu>
@@ -225,10 +225,10 @@ const VehicleTable: React.FC<VehicleTableProps> = ({ vehicles, isOpen, toggleFil
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button variant="outline" onClick={() => setCurrentPage(1)}> <ChevronsLeft className="w-4 h-4" /> </Button>
-      <Button variant="outline" onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}> <ChevronLeft className="w-4 h-4" /> </Button>
-      <Button variant="outline" onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}> <ChevronRight className="w-4 h-4" /> </Button>
-      <Button variant="outline" onClick={() => setCurrentPage(totalPages)}> <ChevronsRight className="w-4 h-4" /> </Button>
+      <Button variant="outline" onClick={() => setCurrentPage(1)}> <ChevronsLeft className="w-3 h-4" /> </Button>
+      <Button variant="outline" onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}> <ChevronLeft className="w-3 h-4" /> </Button>
+      <Button variant="outline" onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}> <ChevronRight className="w-3 h-4" /> </Button>
+      <Button variant="outline" onClick={() => setCurrentPage(totalPages)}> <ChevronsRight className="w-3 h-4" /> </Button>
     </div>
   </div>
   </>
