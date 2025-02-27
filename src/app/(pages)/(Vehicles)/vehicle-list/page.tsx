@@ -26,8 +26,6 @@ import {
   Globe,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-
 import { cn } from "@/lib/utils";
 import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
 import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
@@ -123,7 +121,7 @@ const Pages = () => {
   return (
     <>
       {/* Header Actions */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
+      <div className="flex flex-wrap justify-between items-centre mb-4 gap-2">
         <h2 className="text-2xl font-semibold">Vehicles</h2>
         <Button
           variant="outline"
@@ -136,7 +134,7 @@ const Pages = () => {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 mb-2">
-        <div className="flex items-center gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
+        <div className="flex items-center  gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
               key={tab}
@@ -247,6 +245,7 @@ const Pages = () => {
             className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
+        <div className="flex flex-wrap gap-2">
         <DropdownFilter
           label="Vehicle Type"
           items={vehicleTypes}
@@ -271,7 +270,7 @@ const Pages = () => {
           selectedItems={selectedWatchers}
           setSelectedItems={setSelectedWatchers}
         />
-
+</div>
         <Button
           variant="outline"
           className="flex items-center gap-2 h-10 mb-2"

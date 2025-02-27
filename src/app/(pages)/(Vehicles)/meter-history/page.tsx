@@ -22,6 +22,7 @@ import {
   ChevronRight,
   CalendarIcon,
   X,
+  CheckCircle,
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -61,6 +62,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
+import { ScrollArea } from "@/components/ui/scroll-area";
 const vehicles = Array(15).fill({
   vehicle: "1100 [2018 Toyota Prius]",
   meterDate: "02/01/2025",
@@ -72,13 +74,13 @@ const vehicles = Array(15).fill({
   autoVoidReason: "--",
 });
 
-const vehicleGroups = [
-  "Management",
-  "Logistics",
-  "Operations",
-  "Maintenance",
-  "Security",
+const vehiclesdrop = [
+  { id: 2100, name: "2016 Ford F-150" },
+  { id: 2101, name: "2018 Toyota Tacoma" },
+  { id: 2102, name: "2020 Chevrolet Silverado" },
+  { id: 2103, name: "2017 Ram 1500" },
 ];
+
 const vehicleStatuses = [
   "Active",
   "Inactive",
@@ -87,10 +89,10 @@ const vehicleStatuses = [
   "Archived",
 ];
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
+const rowsPerPageOptions = [10, 20, 30];
 
 const Pages = () => {
   const [search, setSearch] = useState("");
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -100,19 +102,19 @@ const Pages = () => {
   const [meterDate, setMeterDate] = useState(new Date());
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPageOptions = [10, 20, 30];
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [filterDateRange, setFilterDateRange] = useState<DateRange | undefined>(undefined);
-
-  // Format selected date range or show "Meter Date"
+  const [query, setQuery] = useState("");
+  const [selectedVehicle, setSelectedVehicle] = useState<{ id: number; name: string } | null>(null);
+  
+  const filteredVehicles = vehiclesdrop.filter(vehicle => vehicle.name.toLowerCase().includes(search.toLowerCase()));
+  
   const meterDateLabel =
   filterDateRange && filterDateRange.from && filterDateRange.to
     ? `${format(filterDateRange.from, "MM/dd/yyyy")} - ${format(filterDateRange.to, "MM/dd/yyyy")}`
     : "filter Date";
 
-  // Create paginated vehicles data
   const paginatedVehicles = vehicles.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
@@ -138,6 +140,16 @@ const Pages = () => {
     }
   };
 
+  const handleSelectVehicle = (vehicle:{ id: number; name: string; }) => {
+    setSelectedVehicle(vehicle);
+    setQuery(`${vehicle.id} [${vehicle.name}]`);
+  };
+  
+  const handleClearSearch = () => {
+    setQuery("");
+    setSelectedVehicle(null);
+  };
+console.log(selectedVehicle)
   return (
     <div className="flex w-full flex-col gap-4 size-span">
       <Breadcrumb>
@@ -154,7 +166,7 @@ const Pages = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+      <div className="flex flex-wrap justify-between items-start md:items-center gap-2">
         <h2 className="text-2xl font-semibold">Meter History</h2>
         <Button
           variant="outline"
@@ -177,11 +189,12 @@ const Pages = () => {
             className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
+        <div className="flex flex-wrap gap-2">
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-gray-700"
+              className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
             >
               Meter Date
               <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
@@ -199,12 +212,57 @@ const Pages = () => {
           </PopoverContent>
         </Popover>
 
-        <DropdownFilter
-          label="Vehicle"
-          items={vehicleGroups}
-          selectedItems={selectedGroups}
-          setSelectedItems={setSelectedGroups}
-        />     
+        <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" 
+        className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
+        >Vehicle <ChevronDown className="w-4 h-4 ml-2 text-gray-400" /></Button>
+      </PopoverTrigger>
+      <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
+      <div className="relative ">
+    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+    <Input
+        placeholder="Search..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="pl-10 mb-2 border border-[#27272A] bg-black text-white pr-8"
+    />
+    {query && (
+        <X
+            className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
+            onClick={handleClearSearch}
+        />
+    )}
+</div>
+        <ScrollArea className="h-40 border-y border-[#27272A] my-4">
+          {filteredVehicles.map((vehicle) => (
+            <div key={vehicle.id} className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+            onClick={() => handleSelectVehicle(vehicle)}
+            >
+              <Avatar>
+                          <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+              <div className="flex flex-col">
+                <span>{vehicle.id} [{vehicle.name}]</span>
+                <span className="text-sm text-gray-400 flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-green-500" /> Active •  Car • Management
+                </span>
+              </div>
+            </div>
+          ))}
+        </ScrollArea>
+        <div className="flex justify-between gap-2 mt-2">
+          <Button variant="ghost" size="sm">Cancel</Button>
+          <Button variant="default" size="sm">Apply</Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+    
+    
         <DropdownFilter
           label="Meter Type"
           items={vehicleStatuses}
@@ -226,6 +284,7 @@ const Pages = () => {
           <Filter />
           Filters
         </Button>
+        </div>
       </div>
 
       {/* Table Container */}
