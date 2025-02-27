@@ -102,7 +102,7 @@ const Pages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPageOptions = [10, 20, 30];
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [addFilter, setAddFilter] = useState(false);
+
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [filterDateRange, setFilterDateRange] = useState<DateRange | undefined>(undefined);
 
@@ -305,7 +305,6 @@ const Pages = () => {
                 size="icon"
                 onClick={() => {
                   toggleFilterPanel();
-                  setAddFilter(false);
                 }}
               >
                 ✕
