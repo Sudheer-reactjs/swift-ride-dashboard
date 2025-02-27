@@ -139,7 +139,7 @@ const Financial = () => {
                   key={item.value}
                   htmlFor={item.value}
                   onClick={() => setSelectedOption(item.value)}
-                  className={`flex flex-col border rounded-lg p-2 w-full text-left cursor-pointer transition-all col-span-4 ${
+                  className={`flex flex-col border rounded-lg p-2 w-full text-left cursor-pointer transition-all col-span-12 md:col-span-4 ${
                     selectedOption === item.value
                       ? "border-green-500 bg-black/20" // Selected state
                       : "border-gray-700 bg-black/10 hover:border-gray-500" // Default state

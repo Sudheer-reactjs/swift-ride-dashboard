@@ -145,8 +145,8 @@ body{
   .size-span span.text-sm {
     font-size: 10px;
 }
-.size-span input {
-  font-size: 10px;
+.size-span input, .space-y-1 button {
+  font-size: 12px;
   padding: 4px 8px;
 }
 }

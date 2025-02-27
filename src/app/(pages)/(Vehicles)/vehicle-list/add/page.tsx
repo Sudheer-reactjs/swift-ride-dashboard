@@ -88,13 +88,13 @@ const AddVehicle = () => {
         {/* Main Content */}
         <main className="flex-1">
           {/* Top Buttons */}
-          <div className="flex justify-end mb-6 space-x-2 m:dspace-x-4">
-            <Button variant="outline" onClick={handleCancel} className="border-0 h-10">
+          <div className="flex flex-wrap gap-1 md:gap-0 justify-end mb-6 space-x-1 m:dspace-x-4">
+            <Button variant="outline" onClick={handleCancel} className="border-0 h-10 text-xs md:text-sm">
               Cancel
             </Button>
-            <Button variant="outline" className="h-10" onClick={() => router.push("/vehicle-list/add-multiple-vehicle")}>Add Multiple Vehicles</Button>
+            <Button variant="outline" className="h-10 text-xs md:text-sm" onClick={() => router.push("/vehicle-list/add-multiple-vehicle")}>Add Multiple Vehicles</Button>
             <Button
-              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
+              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm"
               onClick={handleSave}
             >
               Save Vehicle
@@ -114,14 +114,14 @@ const AddVehicle = () => {
               
           {/* Bottom Buttons */}
           <hr className="my-5" />
-          <div className="flex justify-between">
-          <Button variant="outline" onClick={handleCancel} className="border-0 h-10">
+          <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between">
+          <Button variant="outline" onClick={handleCancel} className="border-0 h-10 text-xs md:text-sm">
               Cancel
             </Button>
-            <div className="space-x-2 m:dspace-x-4">
-            <Button variant="outline" className="h-10">Save & Add Another</Button>
+            <div className="space-x-2 m:dspace-x-4 flex justify-center ">
+            <Button variant="outline" className="h-10 text-xs md:text-sm">Save & Add Another</Button>
             <Button
-              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10"
+              className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm"
               onClick={handleSave}
             >
               Save Vehicle
