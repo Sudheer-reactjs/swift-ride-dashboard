@@ -20,7 +20,7 @@ export default function Dashboard() {
     <div className="text-white min-h-screen">
       <div className="mb-6 flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-10 flex-col md:flex-row">
           <span className="text-sm text-[#737373] flex items-center gap-2">
             <RefreshIcon /> 1 minutes ago
           </span>
