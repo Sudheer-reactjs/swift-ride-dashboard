@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import {useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -76,8 +76,9 @@ const Pages = () => {
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
+  console.log('addTab:', addTab);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  console.log('dropdownRef:', dropdownRef);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -87,19 +88,19 @@ const Pages = () => {
     setIsOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setAddTab(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       setAddTab(false);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
 
   const getIcon = () => {
     switch (selected) {
@@ -119,10 +120,10 @@ const Pages = () => {
     <>
       {/* Header Actions */}
       <div className="flex flex-wrap justify-between items-centre mb-4 gap-2">
-        <h2 className="text-2xl font-semibold">Vehicles</h2>
+        <h2 className="text-lg font-semibold">Vehicles</h2>
         <Button
           variant="outline"
-          className="flex items-center h-10 w-[136px]"
+          className="flex items-center h-10 "
           onClick={() => router.push("/vehicle-list/add")}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -165,9 +166,9 @@ const Pages = () => {
             </Button>
             {addTab && (
               <Card
-                ref={dropdownRef}
+                // ref={dropdownRef}
                 className={cn(
-                  "absolute  mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
+                  "absolute right-[30px] mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
                 )}
               >
                 {/* Search Input */}

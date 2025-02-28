@@ -115,7 +115,7 @@ const VehicleDetail = () => {
     <div className="flex w-full flex-col gap-6 size-span">
      <Link href="/vehicle-list" className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal">
        <ChevronLeft  className="text-[#A1A1AA]"/> Vehicles</Link>
-      <div className="flex justify-between items-center  rounded-lg">
+      <div className="flex justify-between items-center flex-wrap  rounded-lg">
         <div className="flex items-center justify-between  gap-4 ">
           <Image
             src="/images/profile.png"
