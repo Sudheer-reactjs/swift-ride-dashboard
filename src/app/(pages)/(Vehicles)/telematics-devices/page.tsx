@@ -93,7 +93,7 @@ const Page = () => {
             <BreadcrumbPage className="text-[#FAFAFA] font-light">
             Telematics Devices
             </BreadcrumbPage>
-          </BreadcrumbItem>
+          </BreadcrumbItem> 
         </BreadcrumbList>
       </Breadcrumb>
       <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
