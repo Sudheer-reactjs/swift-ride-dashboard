@@ -191,7 +191,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                         <DropdownMenuTrigger>                         
                           <MoreHorizontal className="w-4 h-4 " />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
+                        <DropdownMenuContent >
                           <DropdownMenuItem className="flex items-center justify-between">View <ArrowRight />
                           </DropdownMenuItem>
                           <DropdownMenuItem className="flex items-center justify-between">Edit <Pencil /></DropdownMenuItem>

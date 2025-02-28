@@ -1,7 +1,7 @@
 "use client"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Filter, ListFilter, Plus, Search, X } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Filter, ListFilter, Plus, Search, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
 import DropdownFilter from '@/components/vehicle-list/add-vehicle/DropdownFilter';
@@ -211,7 +211,7 @@ const Page = () => {
               <div className="flex flex-col">
                 <span>{vehicle.id} [{vehicle.name}]</span>
                 <span className="text-sm text-gray-400 flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-green-500" /> Active •  Car • Management
+                <div className="w-2.5 h-2.5 bg-green-700 rounded-full" /> Active •  Car • Management
                 </span>
               </div>
             </div>

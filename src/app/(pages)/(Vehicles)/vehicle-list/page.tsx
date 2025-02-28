@@ -1,5 +1,5 @@
 "use client";
-import {useRef, useState } from "react";
+import {useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -21,11 +21,20 @@ import {
   Users,
   Globe,
   PlusIcon,
+  ChevronDown,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
 import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import StatusDropdown, { StatusItem } from "@/components/vehicle-list/add-vehicle/StatusDropdown";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -52,18 +61,17 @@ const vehicleTypes = [
   "Loader",
 ];
 const vehicleGroups = [
-  "Management",
-  "Logistics",
-  "Operations",
-  "Maintenance",
-  "Security",
+  { id: "V001", name: "Tesla Model 3" },
+  { id: "V002", name: "Ford Mustang" },
+  { id: "V003", name: "BMW X5" },
 ];
+
 const vehicleStatuses = [
-  "Active",
-  "Inactive",
-  "In Service",
-  "Out of Service",
-  "Archived",
+  { id: 'active', label: 'Active', color: 'bg-green-500' },
+  { id: 'in-shop', label: 'In Shop', color: 'bg-orange-500' },
+  { id: 'inactive', label: 'Inactive', color: 'bg-blue-500' },
+  { id: 'out-of-service', label: 'Out of Service', color: 'bg-red-500' },
+  { id: 'sold', label: 'Sold', color: 'bg-gray-500' },
 ];
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
@@ -71,15 +79,14 @@ const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedGroups, setSelectedGroups] = useState<{ id: string; name: string } | null>(null);
+  console.log('selectedGroups:', selectedGroups);
+  const [selectedStatuses, setSelectedStatuses] =  useState<StatusItem[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
-  console.log('addTab:', addTab);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  console.log('dropdownRef:', dropdownRef);
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState("private");
@@ -87,20 +94,19 @@ const Pages = () => {
   const toggleFilterPanel = () => {
     setIsOpen((prev) => !prev);
   };
+  const handleSelectVehicle = (vehicle: { id: string; name: string; }) => {
+    setSelectedGroups(vehicle);
+    setQuery(`${vehicle.id} [${vehicle.name}]`);
+  };
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       setAddTab(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
+  
+  const handleClearSearch = () => {
+    setQuery("");
+    setSelectedGroups(null);
+  };
+  const filteredVehicles = vehicleGroups.filter((vehicle) =>
+    vehicle.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   const getIcon = () => {
     switch (selected) {
@@ -131,112 +137,110 @@ const Pages = () => {
         </Button>
       </div>
 
-        <div className="flex  gap-2 mb-2">
-          {/* Main tabs container - will wrap on small screens */}
-          <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
-            {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
-              <Button
-                key={tab}
-                variant={selectedTab === tab ? "secondary" : "ghost"}
-                onClick={() => setSelectedTab(tab)}
-                className={cn(
-                  "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
-                  selectedTab === tab
-                    ? "bg-[#171717] text-white"
-                    : "hover:bg-[#171717]"
-                )}
-              >
-                <div className="flex justify-center items-center min-w-0 sm:min-w-16">
-                  {tab}
-                  {selectedTab === tab && <span className="ml-1">...</span>}
-                </div>
-              </Button>
-            ))}
-          </div>
-
-          {/* Add tab button */}
-          <div className="relative">
+      <div className="flex  gap-2 mb-2">
+        {/* Main tabs container - will wrap on small screens */}
+        <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
+          {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
             <Button
-              variant="ghost"
-              onClick={() => setAddTab(!addTab)}
-              className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 bg-[#1C1917] lg:bg-black rounded-full min-w-[32px] lg:min-w-[auto]"
+              key={tab}
+              variant={selectedTab === tab ? "secondary" : "ghost"}
+              onClick={() => setSelectedTab(tab)}
+              className={cn(
+                "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
+                selectedTab === tab
+                  ? "bg-[#171717] text-white"
+                  : "hover:bg-[#171717]"
+              )}
             >
-              <PlusIcon className="h-3 w-3" />
-              <span className="hidden lg:flex ml-1">Add Tab</span>
+              <div className="flex justify-center items-center min-w-0 sm:min-w-16">
+                {tab}
+                {selectedTab === tab && <span className="ml-1">...</span>}
+              </div>
             </Button>
-            {addTab && (
-              <Card
-                // ref={dropdownRef}
-                className={cn(
-                  "absolute right-[30px] mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
-                )}
-              >
-                {/* Search Input */}
-                <div className="relative">
-                  <Search
-                    size={16}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Search views"
-                    className="w-full p-2 pl-8 bg-black h-10 text-white rounded-md border-[0.5px] border-[#171717]"
-                  />
-                </div>
+          ))}
+        </div>
 
-                {/* Saved Views Section */}
-                <div className="mt-3 border-t border-[#171717]">
-                  <div className="flex items-center mt-3 justify-between text-sm text-white">
-                    <div>
-                      <span>MY SAVED VIEWS</span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-white box-border "
-                      >
-                        ...
-                      </Button>
-                    </div>
+        {/* Add tab button */}
+        <div className="relative">
+          <Button
+            variant="ghost"
+            onClick={() => setAddTab(!addTab)}
+            className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 bg-[#1C1917] lg:bg-black rounded-full min-w-[32px] lg:min-w-[auto]"
+          >
+            <PlusIcon className="h-3 w-3" />
+            <span className="hidden lg:flex ml-1">Add Tab</span>
+          </Button>
+          {addTab && (
+            <Card
+              // ref={dropdownRef}
+              className={cn(
+                "absolute right-[30px] mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
+              )}
+            >
+              {/* Search Input */}
+              <div className="relative">
+                <Search
+                  size={16}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+                />
+                <Input
+                  type="text"
+                  placeholder="Search views"
+                  className="w-full p-2 pl-8 bg-black h-10 text-white rounded-md border-[0.5px] border-[#171717]"
+                />
+              </div>
 
+              {/* Saved Views Section */}
+              <div className="mt-3 border-t border-[#171717]">
+                <div className="flex items-center mt-3 justify-between text-sm text-white">
+                  <div>
+                    <span>MY SAVED VIEWS</span>
                     <Button
                       variant="ghost"
-                      className="text-sm"
-                      onClick={() => setOpen(true)}
+                      size="icon"
+                      className="text-white box-border "
                     >
-                      + Add Filter
+                      ...
                     </Button>
                   </div>
-                  <div className="flex flex-col items-center justify-center">
-                    <p className="text-white text-sm my-2">
-                      You havent created any views
-                    </p>
-                  </div>
-                </div>
 
-                {/* Standard Views Section */}
-                <div className="mt-4">
-                  <span className="text-sm text-white">STANDARD VIEWS</span>
-                  <div className="flex flex-col mt-2 space-y-2 ">
-                    {["All", "Assigned", "Unassigned", "Archived"].map(
-                      (tab) => (
-                        <Button
-                          key={tab}
-                          variant="ghost"
-                          className="flex justify-start w-full text-sm  bg-black hover:bg-[#171717] p-2 rounded-md"
-                        >
-                          ✓ {tab}{" "}
-                          <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
-                            S
-                          </span>
-                        </Button>
-                      )
-                    )}
-                  </div>
+                  <Button
+                    variant="ghost"
+                    className="text-sm"
+                    onClick={() => setOpen(true)}
+                  >
+                    + Add Filter
+                  </Button>
                 </div>
-              </Card>
-            )}
-          </div>
+                <div className="flex flex-col items-center justify-center">
+                  <p className="text-white text-sm my-2">
+                    You havent created any views
+                  </p>
+                </div>
+              </div>
+
+              {/* Standard Views Section */}
+              <div className="mt-4">
+                <span className="text-sm text-white">STANDARD VIEWS</span>
+                <div className="flex flex-col mt-2 space-y-2 ">
+                  {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+                    <Button
+                      key={tab}
+                      variant="ghost"
+                      className="flex justify-start w-full text-sm  bg-black hover:bg-[#171717] p-2 rounded-md"
+                    >
+                      ✓ {tab}{" "}
+                      <span className="border bg-white  text-black border-gray-600 px-1 box-border rounded-sm text-xs">
+                        S
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          )}
         </div>
+      </div>
 
       {/* Filters & Search */}
       <div className="flex space-x-2 mb-1 ">
@@ -256,17 +260,80 @@ const Pages = () => {
             selectedItems={selectedTypes}
             setSelectedItems={setSelectedTypes}
           />
-          <DropdownFilter
-            label="Vehicle Group"
-            items={vehicleGroups}
-            selectedItems={selectedGroups}
-            setSelectedItems={setSelectedGroups}
-          />
-          <DropdownFilter
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
+              >
+                Vehicle group <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
+              <div className="relative ">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  placeholder="Search..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="pl-10 mb-2 border border-[#27272A] bg-black text-white pr-8"
+                />
+                {query && (
+                  <X
+                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
+                    onClick={handleClearSearch}
+                  />
+                )}
+              </div>
+              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
+                {filteredVehicles.map((vehicle) => (
+                  <div
+                    key={vehicle.id}
+                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                    onClick={() => handleSelectVehicle(vehicle)}
+                  >
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <span>
+                        {vehicle.id} [{vehicle.name}]
+                      </span>
+                      <span className="text-sm text-gray-400 flex items-center gap-1">
+                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
+                        Active • Car • Management
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </ScrollArea>
+              <div className="flex justify-between gap-2 mt-2">
+                <Button variant="ghost" size="sm">
+                  Cancel
+                </Button>
+                <Button variant="default" size="sm">
+                  Apply
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+          
+          {/* <DropdownFilter
             label="Vehicle Status"
             items={vehicleStatuses}
             selectedItems={selectedStatuses}
             setSelectedItems={setSelectedStatuses}
+          /> */}
+          <StatusDropdown
+          label="Vehicle Status"
+          items={vehicleStatuses}
+          selectedItems={selectedStatuses}
+          setSelectedItems={setSelectedStatuses}
           />
           <DropdownFilter
             label="Watchers"
