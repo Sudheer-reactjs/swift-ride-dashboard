@@ -62,6 +62,8 @@ const StatusDropdown: React.FC<DropdownFilterProps> = ({
     }
   }, [selectedItems]);
 
+  const isApplyDisabled = selectedItems.length === 0;
+
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
@@ -134,8 +136,8 @@ const StatusDropdown: React.FC<DropdownFilterProps> = ({
           <Button
             size="sm"
             onClick={() => setIsOpen(false)}
-            className="w-full h-10 ml-2 bg-[#FAFAFA] text-black hover:bg-[#E5E5E5]"
-          >
+            className={`w-full h-10 ml-2 ${isApplyDisabled ? 'bg-[#FAFAFA] text-black opacity-50 cursor-not-allowed' : 'bg-[#FAFAFA] text-black hover:bg-[#E5E5E5]'}`}
+            disabled={isApplyDisabled}>
             Apply
           </Button>
         </div>

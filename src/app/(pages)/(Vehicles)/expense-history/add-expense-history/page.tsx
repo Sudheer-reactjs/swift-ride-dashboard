@@ -1,0 +1,333 @@
+"use client"
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
+import { CalendarIcon, ChevronLeft, FileTextIcon, ImageIcon } from 'lucide-react'
+import Link from 'next/link'
+import React, { useRef, useState } from 'react'
+import { format } from "date-fns";
+
+const Page = () => {
+  const [selectedOption, setSelectedOption] = useState('singleexpense')
+  const [date, setDate] = React.useState<Date>();
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+  const [documentFiles, setDocumentFiles] = useState<File[]>([]);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const documentInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      handlePhotoFiles(files);
+    }
+  };
+
+  const handleDocumentDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      handleDocumentFiles(files);
+    }
+  };
+
+  const handlePhotoFiles = (files: FileList) => {
+    const newFiles = Array.from(files);
+    setPhotoFiles([...photoFiles, ...newFiles]);
+  };
+
+  const handleDocumentFiles = (files: FileList) => {
+    const newFiles = Array.from(files);
+    setDocumentFiles([...documentFiles, ...newFiles]);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handlePhotoClick = () => {
+    photoInputRef.current?.click();
+  };
+
+  const handleDocumentClick = () => {
+    documentInputRef.current?.click();
+  };
+
+  const handlePhotoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handlePhotoFiles(e.target.files);
+    }
+  };
+
+  const handleDocumentInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleDocumentFiles(e.target.files);
+    }
+  };
+
+  return (
+    <div className="flex w-full flex-col gap-6 size-span">
+      <Link href="/vehicle-list" className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal">
+        <ChevronLeft className="text-[#A1A1AA]" /> Expense History
+      </Link>
+      <div className="flex justify-between items-center flex-wrap rounded-lg">
+        <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
+          New Expense Entry
+        </h2>
+        <div className='flex items-center gap-2'>
+          <Button variant="outline" className="h-10">Cancel</Button>
+          <Button variant="outline" className="h-10 bg-[#065F46] hover:bg-[#065F46]">Save Expense Entry</Button>
+        </div>
+      </div>
+      {/* Add Expense Form */}
+      <div className="flex w-full flex-col gap-6 size-span">
+        <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <h2 className="text-lg font-semibold">Details</h2>
+          <hr className="my-5" />
+          <div className="grid grid-cols-12 gap-4 md:gap-6">
+            <div className="col-span-12 w-full space-y-1">
+              <Label className="text-sm font-medium text-gray-100">Vehicle</Label>
+              <Select>
+                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="device1">Device 1</SelectItem>
+                  <SelectItem value="device2">Device 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="col-span-12 w-full space-y-1">
+              <Label className="text-sm font-medium text-gray-100">Expense Type</Label>
+              <Select>
+                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="device1">Device 1</SelectItem>
+                  <SelectItem value="device2">Device 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="col-span-12 space-y-1">
+              <Label className="text-sm font-medium text-gray-100">Vendor</Label>
+              <Select>
+                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="device1">Device 1</SelectItem>
+                  <SelectItem value="device2">Device 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="col-span-12 space-y-1">
+              <Label className="text-sm font-medium text-gray-100">Amount</Label>
+              <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
+                <Input placeholder="Please Enter" className="bg-transparent border-0 h-10 focus:ring-0 focus-visible:ring-0" />
+                <span className="text-sm w-full max-w-max">$</span>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[#171717] p-4 rounded-lg text-white">
+            <h2 className="text-lg font-semibold">Frequency</h2>
+            <hr className="my-5" />
+            <div className="grid grid-cols-12 gap-4 md:gap-6">
+              <div className="col-span-12 w-full space-y-1">
+                <RadioGroup defaultValue={selectedOption} onValueChange={setSelectedOption} className="grid grid-cols-12 gap-4 md:gap-6">
+                  {[
+                    { value: "singleexpense", label: "Single Expense", description: "A single entry that does not repeat" },
+                    { value: "recurringexpense", label: "Recurring Expense", description: "Repeats on a monthly or annual basis" },
+                  ].map((item) => (
+                    <label
+                      key={item.value}
+                      htmlFor={item.value}
+                      onClick={() => setSelectedOption(item.value)}
+                      className={`flex flex-col border rounded-lg p-2 w-full text-left cursor-pointer transition-all col-span-12 md:col-span-4 ${
+                        selectedOption === item.value ? "border-green-500 bg-black/20" : "border-gray-700 bg-black/10 hover:border-gray-500"
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <RadioGroupItem value={item.value} id={item.value} className="hidden" />
+                        <span className="text-white font-medium custom-cricle m-0 pl-6">{item.label}</span>
+                      </div>
+                      <p className="text-gray-400 text-sm mt-1 pl-6">{item.description}</p>
+                    </label>
+                  ))}
+                </RadioGroup>
+              </div>
+              {selectedOption === "singleexpense" && (
+                <>
+                  <div className="col-span-12 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Date</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal bg-black text-white border-zinc-800 h-10", !date && "text-muted-foreground")}>
+                          <CalendarIcon />
+                          {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="col-span-12 space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Notes</Label>
+                    <Textarea placeholder="Please enter" id="message" className="bg-black text-white border-zinc-800 h-[90px]" />
+                  </div>
+                  <div className="col-span-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Photo Upload */}
+        <div className="bg-black rounded-md overflow-hidden">
+          <div className="px-4 py-3 text-white">
+            <h3>Photos</h3>
+          </div>
+          <div 
+            className="border border-dashed border-gray-600 bg-gray-900 h-32 flex flex-col items-center justify-center px-4 py-6 cursor-pointer"
+            onDrop={handlePhotoDrop} 
+            onDragOver={handleDragOver} 
+            onClick={handlePhotoClick}
+          >
+            <input 
+              type="file" 
+              ref={photoInputRef} 
+              className="hidden" 
+              accept="image/*" 
+              multiple 
+              onChange={handlePhotoInputChange} 
+            />
+            <div className="flex items-center justify-center mb-2">
+              <div className="w-8 h-8 border border-green-500 rounded-md flex items-center justify-center mr-2">
+                <ImageIcon className="w-5 h-5 text-green-500" />
+              </div>
+            </div>
+            <p className="text-white text-sm mb-1">Drag and drop files to upload</p>
+            <p className="text-gray-500 text-xs">or click to pick files</p>
+          </div>
+        </div>
+
+        {/* Document Upload */}
+        <div className="bg-black rounded-md overflow-hidden">
+          <div className="px-4 py-3 text-white">
+            <h3>Documents</h3>
+          </div>
+          <div 
+            className="border border-dashed border-gray-600 bg-gray-900 h-32 flex flex-col items-center justify-center px-4 py-6 cursor-pointer"
+            onDrop={handleDocumentDrop} 
+            onDragOver={handleDragOver} 
+            onClick={handleDocumentClick}
+          >
+            <input 
+              type="file" 
+              ref={documentInputRef} 
+              className="hidden" 
+              multiple 
+              onChange={handleDocumentInputChange} 
+            />
+            <div className="flex items-center justify-center mb-2">
+              <div className="w-8 h-8 border border-green-500 rounded-md flex items-center justify-center mr-2">
+                <FileTextIcon className="w-5 h-5 text-green-500" />
+              </div>
+            </div>
+            <p className="text-white text-sm mb-1">Drag and drop files to upload</p>
+            <p className="text-gray-500 text-xs">or click to pick files</p>
+          </div>
+        </div>
+      </div>
+      </div>
+                </>
+              )}
+              {selectedOption === "recurringexpense" && (
+                <>
+                  <div className="col-span-12 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Purchase Date</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal bg-black text-white border-zinc-800 h-10", !date && "text-muted-foreground")}>
+                          <CalendarIcon />
+                          {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Date of Loan</Label>
+                    <p className="text-sm mt-1 text-zinc-400">Date the loan agreement was signed</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Amount of Loan</Label>
+                    <Input placeholder="$" className="bg-black text-white border-zinc-800 h-10" />
+                    <p className="text-sm mt-1 text-zinc-400">Total principal amount at the start of the loan</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Annual Percentage Rate (APR)</Label>
+                    <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
+                      <Input placeholder="$" className="bg-black border-0 h-10 focus:ring-0 focus-visible:ring-0" />
+                      <span className="text-sm w-full max-w-max">%</span>
+                    </div>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Down Payment</Label>
+                    <Input placeholder="$" className="bg-black text-white border-zinc-800 h-10" />
+                    <p className="text-sm mt-1 text-zinc-400">Total principal amount at the start of the loan</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">First Payment Date</Label>
+                    <p className="text-sm mt-1 text-zinc-400">Date the loan agreement was signed</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Monthly Payment</Label>
+                    <Input placeholder="$" className="bg-black text-white border-zinc-800 h-10" />
+                    <p className="text-sm mt-1 text-zinc-400">Total amount that will be paid each month including any taxes and fees</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Number of Payments</Label>
+                    <Input placeholder="$" className="bg-black text-white border-zinc-800 h-10" />
+                    <p className="text-sm mt-1 text-zinc-400">Number of payments until the loan is paid off (Does not include the down payment)</p>
+                  </div>
+                  <div className="col-span-12 lg:col-span-6 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Loan End Date</Label>
+                  </div>
+                  <div className="col-span-12 w-full space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Account Number</Label>
+                    <Input placeholder="$" className="bg-black text-white border-zinc-800 h-10" />
+                    <p className="text-sm mt-1 text-zinc-400">Used to identify the loan with the lender</p>
+                  </div>
+                  <div className="col-span-12 space-y-1">
+                    <Label className="text-sm font-medium text-gray-100">Notes</Label>
+                    <Textarea placeholder="Please enter" id="message" className="bg-black text-white border-zinc-800 h-[90px]" />
+                  </div>
+                  <div className="col-span-12 space-y-1">
+                    <label htmlFor="terms" className="flex items-start gap-3 cursor-pointer">
+                      <Checkbox id="terms" className="mt-1" />
+                      <div>
+                        <span className="text-white font-medium">Generate Expenses</span>
+                        <p className="text-sm text-zinc-400">Automatically generate expense entries for payments for this loan/lease.</p>
+                      </div>
+                    </label>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Page;

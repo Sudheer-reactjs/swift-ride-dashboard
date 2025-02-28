@@ -89,12 +89,9 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
     setFilters([...filters, { id: filters.length + 1, field: "" }]);
   };
 
-  const handleSelectAll = () => {
-    setSelectedRows(
-      selectedRows.length === paginatedVehicles.length
-        ? []
-        : paginatedVehicles.map((_, i) => i)
-    );
+  const handleSelectAll = (checked: boolean | "indeterminate") => {
+    if (checked === "indeterminate") return;
+    setSelectedRows(checked ? paginatedVehicles.map((_, i) => i) : []);
   };
 
   const paginatedVehicles = vehicles.slice(
@@ -113,8 +110,11 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                 <TableHead className="flex items-center gap-2 ">
                   <Checkbox
                     id="select-all"
-                    checked={selectedRows.length === vehicles.length}
-                    onChange={handleSelectAll}
+                    checked={
+                      selectedRows.length === paginatedVehicles.length &&
+                      paginatedVehicles.length > 0
+                    }
+                    onCheckedChange={handleSelectAll}
                   />{" "}
                   Name
                 </TableHead>
@@ -146,7 +146,12 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                         <Checkbox
                           id={`checkbox-${index}`}
                           checked={selectedRows.includes(index)}
-                          onChange={() => handleRowSelect(index)}
+                          onCheckedChange={(checked) => {
+                            if (checked !== "indeterminate") {
+                              handleRowSelect(index);
+                            }
+                          }}
+                          onClick={(e) => e.stopPropagation()}
                         />
                         <Avatar>
                           <AvatarImage
@@ -188,14 +193,19 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                     </TableCell>
                     <TableCell className="hover:border border-[#262626]">
                       <DropdownMenu>
-                        <DropdownMenuTrigger>                         
+                        <DropdownMenuTrigger>
                           <MoreHorizontal className="w-4 h-4 " />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent >
-                          <DropdownMenuItem className="flex items-center justify-between">View <ArrowRight />
+                        <DropdownMenuContent>
+                          <DropdownMenuItem className="flex items-center justify-between">
+                            View <ArrowRight />
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="flex items-center justify-between">Edit <Pencil /></DropdownMenuItem>
-                          <DropdownMenuItem className="flex items-center justify-between">Archive <Archive /></DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center justify-between">
+                            Edit <Pencil />
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center justify-between">
+                            Archive <Archive />
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -313,7 +323,10 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
           <div className="flex items-center  gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2 px-3">
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-2 px-3"
+                >
                   {" "}
                   {rowsPerPage} <ChevronDown className="w-2 h-4" />{" "}
                 </Button>
@@ -330,7 +343,11 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="outline" onClick={() => setCurrentPage(1)} className="px-3">
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage(1)}
+              className="px-3"
+            >
               {" "}
               <ChevronsLeft className="w-3 h-4" />{" "}
             </Button>

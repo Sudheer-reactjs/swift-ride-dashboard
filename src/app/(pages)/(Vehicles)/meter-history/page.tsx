@@ -22,7 +22,11 @@ import {
   ChevronRight,
   CalendarIcon,
   X,
-  CheckCircle,
+  MoreHorizontal,
+  ArrowRight,
+  Pencil,
+  History,
+  Lock,
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -104,16 +108,26 @@ const Pages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-  const [filterDateRange, setFilterDateRange] = useState<DateRange | undefined>(undefined);
+  const [filterDateRange, setFilterDateRange] = useState<DateRange | undefined>(
+    undefined
+  );
   const [query, setQuery] = useState("");
-  const [selectedVehicle, setSelectedVehicle] = useState<{ id: number; name: string } | null>(null);
-  
-  const filteredVehicles = vehiclesdrop.filter(vehicle => vehicle.name.toLowerCase().includes(search.toLowerCase()));
-  
+  const [selectedVehicle, setSelectedVehicle] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+
+  const filteredVehicles = vehiclesdrop.filter((vehicle) =>
+    vehicle.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   const meterDateLabel =
-  filterDateRange && filterDateRange.from && filterDateRange.to
-    ? `${format(filterDateRange.from, "MM/dd/yyyy")} - ${format(filterDateRange.to, "MM/dd/yyyy")}`
-    : "filter Date";
+    filterDateRange && filterDateRange.from && filterDateRange.to
+      ? `${format(filterDateRange.from, "MM/dd/yyyy")} - ${format(
+          filterDateRange.to,
+          "MM/dd/yyyy"
+        )}`
+      : "filter Date";
 
   const paginatedVehicles = vehicles.slice(
     (currentPage - 1) * rowsPerPage,
@@ -125,12 +139,11 @@ const Pages = () => {
 
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
 
-  const handleRowSelect = (index:number) => {
+  const handleRowSelect = (index: number) => {
     setSelectedRows((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-
 
   const handleSelectAll = () => {
     if (selectedRows.length === paginatedVehicles.length) {
@@ -140,16 +153,16 @@ const Pages = () => {
     }
   };
 
-  const handleSelectVehicle = (vehicle:{ id: number; name: string; }) => {
+  const handleSelectVehicle = (vehicle: { id: number; name: string }) => {
     setSelectedVehicle(vehicle);
     setQuery(`${vehicle.id} [${vehicle.name}]`);
   };
-  
+
   const handleClearSearch = () => {
     setQuery("");
     setSelectedVehicle(null);
   };
-console.log(selectedVehicle)
+  console.log(selectedVehicle);
   return (
     <div className="flex w-full flex-col gap-4 size-span">
       <Breadcrumb>
@@ -189,113 +202,128 @@ console.log(selectedVehicle)
             className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-            >
-              Meter Date
-              <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-2 bg-black text-white border border-[#27272A] rounded-lg shadow-lg">
-            {/* Calendar for Date Range */}
-            <Calendar
-              mode="range"
-              selected={dateRange}
-              onSelect={setDateRange}
-              initialFocus
-              className="bg-black text-white"
-            />
-          </PopoverContent>
-        </Popover>
+        <div className="hidden lg:flex flex-wrap gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
+              >
+                Meter Date
+                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-2 bg-black text-white border border-[#27272A] rounded-lg shadow-lg">
+              {/* Calendar for Date Range */}
+              <Calendar
+                mode="range"
+                selected={dateRange}
+                onSelect={setDateRange}
+                initialFocus
+                className="bg-black text-white"
+              />
+            </PopoverContent>
+          </Popover>
 
-        <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" 
-        className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-        >Vehicle <ChevronDown className="w-4 h-4 ml-2 text-gray-400" /></Button>
-      </PopoverTrigger>
-      <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-      <div className="relative ">
-    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-    <Input
-        placeholder="Search..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="pl-10 mb-2 border border-[#27272A] bg-black text-white pr-8"
-    />
-    {query && (
-        <X
-            className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-            onClick={handleClearSearch}
-        />
-    )}
-</div>
-        <ScrollArea className="h-40 border-y border-[#27272A] my-4">
-          {filteredVehicles.map((vehicle) => (
-            <div key={vehicle.id} className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-            onClick={() => handleSelectVehicle(vehicle)}
-            >
-              <Avatar>
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-              <div className="flex flex-col">
-                <span>{vehicle.id} [{vehicle.name}]</span>
-                <span className="text-sm text-gray-400 flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-green-500" /> Active •  Car • Management
-                </span>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
+              >
+                Vehicle
+                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
+              <div className="relative ">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  placeholder="Search..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
+                />
+                {query && (
+                  <X
+                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
+                    onClick={handleClearSearch}
+                  />
+                )}
               </div>
-            </div>
-          ))}
-        </ScrollArea>
-        <div className="flex justify-between gap-2 mt-2">
-          <Button variant="ghost" size="sm">Cancel</Button>
-          <Button variant="default" size="sm">Apply</Button>
-        </div>
-      </PopoverContent>
-    </Popover>
-    
-    
-        <DropdownFilter
-          label="Meter Type"
-          items={vehicleStatuses}
-          selectedItems={selectedStatuses}
-          setSelectedItems={setSelectedStatuses}
-        />
-        <DropdownFilter
-          label="Void Status"
-          items={vehicleWatchers}
-          selectedItems={selectedWatchers}
-          setSelectedItems={setSelectedWatchers}
-        />
+              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
+                {filteredVehicles.map((vehicle) => (
+                  <div
+                    key={vehicle.id}
+                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                    onClick={() => handleSelectVehicle(vehicle)}
+                  >
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <span>
+                        {vehicle.id} [{vehicle.name}]
+                      </span>
+                      <span className="text-sm text-gray-400 flex items-center gap-1">
+                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
+                        Active • Car • Management
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </ScrollArea>
+              <div className="flex justify-between gap-2 mt-2">
+                <Button variant="ghost" size="sm" className="w-full h-10">
+                  Cancel
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className={`w-full h-10 ${
+                    query === "" ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={query === ""}
+                >
+                  Apply
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
 
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 h-10 mb-2"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <Filter />
-          Filters
-        </Button>
-        </div>
+          <DropdownFilter
+            label="Meter Type"
+            items={vehicleStatuses}
+            selectedItems={selectedStatuses}
+            setSelectedItems={setSelectedStatuses}
+          />
+          <DropdownFilter
+            label="Void Status"
+            items={vehicleWatchers}
+            selectedItems={selectedWatchers}
+            setSelectedItems={setSelectedWatchers}
+          />
+          </div>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 h-10 mb-2"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <Filter />
+            Filters
+          </Button>
+        
       </div>
 
       {/* Table Container */}
-      <div className="flex rounded-lg border min-w-[500px] overflow-auto bg-[#171717] border-[#27272A]">
-        <div
-          className={`transition-all duration-300 ${
-            isOpen ? "w-[70%]" : "w-full"
-          }`}
-        >
-          <div className="w-full overflow-x-auto">
-            <Table>
+      <div className="w-full relative overflow-hidden">
+              {/* Table Container */}
+              <div className="w-full overflow-auto rounded-lg border bg-[#171717] border-[#27272A]">
+                <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1300px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>
@@ -346,17 +374,45 @@ console.log(selectedVehicle)
                     <TableCell>{vehicle.source}</TableCell>
                     <TableCell>{vehicle.voidStatus}</TableCell>
                     <TableCell>{vehicle.autoVoidReason}</TableCell>
+                    <TableCell className="hover:border border-[#262626]">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <MoreHorizontal className="w-4 h-4 " />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem className="flex items-center cursor-pointer justify-between">
+                            View <ArrowRight />
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center cursor-pointer justify-between">
+                            Edit <Pencil  />
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center cursor-pointer justify-between">
+                            View Record History<History  />
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center cursor-pointer justify-between">
+                            Delete <Lock />
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          </div>
-        </div>
-
-        {isOpen && (
-          <div className="w-[30%] p-4 bg-[#171717] border-l border-gray-800 h-full">
-            <div className="flex my-2 items-center justify-between">
-              <h3 className="text-2xl font-semibold flex items-center gap-2">
+          </div>        
+          <div
+          aria-hidden={!isOpen}
+          className="absolute max-w-[430px] w-full top-0 bottom-0 right-0 border-[1px]  bg-neutral-900 rounded  border-zinc-800 flex-col justify-start items-start gap-10 inline-flex"
+          data-testid="index-filters-aside"
+          style={{
+            zIndex: 3,
+            transition: "transform 300ms ease-in-out",
+            transform: isOpen ? "translateX(0)" : "translateX(450px)",
+          }}
+        >
+          <div className="flex-shrink-0 w-full h-full overflow-auto bg-[#171717] ">
+            <div className="flex  px-4 py-2 items-center justify-between sticky top-0 bg-[#171717] z-10">
+               <h3 className="text-2xl font-semibold flex items-center gap-2">
                 <ListFilter className="w-6 h-6" /> Filters
               </h3>
               <Button
@@ -371,57 +427,55 @@ console.log(selectedVehicle)
             </div>
             <hr />
             <div className="p-4 gap-4  text-white">
-      <div className="flex flex-col border border-[#27272A] p-4 rounded-sm space-y-2">
-        <label className="text-sm font-medium">Meter date</label>
-        <Select>
-          <SelectTrigger className="bg-[#09090B] border-[#27272A] text-white">
-            <SelectValue placeholder="Is between" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#09090B] border-[#27272A] text-white">
-            <SelectItem value="between">Is between</SelectItem>
-            <SelectItem value="before">Is before</SelectItem>
-            <SelectItem value="after">Is after</SelectItem>
-          </SelectContent>
-        </Select>
+              <div className="flex flex-col border border-[#27272A] p-4 rounded-sm space-y-2">
+                <label className="text-sm font-medium">Meter date</label>
+                <Select>
+                  <SelectTrigger className="bg-[#09090B] border-[#27272A] text-white">
+                    <SelectValue placeholder="Is between" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#09090B] border-[#27272A] text-white">
+                    <SelectItem value="between">Is between</SelectItem>
+                    <SelectItem value="before">Is before</SelectItem>
+                    <SelectItem value="after">Is after</SelectItem>
+                  </SelectContent>
+                </Select>
 
-       
-        <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm  text-white border-[#27272A]"
-        >
-          {meterDateLabel}
-          
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-2 bg-black text-white border border-[#27272A] rounded-lg shadow-lg">
-        {/* Calendar for Date Range */}
-        <Calendar
-          mode="range"
-          selected={filterDateRange}
-          onSelect={setFilterDateRange}
-          initialFocus
-          className="bg-black text-white"
-        />
-      </PopoverContent>
-    </Popover>
-    </div>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm  text-white border-[#27272A]"
+                    >
+                      {meterDateLabel}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-2 bg-black text-white border border-[#27272A] rounded-lg shadow-lg">
+                    {/* Calendar for Date Range */}
+                    <Calendar
+                      mode="range"
+                      selected={filterDateRange}
+                      onSelect={setFilterDateRange}
+                      initialFocus
+                      className="bg-black text-white"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
 
-        <div className="flex justify-between flex-wrap items-center pt-2">
-          <Button variant="ghost" className="text-white">
-            <Plus className="w-4 h-4 mr-1" /> Add Filter
-          </Button>
-          <Button className="bg-[#065F46] text-white hover:bg-[#065F46]">Apply</Button>
-        </div>
-     
-    </div>
+              <div className="flex justify-between flex-wrap items-center pt-2">
+                <Button variant="ghost" className="text-white">
+                  <Plus className="w-4 h-4 mr-1" /> Add Filter
+                </Button>
+                <Button className="bg-[#065F46] text-white hover:bg-[#065F46]">
+                  Apply
+                </Button>
+              </div>
+            </div>
           </div>
-        )}
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center mt-4">
-        <p className="text-sm">
+      <div className="flex flex-wrap justify-between items-center mt-4">
+          <p className="text-sm">
           {selectedRows.length} of {vehicles.length} row(s) selected.
         </p>
         <div className="flex items-center gap-4">
@@ -429,7 +483,7 @@ console.log(selectedVehicle)
             <span>Row Per Page</span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
+                <Button variant="outline" className="flex items-center gap-2 px-3">
                   {" "}
                   {rowsPerPage} <ChevronDown className="w-2 h-4" />{" "}
                 </Button>
@@ -449,13 +503,16 @@ console.log(selectedVehicle)
           </div>
           <div>Page 1 of 10</div>
           <div className="gap-2 flex flex-wrap">
-            <Button variant="outline" onClick={() => setCurrentPage(1)}>
+            <Button variant="outline" onClick={() => setCurrentPage(1)}
+              className="px-3"
+              >
               {" "}
               <ChevronsLeft className="w-4 h-4" />{" "}
             </Button>
             <Button
               variant="outline"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+             className="px-3"
             >
               {" "}
               <ChevronLeft className="w-4 h-4" />{" "}
@@ -465,6 +522,7 @@ console.log(selectedVehicle)
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
+               className="px-3"
             >
               {" "}
               <ChevronRight className="w-4 h-4" />{" "}
@@ -472,12 +530,14 @@ console.log(selectedVehicle)
             <Button
               variant="outline"
               onClick={() => setCurrentPage(totalPages)}
+               className="px-3"
             >
               {" "}
               <ChevronsRight className="w-4 h-4" />{" "}
             </Button>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Dialog for new saved view */}

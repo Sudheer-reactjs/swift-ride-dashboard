@@ -1,5 +1,5 @@
 "use client";
-import {useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -34,7 +34,9 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import StatusDropdown, { StatusItem } from "@/components/vehicle-list/add-vehicle/StatusDropdown";
+import StatusDropdown, {
+  StatusItem,
+} from "@/components/vehicle-list/add-vehicle/StatusDropdown";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -67,11 +69,11 @@ const vehicleGroups = [
 ];
 
 const vehicleStatuses = [
-  { id: 'active', label: 'Active', color: 'bg-green-500' },
-  { id: 'in-shop', label: 'In Shop', color: 'bg-orange-500' },
-  { id: 'inactive', label: 'Inactive', color: 'bg-blue-500' },
-  { id: 'out-of-service', label: 'Out of Service', color: 'bg-red-500' },
-  { id: 'sold', label: 'Sold', color: 'bg-gray-500' },
+  { id: "active", label: "Active", color: "bg-green-500" },
+  { id: "in-shop", label: "In Shop", color: "bg-orange-500" },
+  { id: "inactive", label: "Inactive", color: "bg-blue-500" },
+  { id: "out-of-service", label: "Out of Service", color: "bg-red-500" },
+  { id: "sold", label: "Sold", color: "bg-gray-500" },
 ];
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
@@ -79,9 +81,12 @@ const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<{ id: string; name: string } | null>(null);
-  console.log('selectedGroups:', selectedGroups);
-  const [selectedStatuses, setSelectedStatuses] =  useState<StatusItem[]>([]);
+  const [selectedGroups, setSelectedGroups] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+  console.log("selectedGroups:", selectedGroups);
+  const [selectedStatuses, setSelectedStatuses] = useState<StatusItem[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
@@ -94,12 +99,11 @@ const Pages = () => {
   const toggleFilterPanel = () => {
     setIsOpen((prev) => !prev);
   };
-  const handleSelectVehicle = (vehicle: { id: string; name: string; }) => {
+  const handleSelectVehicle = (vehicle: { id: string; name: string }) => {
     setSelectedGroups(vehicle);
     setQuery(`${vehicle.id} [${vehicle.name}]`);
   };
 
-  
   const handleClearSearch = () => {
     setQuery("");
     setSelectedGroups(null);
@@ -267,7 +271,8 @@ const Pages = () => {
                 variant="outline"
                 className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
               >
-                Vehicle group <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+                Vehicle group{" "}
+                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
@@ -277,7 +282,7 @@ const Pages = () => {
                   placeholder="Search..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="pl-10 mb-2 border border-[#27272A] bg-black text-white pr-8"
+                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
                 />
                 {query && (
                   <X
@@ -313,27 +318,28 @@ const Pages = () => {
                 ))}
               </ScrollArea>
               <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="w-full h-10">
                   Cancel
                 </Button>
-                <Button variant="default" size="sm">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className={`w-full h-10 ${
+                    query === "" ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={query === ""}
+                >
                   Apply
                 </Button>
               </div>
             </PopoverContent>
           </Popover>
-          
-          {/* <DropdownFilter
+
+          <StatusDropdown
             label="Vehicle Status"
             items={vehicleStatuses}
             selectedItems={selectedStatuses}
             setSelectedItems={setSelectedStatuses}
-          /> */}
-          <StatusDropdown
-          label="Vehicle Status"
-          items={vehicleStatuses}
-          selectedItems={selectedStatuses}
-          setSelectedItems={setSelectedStatuses}
           />
           <DropdownFilter
             label="Watchers"
