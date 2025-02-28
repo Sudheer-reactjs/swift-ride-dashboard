@@ -73,7 +73,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
               </div>
               <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                 <div className="col-span-6 text-gray-400">VIN/SN</div>
-                <div className="col-span-6 text-white flex items-center gap-2">
+                <div className="col-span-6 text-white flex items-center flex-wrap gap-2">
                   JTDKBRFU9J3059307
                   <Button variant="ghost" className="text-[#10b981] cursor-pointer">
                     Decode VIN
