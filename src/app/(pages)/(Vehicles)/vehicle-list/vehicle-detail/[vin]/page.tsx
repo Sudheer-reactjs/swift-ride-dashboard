@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Bell,
@@ -46,8 +47,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 // List of all possible tabs including the ones in the dropdown
 const allTabs = [
   { id: "overview", label: "Overview" },
@@ -75,27 +76,31 @@ const moreTabs = [
 ];
 
 const VehicleDetail = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("overview");
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
   const [open, setOpen] = useState(false);
-  const {vin} = useParams();
+  const { vin } = useParams();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   console.log(vin);
 
   // Check if the current active tab is in the "more" dropdown
-  const isMoreTabActive = moreTabs.some(tab => tab.id === activeTab);
+  const isMoreTabActive = moreTabs.some((tab) => tab.id === activeTab);
 
   // Handle clicks outside the dropdown to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowMoreDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -113,8 +118,12 @@ const VehicleDetail = () => {
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-     <Link href="/vehicle-list" className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal">
-       <ChevronLeft  className="text-[#A1A1AA]"/> Vehicles</Link>
+      <Link
+        href="/vehicle-list"
+        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal"
+      >
+        <ChevronLeft className="text-[#A1A1AA]" /> Vehicles
+      </Link>
       <div className="flex justify-between items-center flex-wrap  rounded-lg">
         <div className="flex items-center justify-between  gap-4 ">
           <Image
@@ -126,10 +135,12 @@ const VehicleDetail = () => {
           />
           <div className="flex flex-col gap-2">
             <div>
-            <h2 className="text-lg font-semibold">1100 [2018 Toyota Prius]</h2>
-            <p className="text-neutral-50 text-xs ">
-              Car • 2018 Toyota Prius • JTDKBRFU9J3059307 • 6TJR244
-            </p>
+              <h2 className="text-lg font-semibold">
+                1100 [2018 Toyota Prius]
+              </h2>
+              <p className="text-neutral-50 text-xs ">
+                Car • 2018 Toyota Prius • JTDKBRFU9J3059307 • 6TJR244
+              </p>
             </div>
             <div className="flex items-center gap-2 md:gap-4 mt-2 text-neutral-50 text-xs font-normal">
               <span className="">20,811 mi</span>
@@ -162,56 +173,65 @@ const VehicleDetail = () => {
             <Pencil className="w-4 h-4" /> Edit
           </Button>
           <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="default" className="bg-[#047857] hover:bg-[#047857] text-white flex items-center gap-1">
-          <Plus size={16} />
-          <span>Add</span>
-          <ChevronDown size={14} />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-[#09090B] border-[#27272A] text-white w-56 mr-11 mt-1">
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <UserPlus  size={16} className="text-white" />
-          <span>Add Vehicle Assignment</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <Fuel  size={16} className="text-white" />
-          <span>Add Fuel Entry</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <CreditCard size={16} className="text-white" />
-          <span>Add Expense Entry</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <Wrench size={16} className="text-white" />
-          <span>Add Service Entry</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <TriangleAlert  size={16} className="text-white" />
-          <span>Add Issue</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <TextSearch  size={16} className="text-white" />
-          <span>Add Inspection Submission</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <FileSpreadsheet size={16} className="text-white" />
-          <span>Add Work Order</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <Bell  size={16} className="text-white" />
-          <span>Add Service Reminder</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <Calendar size={16} className="text-white" />
-          <span>Add Vehicle Renewal Reminder</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
-          <CircleGauge size={16} className="text-white" />
-          <span>Add Meter Entry</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="default"
+                className="bg-[#047857] hover:bg-[#047857] text-white flex items-center gap-1"
+              >
+                <Plus size={16} />
+                <span>Add</span>
+                <ChevronDown size={14} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-[#09090B] border-[#27272A] text-white w-56 mr-11 mt-1">
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => router.push("/vehicle-list/vehicle-assignment")}
+              >
+                <UserPlus size={16} className="text-white" />
+                <span>Add Vehicle Assignment</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => router.push("/vehicle-list/fuel-entry")}
+              >
+                <Fuel size={16} className="text-white" />
+                <span>Add Fuel Entry</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <CreditCard size={16} className="text-white" />
+                <span>Add Expense Entry</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <Wrench size={16} className="text-white" />
+                <span>Add Service Entry</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <TriangleAlert size={16} className="text-white" />
+                <span>Add Issue</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <TextSearch size={16} className="text-white" />
+                <span>Add Inspection Submission</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <FileSpreadsheet size={16} className="text-white" />
+                <span>Add Work Order</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <Bell size={16} className="text-white" />
+                <span>Add Service Reminder</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <Calendar size={16} className="text-white" />
+                <span>Add Vehicle Renewal Reminder</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+                <CircleGauge size={16} className="text-white" />
+                <span>Add Meter Entry</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -224,7 +244,9 @@ const VehicleDetail = () => {
               className={cn(
                 "px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
                 "text-neutral-300 border-b-2 border-transparent hover:text-white",
-                tab.id === activeTab ? "text-emerald-600 border-b-2 border-emerald-600" : "border-transparent"
+                tab.id === activeTab
+                  ? "text-emerald-600 border-b-2 border-emerald-600"
+                  : "border-transparent"
               )}
             >
               {tab.label}
@@ -236,12 +258,14 @@ const VehicleDetail = () => {
               className={cn(
                 "px-2.5 py-2 flex items-center gap-1 text-xs font-normal",
                 "text-neutral-300 border-b-2 border-transparent hover:text-white",
-                isMoreTabActive ? "text-emerald-600 border-b-2 border-emerald-600" : "border-transparent"
+                isMoreTabActive
+                  ? "text-emerald-600 border-b-2 border-emerald-600"
+                  : "border-transparent"
               )}
             >
               More <ChevronDown size={16} />
             </button>
-            
+
             {showMoreDropdown && (
               <div className="absolute left-0 top-full mt-1 w-48 bg-[#0A0A0A] border border-[#262626] rounded-md shadow-lg z-10">
                 {moreTabs.map((tab) => (
@@ -251,7 +275,9 @@ const VehicleDetail = () => {
                     className={cn(
                       "block w-full text-left px-4 py-2 text-xs",
                       "hover:bg-[#1A1A1A] transition-colors duration-150",
-                      tab.id === activeTab ? "text-emerald-500" : "text-neutral-50"
+                      tab.id === activeTab
+                        ? "text-emerald-500"
+                        : "text-neutral-50"
                     )}
                   >
                     {tab.label}
@@ -265,22 +291,22 @@ const VehicleDetail = () => {
       <div className="grid grid-cols-12 gap-4 w-full">
         {activeTab === "overview" && <Overview />}
         {activeTab === "specs" && <Specs />}
-        {activeTab === "financial" && <FinancialDetail/>}
-        {activeTab === "sensor-data" && <SensorDataSnapshots />}  
-        {activeTab === "service-history" && <ServiceHistory/>}
-        {activeTab === "inspection-history" && <InspectionHistory/>}
+        {activeTab === "financial" && <FinancialDetail />}
+        {activeTab === "sensor-data" && <SensorDataSnapshots />}
+        {activeTab === "service-history" && <ServiceHistory />}
+        {activeTab === "inspection-history" && <InspectionHistory />}
         {activeTab === "work-orders" && <WorkOrders />}
         {activeTab === "service-reminders" && <ServiceReminders />}
-        {activeTab === "renewal-reminders" && <RenewalReminder/>}
-        {activeTab === "issues" && <Issues/>}
-        {activeTab === "meter-history" && <MeterHistory/>}
-        {activeTab === "fuel-history" && <FuelHistory/>}
-        {activeTab === "assignment-history" && <AssignmentHistory/>}
-        {activeTab === "expense-history" && <ExpenseHistory/>}
-        {activeTab === "recalls" && <Recalls/>}
-        {activeTab === "faults" && <Faults/>}
-        {activeTab === "location-history" && <LocationHistory/>}
-        {activeTab === "parts-history" && <PartsHistory/>}
+        {activeTab === "renewal-reminders" && <RenewalReminder />}
+        {activeTab === "issues" && <Issues />}
+        {activeTab === "meter-history" && <MeterHistory />}
+        {activeTab === "fuel-history" && <FuelHistory />}
+        {activeTab === "assignment-history" && <AssignmentHistory />}
+        {activeTab === "expense-history" && <ExpenseHistory />}
+        {activeTab === "recalls" && <Recalls />}
+        {activeTab === "faults" && <Faults />}
+        {activeTab === "location-history" && <LocationHistory />}
+        {activeTab === "parts-history" && <PartsHistory />}
       </div>
     </div>
   );

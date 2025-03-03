@@ -133,7 +133,7 @@ const Pages = () => {
         <h2 className="text-lg font-semibold">Vehicles</h2>
         <Button
           variant="outline"
-          className="flex items-center h-10 "
+          className="flex items-center h-10 bg "
           onClick={() => router.push("/vehicle-list/add")}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -141,7 +141,7 @@ const Pages = () => {
         </Button>
       </div>
 
-      <div className="flex  gap-2 mb-2">
+      <div className="flex  gap-5 mb-2 items-center">
         {/* Main tabs container - will wrap on small screens */}
         <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
           {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
@@ -166,10 +166,10 @@ const Pages = () => {
 
         {/* Add tab button */}
         <div className="relative">
-          <Button
+          <Button 
             variant="ghost"
             onClick={() => setAddTab(!addTab)}
-            className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 bg-[#1C1917] lg:bg-black rounded-full min-w-[32px] lg:min-w-[auto]"
+            className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 rounded-full min-w-[32px] lg:min-w-[auto] bg-transparent hover:bg-transparent"
           >
             <PlusIcon className="h-3 w-3" />
             <span className="hidden lg:flex ml-1">Add Tab</span>
