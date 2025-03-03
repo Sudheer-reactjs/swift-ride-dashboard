@@ -161,7 +161,7 @@ const VehicleDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-4 mx-3">
+        <div className="flex gap-4 mx-3 items-center">
           <Button variant="outline" className="h-10">
             <Bell />
             Watch
@@ -176,7 +176,7 @@ const VehicleDetail = () => {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="default"
-                className="bg-[#047857] hover:bg-[#047857] text-white flex items-center gap-1"
+                className="bg-[#047857] hover:bg-[#047857] min-h-10 text-white flex items-center gap-1 focus:none outline-none border-0 shadow-none"
               >
                 <Plus size={16} />
                 <span>Add</span>
@@ -198,11 +198,15 @@ const VehicleDetail = () => {
                 <Fuel size={16} className="text-white" />
                 <span>Add Fuel Entry</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+              onClick={() => router.push("/vehicle-list/expense-entry")}
+              >
                 <CreditCard size={16} className="text-white" />
                 <span>Add Expense Entry</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+               onClick={() => router.push("/vehicle-list/maintenance-entry")}
+              >
                 <Wrench size={16} className="text-white" />
                 <span>Add Service Entry</span>
               </DropdownMenuItem>

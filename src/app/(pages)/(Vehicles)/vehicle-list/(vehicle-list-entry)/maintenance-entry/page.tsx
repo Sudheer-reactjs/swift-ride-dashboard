@@ -25,6 +25,7 @@ import { FileIcon } from "@/lib/svg";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import MaintenanceEntryTab from "@/components/vehicle-list/vehicle-list-entry/MaintenanceEntryTab";
 const generateTimeOptions = () => {
   const times = [];
   let hour = 0;
@@ -128,11 +129,11 @@ const Page = () => {
         href="/vehicle-list"
         className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal"
       >
-        <ChevronLeft size={24} className="text-[#A1A1AA]" /> Fuel Entry
+        <ChevronLeft size={24} className="text-[#A1A1AA]" /> Maintenance Entries
       </Link>
       <div className="flex justify-between items-center flex-wrap gap-2">
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
-          New Fuel Entry
+          New Maintenance Entry
         </h2>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="h-10 border-0">
@@ -142,7 +143,7 @@ const Page = () => {
             variant="outline"
             className="h-10 bg-[#065F46] hover:bg-[#065F46] border-0"
           >
-            Save Fuel Entry
+            Save Maintenance Entry
           </Button>
         </div>
       </div>
@@ -157,8 +158,11 @@ const Page = () => {
                 Vehicle
               </Label>
               <Select>
-                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
-                  <SelectValue placeholder="Please Select" />
+                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                  <SelectValue
+                    className="text-zinc-400"
+                    placeholder="Please Select"
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="device1">Device 1</SelectItem>
@@ -168,7 +172,30 @@ const Page = () => {
             </div>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-                Fuel Entry Date & Time
+                Repair Priority Class
+              </Label>
+              <Select>
+                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="PriorityClass1">
+                    Priority Class 1
+                  </SelectItem>
+                  <SelectItem value="PriorityClass2">
+                    Priority Class 2
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-zinc-400 text-sm font-normal">
+                Repair Priority Class (VMRS Code Key 16) is a simple way to
+                classify whether a service or repair was scheduled,
+                non-scheduled, or an emergency.
+              </p>
+            </div>
+            <div className="col-span-12 w-full space-y-1">
+              <Label className="text-sm font-medium text-gray-100">
+                Completion Date
               </Label>
               <div className="flex items-center gap-4">
                 {/* Date Picker */}
@@ -222,120 +249,64 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-span-12 w-full space-y-1">
-              <Label className="text-sm font-medium text-gray-100 flex items-center gap-2">
-                Odometr
-              </Label>
-              <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
-                <Input
-                  type="number"
-                  placeholder="Please Enter"
-                  className="bg-transparent border-0 h-10 focus:ring-0 focus-visible:ring-0"
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  className="border-solid-neutral-600 bg-zinc-950 h-4 w-4"
+                  id="terms"
                 />
-                <span className="text-sm w-full max-w-max">mi</span>
+                <label htmlFor="terms" className="text-neutral-50 text-base">
+                  Set Start Date
+                </label>
               </div>
-              <p className="text-zinc-400 text-sm font-normal">
-                {" "}
-                Last updated 20,7922 mi (11 days ago)
-              </p>
             </div>
-            <div className="col-span-12 w-full space-y-1">
-              <Label className="text-sm font-medium text-gray-100 flex items-center gap-2">
-                Gallons (US)
-              </Label>
-              <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
-                <Input
-                  type="number"
-                  placeholder="Please Enter"
-                  className="bg-transparent border-0 h-10 focus:ring-0 focus-visible:ring-0"
-                />
-                <span className="text-sm w-full max-w-max">gal (US)</span>
-              </div>
-              <p className="text-zinc-400 text-sm font-normal">e.g. 5.299</p>
-            </div>
-            <div className="col-span-12 w-full space-y-1">
-              <Label className="text-sm font-medium text-gray-100 flex items-center gap-2">
-                Price/Gallon (US)
-              </Label>
-              <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
-                <Input
-                  type="number"
-                  placeholder="Please Enter"
-                  className="bg-transparent border-0 h-10 focus:ring-0 focus-visible:ring-0"
-                />
-                <span className="text-sm w-full max-w-max">$</span>
-              </div>
-              <p className="text-zinc-400 text-sm font-normal">e.g. 51.299</p>
-            </div>
-            <div className="col-span-12 w-full space-y-1">
-              <Label className="text-sm font-medium text-gray-100">
-                Vendor Name
-              </Label>
-              <Select>
-                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
-                  <SelectValue placeholder="Please Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="device1">Vendor Name 1</SelectItem>
-                  <SelectItem value="device2">Vendor Name 2</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <hr className=" col-span-12 w-full"></hr>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100 flex items-center gap-2">
                 Reference
               </Label>
-              <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pr-4">
-                <Input
-                  type="number"
-                  placeholder="Please Enter"
-                  className="bg-transparent border-0 h-10 focus:ring-0 focus-visible:ring-0"
-                />
-                <span className="text-sm w-full max-w-max">$</span>
-              </div>
-              <p className="text-zinc-400 text-sm font-normal">
-                e.g. invoice number, transaction ID, etc.
-              </p>
+              <Input
+                type="text"
+                placeholder="Please Enter"
+                className="bg-black text-white border-zinc-800"
+              />
+            </div>
+
+            <div className="col-span-12 w-full space-y-1">
+              <Label className="text-sm font-medium text-gray-100">
+                Vendor 
+              </Label>
+              <Select>
+                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="device1">Vendor 1</SelectItem>
+                  <SelectItem value="device2">Vendor 2</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="col-span-12 w-full space-y-1">
-              <h6 className="text-sm font-medium text-gray-100 flex items-center gap-2">
-                Flags
-              </h6>
-              <p className="text-zinc-400 text-sm font-normal">
-                Enable the options below to flag transactions for personal use,
-                to ensure accurate metrics for partial fill-ups, or to reset
-                usage after a missed entry.
-                <button className="text-[#10B981] text-sm font-normal hover:underline ml-1">
-                  Learn More
-                </button>
-              </p>
+              <Label className="text-sm font-medium text-gray-100">
+              Labels
+              </Label>
+              <Select>
+                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                  <SelectValue placeholder="Please Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="device1">Labels 1</SelectItem>
+                  <SelectItem value="device2">Labels 2</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div className="col-span-12 w-full space-y-3">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="personal" />
-                <label htmlFor="personal" className="text-neutral-50 text-sm ">
-                  Personal
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="fuel-up" />
-                <label htmlFor="fuel-up" className="text-neutral-50 text-sm ">
-                  Partial fuel-up
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="reset-usage" />
-                <label
-                  htmlFor="reset-usage"
-                  className="text-neutral-50 text-sm "
-                >
-                  Reset usage
-                </label>
-              </div>
+            <div className="col-span-12 w-full space-y-1">
+            <MaintenanceEntryTab />
             </div>
           </div>
         </div>
+
+
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Photo Upload */}
           <div className="bg-[#171717] p-4 rounded-lg text-white">
@@ -474,7 +445,7 @@ const Page = () => {
             Save & Add Another
           </Button>
           <Button className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm">
-            Save Expense Entry
+            Save Maintenance Entry
           </Button>
         </div>
       </div>

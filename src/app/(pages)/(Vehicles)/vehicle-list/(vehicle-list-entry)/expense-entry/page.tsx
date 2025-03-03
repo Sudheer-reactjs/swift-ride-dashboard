@@ -188,7 +188,7 @@ const Page = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[#171717] py-4 pb-0 rounded-lg text-white">
+          <div className="bg-[#171717] pt-4 rounded-lg text-white">
             <h2 className="text-lg font-semibold">Frequency</h2>
             <hr className="my-5" />
             <div className="grid grid-cols-12 gap-4 md:gap-6">
@@ -239,7 +239,7 @@ const Page = () => {
               </div>
               {selectedOption === "singleexpense" && (
                 <>
-                  <div className="col-span-12 w-full space-y-1">
+                  <div className="col-span-12 w-full space-y-1 ">
                     <Label className="text-sm font-medium text-gray-100">
                       Date
                     </Label>
@@ -270,7 +270,7 @@ const Page = () => {
                       </PopoverContent>
                     </Popover>
                   </div>
-                  <div className="col-span-12 space-y-1">
+                  <div className="col-span-12 space-y-1 ">
                     <Label className="text-sm font-medium text-gray-100">
                       Notes
                     </Label>
@@ -482,7 +482,7 @@ const Page = () => {
                     <Textarea
                       placeholder="Please enter"
                       id="message"
-                      className="bg-black text-white border-zinc-800 h-[90px]"
+                      className="bg-black text-white border-zinc-800 h-[90px] "
                     />
                   </div>
                 </>
@@ -501,7 +501,7 @@ const Page = () => {
           </Button>
           <Button className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm">
             Save Vehicle
-          </Button>
+          </Button> 
         </div>
       </div>
     </div>
