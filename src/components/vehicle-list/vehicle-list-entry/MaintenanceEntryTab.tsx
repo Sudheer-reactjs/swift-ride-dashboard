@@ -66,7 +66,7 @@ const IssueTracker = () => {
           ))}
         </TabsList>
 
-        <TabsContent value="open" className="py-4 m-0">
+        <TabsContent value="open" className="pt-4 m-0">
           <div className="text-zinc-400 text-sm font-normal flex pb-4">
             <span className="mr-2 text-zinc-400 w-6"><InfoIcon /></span>
             Select any issues that were resolved as part of this service
@@ -75,7 +75,7 @@ const IssueTracker = () => {
           <div className="w-full overflow-auto rounded-lg border bg-[#171717] border-[#27272A]">
           <Table className="w-full overflow-auto hover:cursor-pointer min-w-[900px]">
             <TableHeader className="bg-transparent">
-              <TableRow className="hover:bg-[rgba(39,39,42,0.05)] text-zinc-400 text-sm font-medium" >
+              <TableRow className="hover:bg-transparent text-zinc-400 text-sm font-medium" >
                 <TableHead  className="pr-0">
                   <Checkbox className="border-neutral-600 bg-zinc-950"/>
                 </TableHead>
@@ -91,7 +91,7 @@ const IssueTracker = () => {
             </TableHeader>
             <TableBody>
               {issues.map((issue) => (
-                <TableRow key={issue.id} className="bg-black-800 hover:bg-[#27272a0d] text-neutral-50 text-xs">
+                <TableRow key={issue.id} className="bg-black-800 hover:bg-transparent text-neutral-50 text-xs">
                   <TableCell className="pr-0">
                     <Checkbox className="border-neutral-600 bg-zinc-950"/>
                   </TableCell>

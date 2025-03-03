@@ -26,6 +26,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import MaintenanceEntryTab from "@/components/vehicle-list/vehicle-list-entry/MaintenanceEntryTab";
+import LineItemsCard from "@/components/vehicle-list/vehicle-list-entry/LineItemsCard";
+import CostSummaryTable from "@/components/vehicle-list/vehicle-list-entry/CostSummaryTable";
 const generateTimeOptions = () => {
   const times = [];
   let hour = 0;
@@ -302,14 +304,29 @@ const Page = () => {
             <div className="col-span-12 w-full space-y-1">
             <MaintenanceEntryTab />
             </div>
+            <div className="col-span-12 w-full space-y-1">
+            <LineItemsCard />
+            </div>
+           
           </div>
-        </div>
-
-
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-12 gap-4 md:gap-6 py-8">
+            <div className="col-span-12 md:col-span-6 w-full ">
+            <h3 className="text-neutral-50 text-sm font-medium mb-5 ">General Notes</h3>
+            <Textarea
+              placeholder="Add notes or additional details"
+              id="message"
+              className="bg-black text-white border-zinc-800 h-[328px]"
+            />
+            </div>
+            <div className="col-span-12 md:col-span-6 w-full ">
+            <h3 className="text-neutral-50 text-sm font-medium ">Cost Summary</h3>
+            <hr className="my-5"></hr>
+                <CostSummaryTable />
+            </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Photo Upload */}
-          <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <div className="bg-[#171717] md:p-4 rounded-lg text-white">
             <h3>Photos</h3>
             <hr className="my-5"></hr>
             <div
@@ -365,7 +382,7 @@ const Page = () => {
           </div>
 
           {/* Document Upload */}
-          <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <div className="bg-[#171717] md:p-4 rounded-lg text-white">
             <h3>Documents</h3>
             <hr className="my-5"></hr>
             <div
@@ -433,6 +450,7 @@ const Page = () => {
               className="bg-black text-white border-zinc-800 h-[90px]"
             />
           </div>
+        </div>
         </div>
       </div>
 
