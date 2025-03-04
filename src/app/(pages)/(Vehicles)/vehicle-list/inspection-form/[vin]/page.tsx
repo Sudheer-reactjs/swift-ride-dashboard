@@ -45,12 +45,12 @@ const page = () => {
         {/* left side */}
         <div className="col-span-12 lg:col-span-6">
           <Card className="bg-[#171717] mb-4 border-none text-white">
-            <CardHeader className="pt-4">
+            <CardHeader className="p-4">
               <div className="flex justify-between items-center">
                 <CardTitle className="text-base">Inspection Details</CardTitle>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-0">
               <div className="space-y-4 text-sm">
                 <div className="grid grid-cols-12 border-b border-[#262626] pb-4">
                   <div className="col-span-6 text-gray-400">Vehicle</div>
@@ -115,15 +115,15 @@ const page = () => {
 
         <div className="col-span-12 lg:col-span-6">
           {/* right side */}
-          <Card className=" bg-[#181818] text-white ">
-          <CardHeader className="pt-4">
+          <Card className=" bg-[#181818] text-white border-0 shadow-none ">
+          <CardHeader className="p-4">
               <div className="flex justify-between items-center">
                 <CardTitle className="text-base">Inspection Details</CardTitle>
               </div>
             </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 pt-0">
         
-        <div className="flex flex-row justify-between border-b border-[#262626] pb-4">
+        <div className="flex flex-row justify-between border-b border-[#262626] pl-4 pb-2">
                   <div className="col-span-6 text-white">
                   Odometer Reading
                   </div>
@@ -134,16 +134,16 @@ const page = () => {
         <CardTitle className="text-lg ">Item Checklist</CardTitle>
       </CardHeader>
         {/* Item Checklist Header */}
-        <div className="grid grid-cols-12 border-b border-[#262626] ml-4 pb-4">
+        <div className="grid grid-cols-12 border-b border-[#262626] pl-4 pb-2">
                   <div className="col-span-12 text-white">
                   Interior Cleanliness
                   </div>
-                  <div className="col-span-12 text-gray-400">Take a photo of the interior</div>
+                  <div className="col-span-12 text-neutral-500 text-xs">Take a photo of the interior</div>
                 </div>
         {/* Checklist Items */}
 
         
-        <div className="flex flex-col  pl-4 mt-2">
+        <div className="flex flex-col  pl-4 ">
                 <div className="flex flex-row justify-between border-b border-[#262626] p-2 pl-0">
                   <div className="col-span-8 text-white">
                   Engine
@@ -268,12 +268,12 @@ const page = () => {
         </div>
 
         <div className="flex flex-col  ml-4 pb-4">
-                  <div className="flex justify-between border-b border-[#262626] ">
+                  <div className="flex justify-between border-b border-[#262626] pb-2 ">
                  <div>
                   <div className="col-span-12 text-white">
                   Interior Cleanliness
                   </div>
-                  <div className="col-span-12 text-gray-400">Take a photo of the interior</div>
+                  <div className="col-span-12 text-neutral-500 text-xs">Take a photo of the interior</div>
                   </div>
                   <div>
                   ✓  Excellent
