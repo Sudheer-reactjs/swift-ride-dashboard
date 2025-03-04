@@ -35,8 +35,8 @@ const page = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex items-center justify-between bg-black text-white p-3 rounded-lg">
-      <h2 className="text-3xl font-semibold">Submission #52839203</h2>
+      <div className="flex items-center justify-between text-white">
+      <h2 className="text-neutral-50 text-2xl md:text-3xl font-bold">Submission #52839203</h2>
       <Button variant="outline" className="border-[#27272A] bg-[#09090B] h-10 text-white">
         <Printer className="w-4 h-4 mr-2" /> Print
       </Button>

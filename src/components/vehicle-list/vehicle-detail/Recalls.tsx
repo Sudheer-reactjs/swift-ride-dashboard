@@ -23,7 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import RightSideBar from "./RightSideBar";
+import SidebarWidget from "../SidebarWidget";
+import { EmptyData } from "@/lib/svg";
 
 interface RecallData {
   date: string;
@@ -49,9 +50,7 @@ const CompletionDate = [
   "Last Year",
 ];
 
-const sampleData: RecallData[] = [
-  
-];
+const sampleData: RecallData[] = [];
 
 const Recalls = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,115 +66,139 @@ const Recalls = () => {
   );
 
   return (
-    <div className="col-span-12 relative flex flex-col text-white p-4 pt-0">
-      {/* Header Filters */}
-      <div className="flex space-x-2 mb-1 flex-wrap">
-        <div className="relative w-full md:w-1/4 gap-2 lg:w-1/5 mb-2">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <Input
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
-          />
+    <div className="flex w-full col-span-12 gap-1 relative h-screen">
+      <div className="col-span-12 w-full flex flex-col  text-white max-w-[calc(100%-52px)]">
+        {/* Header Filters */}
+        <div className="flex space-x-2 mb-1 flex-wrap">
+          <div className="relative w-full md:w-1/4 gap-2 lg:w-1/5 mb-2">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="!pl-10 bg-black text-white border-[#27272A] w-full h-10"
+            />
+          </div>
+          <div className="hidden space-x-2 flex-wrap  md:flex">
+            <DropdownFilter
+              label="Recall Status"
+              items={CompletionDate}
+              selectedItems={date}
+              setSelectedItems={setDate}
+            />
+            <DropdownFilter
+              label="Recall Issued Date"
+              items={CompletionDate}
+              selectedItems={date}
+              setSelectedItems={setDate}
+            />
+            <DropdownFilter
+              label="Fuel Entry Fuel Transaction"
+              items={CompletionDate}
+              selectedItems={date}
+              setSelectedItems={setDate}
+            />
+          </div>
         </div>
-        <DropdownFilter
-          label="Recall Status"
-          items={CompletionDate}
-          selectedItems={date}
-          setSelectedItems={setDate}
-        />
-        <DropdownFilter
-          label="Recall Issued Date"
-          items={CompletionDate}
-          selectedItems={date}
-          setSelectedItems={setDate}
-        />
-        <DropdownFilter
-          label="Fuel Entry Fuel Transaction"
-          items={CompletionDate}
-          selectedItems={date}
-          setSelectedItems={setDate}
-        />
-      </div>
 
-      {/* Table */}
-      <div className="max-w-[98%] overflow-hidden border  bg-[#171717] border-[#262626] rounded-lg">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Issued At              
-                </TableHead>
-                <TableHead className="whitespace-nowrap">Summary</TableHead>
-                <TableHead className="whitespace-nowrap">Status</TableHead>
-                <TableHead className="whitespace-nowrap">Issue</TableHead>
-                <TableHead className="whitespace-nowrap">Manufacturer Campaign Number</TableHead>
-                <TableHead className="whitespace-nowrap">NHTSA Campaign Number</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredData.length > 0 ? (
-                filteredData.map((item, index) => (
-                  <TableRow key={index} className="cursor-pointer hover:bg-[#262626]">
-                    <TableCell>
-                      <div className="flex gap-2 items-center">
-                        {item.date}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {item.vendor}
-                      <div className="text-[#A3A3A3]">{item.mileage}</div>
-                    </TableCell>
-                    <TableCell>{item.alert}</TableCell>
-                    <TableCell>{item.meterentry}</TableCell>
-                    <TableCell>{item.usage}</TableCell>
-                    <TableCell>{item.volume}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={9} className="text-center py-6 text-gray-400">
-                    No results to show
-                  </TableCell>
+        {/* Table */}
+        <div className="w-full overflow-auto rounded-lg border bg-[#171717] border-[#27272A]">
+          <div className="relative w-full overflow-auto">
+            <Table className="caption-bottom text-sm w-full overflow-auto hover:cursor-pointer min-w-[1000px]">
+              <TableHeader>
+                <TableRow className="text-zinc-500  text-xs">
+                  <TableHead>Issued At</TableHead>
+                  <TableHead className="whitespace-nowrap">Summary</TableHead>
+                  <TableHead className="whitespace-nowrap">Status</TableHead>
+                  <TableHead className="whitespace-nowrap">Issue</TableHead>
+                  <TableHead className="whitespace-nowrap">
+                    Manufacturer Campaign Number
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap">
+                    NHTSA Campaign Number
+                  </TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredData.length > 0 ? (
+                  filteredData.map((item, index) => (
+                    <TableRow
+                      key={index}
+                      className="cursor-pointer hover:bg-[#262626] text-neutral-50 text-xs"
+                    >
+                      <TableCell>
+                        <div className="flex gap-2 items-center">
+                          {item.date}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {item.vendor}
+                        <div className="text-[#A3A3A3]">{item.mileage}</div>
+                      </TableCell>
+                      <TableCell>{item.alert}</TableCell>
+                      <TableCell>{item.meterentry}</TableCell>
+                      <TableCell>{item.usage}</TableCell>
+                      <TableCell>{item.volume}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow className="text-center text-neutral-50 text-xl font-medium ">
+                    <TableCell
+                      colSpan={9}
+                      className="text-center text-neutral-50 text-xl font-medium h-96"
+                    >
+                      <div className="flex items-center justify-center mb-3">
+                        <EmptyData />
+                      </div>
+                      No results to show
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-      </div>
 
-      {/* Pagination */}
-      <div className="flex justify-between w-full items-center text-gray-400 text-sm mt-2 p-3">
-        <span>{filteredData.length} of {data.length} row(s) selected.</span>
-        <div className="flex items-center space-x-2">
-          <span>Rows per page</span>
-          <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
-            <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
-              {rowsPerPage}
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectContent>
-          </Select>
-          <span>Page {currentPage} of {Math.ceil(filteredData.length / rowsPerPage)}</span>
-          <Button variant="outline">
-            <ChevronsLeft className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronsRight className="w-4 h-4" />
-          </Button>
+        {/* Pagination */}
+        <div className=" w-[100%]  text-gray-400 text-sm  flex flex-wrap gap-2 justify-between items-center mt-4">
+          <span>0 of 100 row(s) selected.</span>
+          <div className="flex items-start gap-2 space-x-2 flex-col md:flex-row">
+            <div className="flex items-center justify-normal gap-2 space-x-2 flex-wrap">
+              <span>Rows per page</span>
+              <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
+                <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
+                  {rowsPerPage}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-2 space-x-2 flex-wrap">
+              <span>Page {currentPage} of 1</span>
+              <Button variant="outline">
+                {" "}
+                <ChevronsLeft className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronLeft className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronRight className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronsRight className="w-4 h-4" />{" "}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-      <RightSideBar />
+      <SidebarWidget />
     </div>
   );
 };

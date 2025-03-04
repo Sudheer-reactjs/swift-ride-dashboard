@@ -23,7 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import RightSideBar from "./RightSideBar";
+import SidebarWidget from "../SidebarWidget";
+import { EmptyData } from "@/lib/svg";
 
 interface PartHistoryData {
   partNumber: string;
@@ -66,7 +67,8 @@ const PartsHistory = () => {
   );
 
   return (
-    <div className="col-span-12 relative flex flex-col text-white p-4 pt-0">
+    <div className="flex w-full col-span-12 gap-1 relative h-screen">
+      <div className="col-span-12 w-full flex flex-col  text-white max-w-[calc(100%-52px)]">
       {/* Header Filters */}
       <div className="flex space-x-2 mb-1 flex-wrap">
         <div className="relative w-full md:w-1/4 gap-2 lg:w-1/5 mb-2">
@@ -75,9 +77,10 @@ const PartsHistory = () => {
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-black text-white border-[#27272A] w-full h-10"
+            className="!pl-10 bg-black text-white border-[#27272A] w-full h-10"
           />
         </div>
+        <div className="hidden space-x-2 flex-wrap  md:flex">
         <DropdownFilter
           label="Service Task"
           items={CompletionDate}
@@ -96,14 +99,15 @@ const PartsHistory = () => {
           selectedItems={date}
           setSelectedItems={setDate}
         />
+        </div>
       </div>
 
       {/* Table */}
-      <div className="max-w-[98%] overflow-hidden border  bg-[#171717] border-[#262626] rounded-lg">
-        <div className="overflow-x-auto">
-          <Table>
+      <div className="w-full overflow-auto rounded-lg border bg-[#171717] border-[#27272A]">
+          <div className="relative w-full overflow-auto">
+            <Table className="caption-bottom text-sm w-full overflow-auto hover:cursor-pointer min-w-[1000px]">
             <TableHeader>
-              <TableRow>
+            <TableRow className="text-zinc-500  text-xs">
                 <TableHead>Part Number</TableHead>
                 <TableHead className="whitespace-nowrap">Work Order</TableHead>
                 <TableHead className="whitespace-nowrap">Date</TableHead>
@@ -118,7 +122,7 @@ const PartsHistory = () => {
             <TableBody>
             {filteredData.length > 0 ? (
     filteredData.map((item, index) => (
-      <TableRow key={index} className="cursor-pointer hover:bg-[#262626]">
+      <TableRow key={index} className="cursor-pointer hover:bg-[#262626] text-neutral-50 text-xs">
         <TableCell>{item.partNumber}</TableCell>
         <TableCell>{item.workOrder}</TableCell>
         <TableCell>{item.date}</TableCell>
@@ -131,11 +135,17 @@ const PartsHistory = () => {
       </TableRow>
                 ))
               ) : (
-                <TableRow>
-                  <TableCell colSpan={9} className="text-center text-2xl py-6 text-white">
-                    No results to show
-                  </TableCell>
-                </TableRow>
+                <TableRow className="text-center text-neutral-50 text-xl font-medium ">
+                                    <TableCell
+                                      colSpan={9}
+                                      className="text-center text-neutral-50 text-xl font-medium h-96"
+                                    >
+                                      <div className="flex items-center justify-center mb-3">
+                                        <EmptyData />
+                                      </div>
+                                      No results to show
+                                    </TableCell>
+                                  </TableRow>
               )}
             </TableBody>
           </Table>
@@ -143,36 +153,45 @@ const PartsHistory = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between max-w-[98%] items-center text-gray-400 text-sm mt-2 p-3">
-        <span>{filteredData.length} of {data.length} row(s) selected.</span>
-        <div className="flex items-center space-x-2">
-          <span>Rows per page</span>
-          <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
-            <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
-              {rowsPerPage}
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectContent>
-          </Select>
-          <span>Page {currentPage} of {Math.ceil(filteredData.length / rowsPerPage)}</span>
-          <Button variant="outline">
-            <ChevronsLeft className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-          <Button variant="outline">
-            <ChevronsRight className="w-4 h-4" />
-          </Button>
+      <div className=" w-[100%]  text-gray-400 text-sm  flex flex-wrap gap-2 justify-between items-center mt-4">
+          <span>0 of 100 row(s) selected.</span>
+          <div className="flex items-start gap-2 space-x-2 flex-col md:flex-row">
+            <div className="flex items-center justify-normal gap-2 space-x-2 flex-wrap">
+              <span>Rows per page</span>
+              <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
+                <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
+                  {rowsPerPage}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-2 space-x-2 flex-wrap">
+              <span>Page {currentPage} of 1</span>
+              <Button variant="outline">
+                {" "}
+                <ChevronsLeft className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronLeft className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronRight className="w-4 h-4" />{" "}
+              </Button>
+              <Button variant="outline">
+                {" "}
+                <ChevronsRight className="w-4 h-4" />{" "}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-      <RightSideBar />
+      <SidebarWidget />
     </div>
   );
 };
