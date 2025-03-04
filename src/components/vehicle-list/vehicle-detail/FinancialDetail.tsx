@@ -11,18 +11,18 @@ const FinancialDetail = () => {
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Lifecycle Details</CardTitle>
-              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium  p-0 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0">
             <div className="space-y-4 text-sm">
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">In-Service Date</div>
                 <div className="col-span-6 text-white">0 mi</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Estimated Service Life in Months
                 </div>
@@ -42,7 +42,7 @@ const FinancialDetail = () => {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Estimated Service Life in Miles
                 </div>
@@ -62,19 +62,19 @@ const FinancialDetail = () => {
                   </div>
                 </div> 
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Estimated Resale Value{" "}
                 </div>
                 <div className="col-span-6 text-white">$4,000.00</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Out-of-Service Date
                 </div>
                 <div className="col-span-6 text-white">-</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Out-of-Service Odometr
                 </div>
@@ -87,32 +87,32 @@ const FinancialDetail = () => {
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Purchase Details</CardTitle>
-              <Button variant="ghost" className="text-emerald-500 text-xs font-medium font-['Inter'] p-0 px-4 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
+              <Button variant="ghost" className="text-emerald-500 text-xs font-medium p-0 h-auto hover:bg-transparent hover:text-emerald-500 hover:underline">
                 Edit
               </Button>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0">
             <div className="space-y-4 text-sm">
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">Purchase Vendor</div>
                 <div className="col-span-6 text-white">- </div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">Purchase Price</div>
                 <div className="col-span-6 text-white">$10,000.00</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">Purchase Date</div>
                 <div className="col-span-6 text-white">01/01/2023</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Purchase Odometr{" "}
                 </div>
                 <div className="col-span-6 text-white">10 000 mi</div>
               </div>
-              <div className="grid grid-cols-12 border-b border-[#262626] pb-4 items-center">
+              <div className="grid grid-cols-12 border-b gap-2 border-[#262626] pb-4 items-center">
                 <div className="col-span-6 text-gray-400">
                   Purchase Comments
                 </div>
@@ -125,10 +125,10 @@ const FinancialDetail = () => {
 
       <div className="col-span-12 lg:col-span-6">
         <Card className="bg-[#171717] border-none text-white">
-          <CardHeader>
+          <CardHeader className="p-4">
             <CardTitle className="text-lg">Loan/Lease Details</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0">
           <p className="text-center text-neutral-400 text-xs font-normal font-['Inter'] leading-3">Add a loan or lease for this vehicle to keep track of your monthly payments - these expenses will be included in your asset&apos;s total cost, cost per meter reporting, and dashboard metrics in the future</p>
           </CardContent>
         </Card>

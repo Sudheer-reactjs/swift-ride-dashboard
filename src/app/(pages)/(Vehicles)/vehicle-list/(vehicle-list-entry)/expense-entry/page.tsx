@@ -18,10 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import {
-  CalendarIcon,
-  ChevronLeft,
-} from "lucide-react";
+import { CalendarIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
@@ -89,8 +86,8 @@ const Page = () => {
       handleDocumentFiles(e.target.files);
     }
   };
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   const getPhotoURL = (file: File) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getPhotoURL = (file: File) => {
     return URL.createObjectURL(file);
   };
 
@@ -149,7 +146,7 @@ const Page = () => {
             </div>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-              Fuel Entry Date
+                Fuel Entry Date
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
@@ -286,111 +283,111 @@ const Page = () => {
                       <div className="bg-[#171717] p-4 rounded-lg text-white">
                         <h3>Photos</h3>
                         <hr className="my-5"></hr>
-                       <div
-                                     className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-                                     onDrop={handlePhotoDrop}
-                                     onDragOver={handleDragOver}
-                                     onClick={handlePhotoClick}
-                                   >
-                                     <input
-                                       type="file"
-                                       ref={photoInputRef}
-                                       className="hidden"
-                                       accept="image/*"
-                                       multiple
-                                       onChange={handlePhotoInputChange}
-                                     />
-                                     <div className="flex items-center justify-center">
-                                       <div className="flex items-center justify-center">
-                                         <FileIcon />
-                                       </div>
-                                     </div>
-                                     <div>
-                                       <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                                         Drag and drop files to upload
-                                       </p>
-                                       <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                                         or click to pick files
-                                       </p>
-                                     </div>
-                                   </div>
-                                   {photoFiles.length > 0 && (
-                                    <div className="mt-4 space-y-2">
-                                       {photoFiles.map((file, index) => (
-                                        <div
-                                        key={index}
-                                        className="flex items-center justify-between bg-black p-2 rounded-md"
-                                      >
-                                        <div className="flex items-center">
-                                          <span className="ml-2 text-sm truncate w-full">
-                                            {file.name}
-                                          </span>
-                                        </div>
-                                        <button
-                                          className="text-red-500 hover:text-red-400"
-                                          onClick={() => removePhotoFile(index)}
-                                        >
-                                          ×
-                                        </button>
-                                      </div>
-                                       ))}
-                                     </div>
-                                   )}
+                        <div
+                          className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                          onDrop={handlePhotoDrop}
+                          onDragOver={handleDragOver}
+                          onClick={handlePhotoClick}
+                        >
+                          <input
+                            type="file"
+                            ref={photoInputRef}
+                            className="hidden"
+                            accept="image/*"
+                            multiple
+                            onChange={handlePhotoInputChange}
+                          />
+                          <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center">
+                              <FileIcon />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                              Drag and drop files to upload
+                            </p>
+                            <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                              or click to pick files
+                            </p>
+                          </div>
+                        </div>
+                        {photoFiles.length > 0 && (
+                          <div className="mt-4 space-y-2">
+                            {photoFiles.map((file, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between bg-black p-2 rounded-md"
+                              >
+                                <div className="flex items-center">
+                                  <span className="ml-2 text-sm truncate w-full">
+                                    {file.name}
+                                  </span>
+                                </div>
+                                <button
+                                  className="text-red-500 hover:text-red-400"
+                                  onClick={() => removePhotoFile(index)}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       {/* Document Upload */}
                       <div className="bg-[#171717] p-4 rounded-lg text-white">
                         <h3>Documents</h3>
                         <hr className="my-5"></hr>
-<div
-              className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-              onDrop={handleDocumentDrop}
-              onDragOver={handleDragOver}
-              onClick={handleDocumentClick}
-            >
-              <input
-                type="file"
-                ref={documentInputRef}
-                className="hidden"
-                multiple
-                onChange={handleDocumentInputChange}
-              />
-              <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center">
-                  <FileIcon />
-                </div>
-              </div>
-              <div>
-                <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                  Drag and drop files to upload
-                </p>
-                <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                  or click to pick files
-                </p>
-              </div>
-            </div>
-            {documentFiles.length > 0 && (
-              <div className="mt-4 space-y-2">
-                {documentFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between bg-black p-2 rounded-md"
-                  >
-                    <div className="flex items-center">
-                      <span className="ml-2 text-sm truncate max-w-[180px]">
-                        {file.name}
-                      </span>
-                    </div>
-                    <button
-                      className="text-red-500 hover:text-red-400"
-                      onClick={() => removeDocumentFile(index)}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+                        <div
+                          className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                          onDrop={handleDocumentDrop}
+                          onDragOver={handleDragOver}
+                          onClick={handleDocumentClick}
+                        >
+                          <input
+                            type="file"
+                            ref={documentInputRef}
+                            className="hidden"
+                            multiple
+                            onChange={handleDocumentInputChange}
+                          />
+                          <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center">
+                              <FileIcon />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                              Drag and drop files to upload
+                            </p>
+                            <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                              or click to pick files
+                            </p>
+                          </div>
+                        </div>
+                        {documentFiles.length > 0 && (
+                          <div className="mt-4 space-y-2">
+                            {documentFiles.map((file, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between bg-black p-2 rounded-md"
+                              >
+                                <div className="flex items-center">
+                                  <span className="ml-2 text-sm truncate max-w-[180px]">
+                                    {file.name}
+                                  </span>
+                                </div>
+                                <button
+                                  className="text-red-500 hover:text-red-400"
+                                  onClick={() => removeDocumentFile(index)}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -501,7 +498,7 @@ const Page = () => {
           </Button>
           <Button className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm">
             Save Vehicle
-          </Button> 
+          </Button>
         </div>
       </div>
     </div>

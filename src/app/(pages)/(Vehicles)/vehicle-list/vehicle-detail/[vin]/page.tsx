@@ -49,7 +49,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// List of all possible tabs including the ones in the dropdown
+  
 const allTabs = [
   { id: "overview", label: "Overview" },
   { id: "specs", label: "Specs" },
@@ -59,10 +59,6 @@ const allTabs = [
   { id: "inspection-history", label: "Inspection History" },
   { id: "work-orders", label: "Work Orders" },
   { id: "service-reminders", label: "Service Reminders" },
-];
-
-// Dropdown tabs
-const moreTabs = [
   { id: "renewal-reminders", label: "Renewal Reminders" },
   { id: "issues", label: "Issues" },
   { id: "meter-history", label: "Meter History" },
@@ -77,15 +73,18 @@ const moreTabs = [
 
 const VehicleDetail = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("overview");
+  // const [activeTab, setActiveTab] = useState("overview");
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
   const [open, setOpen] = useState(false);
   const { vin } = useParams();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   console.log(vin);
 
-  // Check if the current active tab is in the "more" dropdown
-  const isMoreTabActive = moreTabs.some((tab) => tab.id === activeTab);
+  const [activeTab, setActiveTab] = useState(allTabs[0].id);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const moreButtonRef = useRef<HTMLButtonElement>(null);
+  const [visibleTabs, setVisibleTabs] = useState<{ id: string; label: string }[]>([]);
+  const [moreTabs, setMoreTabs] = useState<{ id: string; label: string }[]>([]);
 
   // Handle clicks outside the dropdown to close it
   useEffect(() => {
@@ -103,18 +102,35 @@ const VehicleDetail = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // Toggle the dropdown visibility without changing the active tab
-  const toggleMoreDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setShowMoreDropdown(!showMoreDropdown);
+  
+  const updateTabs = () => {
+    const containerWidth = window.innerWidth; // Get the screen width
+    const mobileBreakpoint = 768; // Define a breakpoint for mobile
+    const tabWidth = containerWidth < mobileBreakpoint ? 120 : 140; // Adjust width based on screen size
+  
+    let totalWidth = 0;
+    const tempVisibleTabs: { id: string; label: string }[] = [];
+    const tempMoreTabs: { id: string; label: string }[] = [];
+  
+    allTabs.forEach((tab) => {
+      totalWidth += tabWidth;
+  
+      if (totalWidth < containerWidth - 0) {
+        tempVisibleTabs.push(tab);
+      } else {
+        tempMoreTabs.push(tab);
+      }
+    });
+  
+    setVisibleTabs(tempVisibleTabs);
+    setMoreTabs(tempMoreTabs);
   };
 
-  // Handle selecting a tab from the dropdown
-  const handleMoreTabSelect = (tabId: string) => {
-    setActiveTab(tabId);
-    setShowMoreDropdown(false);
-  };
+  useEffect(() => {
+    updateTabs();
+    window.addEventListener("resize", updateTabs);
+    return () => window.removeEventListener("resize", updateTabs);
+  }, []);
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
@@ -124,7 +140,7 @@ const VehicleDetail = () => {
       >
         <ChevronLeft className="text-[#A1A1AA]" /> Vehicles
       </Link>
-      <div className="flex justify-between items-center flex-wrap  rounded-lg">
+      <div className="flex justify-between items-center flex-wrap gap-4 ">
         <div className="flex items-center justify-between  gap-4 ">
           <Image
             src="/images/profile.png"
@@ -142,7 +158,7 @@ const VehicleDetail = () => {
                 Car • 2018 Toyota Prius • JTDKBRFU9J3059307 • 6TJR244
               </p>
             </div>
-            <div className="flex items-center gap-2 md:gap-4 mt-2 text-neutral-50 text-xs font-normal">
+            <div className="flex items-center gap-2 md:gap-4 mt-2 text-neutral-50 text-xs font-normal flex-wrap">
               <span className="">20,811 mi</span>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />
@@ -161,7 +177,7 @@ const VehicleDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-4 mx-3 items-center">
+        <div className="flex gap-2 md:gap-4 mx-3 items-center flex-wrap">
           <Button variant="outline" className="h-10">
             <Bell />
             Watch
@@ -239,30 +255,33 @@ const VehicleDetail = () => {
         </div>
       </div>
 
-      <div className="w-[90%] border-b border-[#262626]">
-        <div className="flex">
-          {allTabs.map((tab) => (
+      <div className="w-full  border-b border-[#262626]" ref={containerRef}>
+      <div className="flex items-center">
+        {visibleTabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              "px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
+              "border-b-2 border-transparent hover:text-white",
+              tab.id === activeTab
+                ? "text-emerald-600 border-b-2 border-emerald-600"
+                : "border-transparent"
+            )}
+          >
+            {tab.label}
+          </button>
+        ))}
+
+        {moreTabs.length > 0 && (
+          <div className="relative">
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              ref={moreButtonRef}
+              onClick={() => setShowMoreDropdown((prev) => !prev)}
               className={cn(
-                "px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
+                "px-2.5 py-2 flex items-center gap-1 text-xs font-medium ",
                 "text-neutral-300 border-b-2 border-transparent hover:text-white",
-                tab.id === activeTab
-                  ? "text-emerald-600 border-b-2 border-emerald-600"
-                  : "border-transparent"
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={toggleMoreDropdown}
-              className={cn(
-                "px-2.5 py-2 flex items-center gap-1 text-xs font-normal",
-                "text-neutral-300 border-b-2 border-transparent hover:text-white",
-                isMoreTabActive
+                showMoreDropdown
                   ? "text-emerald-600 border-b-2 border-emerald-600"
                   : "border-transparent"
               )}
@@ -271,17 +290,18 @@ const VehicleDetail = () => {
             </button>
 
             {showMoreDropdown && (
-              <div className="absolute left-0 top-full mt-1 w-48 bg-[#0A0A0A] border border-[#262626] rounded-md shadow-lg z-10">
+              <div className="absolute right-0 top-full mt-1 w-48 bg-[#0A0A0A] border border-[#262626] rounded-md shadow-lg z-10 max-h-60 overflow-auto">
                 {moreTabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => handleMoreTabSelect(tab.id)}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setShowMoreDropdown(false);
+                    }}
                     className={cn(
                       "block w-full text-left px-4 py-2 text-xs",
                       "hover:bg-[#1A1A1A] transition-colors duration-150",
-                      tab.id === activeTab
-                        ? "text-emerald-500"
-                        : "text-neutral-50"
+                      tab.id === activeTab ? "text-emerald-500" : "text-neutral-50"
                     )}
                   >
                     {tab.label}
@@ -290,8 +310,9 @@ const VehicleDetail = () => {
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
+    </div>
       <div className="grid grid-cols-12 gap-4 w-full">
         {activeTab === "overview" && <Overview />}
         {activeTab === "specs" && <Specs />}

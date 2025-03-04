@@ -141,6 +141,15 @@ body{
 [data-state="checked"] ~ .custom-cricle:before {
   border: solid 1px #059669;
 }
+/* Add this in your global CSS */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (max-width: 767px){
   .size-span span.text-sm {
     font-size: 10px;

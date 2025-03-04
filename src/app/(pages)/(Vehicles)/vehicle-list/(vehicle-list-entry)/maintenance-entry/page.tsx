@@ -275,7 +275,7 @@ const Page = () => {
 
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-                Vendor 
+                Vendor
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
@@ -289,7 +289,7 @@ const Page = () => {
             </div>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-              Labels
+                Labels
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
@@ -302,155 +302,161 @@ const Page = () => {
               </Select>
             </div>
             <div className="col-span-12 w-full space-y-1">
-            <MaintenanceEntryTab />
+              <MaintenanceEntryTab />
             </div>
             <div className="col-span-12 w-full space-y-1">
-            <LineItemsCard />
+              <LineItemsCard />
             </div>
-           
           </div>
           <div className="grid grid-cols-12 gap-4 md:gap-6 py-8">
             <div className="col-span-12 md:col-span-6 w-full ">
-            <h3 className="text-neutral-50 text-sm font-medium mb-5 ">General Notes</h3>
-            <Textarea
-              placeholder="Add notes or additional details"
-              id="message"
-              className="bg-black text-white border-zinc-800 h-[328px]"
-            />
+              <h3 className="text-neutral-50 text-sm font-medium mb-5 ">
+                General Notes
+              </h3>
+              <Textarea
+                placeholder="Add notes or additional details"
+                id="message"
+                className="bg-black text-white border-zinc-800 h-[328px]"
+              />
             </div>
             <div className="col-span-12 md:col-span-6 w-full ">
-            <h3 className="text-neutral-50 text-sm font-medium ">Cost Summary</h3>
-            <hr className="my-5"></hr>
-                <CostSummaryTable />
+              <h3 className="text-neutral-50 text-sm font-medium ">
+                Cost Summary
+              </h3>
+              <hr className="my-5"></hr>
+              <CostSummaryTable />
             </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Photo Upload */}
-          <div className="bg-[#171717] md:p-4 rounded-lg text-white">
-            <h3>Photos</h3>
-            <hr className="my-5"></hr>
-            <div
-              className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-              onDrop={handlePhotoDrop}
-              onDragOver={handleDragOver}
-              onClick={handlePhotoClick}
-            >
-              <input
-                type="file"
-                ref={photoInputRef}
-                className="hidden"
-                accept="image/*"
-                multiple
-                onChange={handlePhotoInputChange}
-              />
-              <div className="flex items-center justify-center">
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Photo Upload */}
+            <div className="bg-[#171717] md:p-4 rounded-lg text-white">
+              <h3>Photos</h3>
+              <hr className="my-5"></hr>
+              <div
+                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                onDrop={handlePhotoDrop}
+                onDragOver={handleDragOver}
+                onClick={handlePhotoClick}
+              > 
+                <input
+                  type="file"
+                  ref={photoInputRef}
+                  className="hidden"
+                  accept="image/*"
+                  multiple
+                  onChange={handlePhotoInputChange}
+                />
                 <div className="flex items-center justify-center">
-                  <FileIcon />
+                  <div className="flex items-center justify-center">
+                    <FileIcon />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                    Drag and drop files to upload
+                  </p>
+                  <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                    or click to pick files
+                  </p>
                 </div>
               </div>
-              <div>
-                <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                  Drag and drop files to upload
-                </p>
-                <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                  or click to pick files
-                </p>
-              </div>
-            </div>
-            {photoFiles.length > 0 && (
-              <div className="mt-4 space-y-2">
-                {photoFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between bg-black p-2 rounded-md"
-                  >
-                    <div className="flex items-center">
-                      <span className="ml-2 text-sm truncate w-full">
-                        {file.name}
-                      </span>
-                    </div>
-                    <button
-                      className="text-red-500 hover:text-red-400"
-                      onClick={() => removePhotoFile(index)}
+              {photoFiles.length > 0 && (
+                <div className="mt-4 space-y-2">
+                  {photoFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between bg-black p-2 rounded-md"
                     >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                      <div className="flex items-center">
+                        <span className="ml-2 text-sm truncate w-full">
+                          {file.name}
+                        </span>
+                      </div>
+                      <button
+                        className="text-red-500 hover:text-red-400"
+                        onClick={() => removePhotoFile(index)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          {/* Document Upload */}
-          <div className="bg-[#171717] md:p-4 rounded-lg text-white">
-            <h3>Documents</h3>
-            <hr className="my-5"></hr>
-            <div
-              className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-              onDrop={handleDocumentDrop}
-              onDragOver={handleDragOver}
-              onClick={handleDocumentClick}
-            >
-              <input
-                type="file"
-                ref={documentInputRef}
-                className="hidden"
-                multiple
-                onChange={handleDocumentInputChange}
-              />
-              <div className="flex items-center justify-center">
+            {/* Document Upload */}
+            <div className="bg-[#171717] md:p-4 rounded-lg text-white">
+              <h3>Documents</h3>
+              <hr className="my-5"></hr>
+              <div
+                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                onDrop={handleDocumentDrop}
+                onDragOver={handleDragOver}
+                onClick={handleDocumentClick}
+              >
+                <input
+                  type="file"
+                  ref={documentInputRef}
+                  className="hidden"
+                  multiple
+                  onChange={handleDocumentInputChange}
+                />
                 <div className="flex items-center justify-center">
-                  <FileIcon />
+                  <div className="flex items-center justify-center">
+                    <FileIcon />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                    Drag and drop files to upload
+                  </p>
+                  <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                    or click to pick files
+                  </p>
                 </div>
               </div>
-              <div>
-                <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                  Drag and drop files to upload
-                </p>
-                <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                  or click to pick files
-                </p>
-              </div>
-            </div>
-            {documentFiles.length > 0 && (
-              <div className="mt-4 space-y-2">
-                {documentFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between bg-black p-2 rounded-md"
-                  >
-                    <div className="flex items-center">
-                      <span className="ml-2 text-sm truncate max-w-[180px]">
-                        {file.name}
-                      </span>
-                    </div>
-                    <button
-                      className="text-red-500 hover:text-red-400"
-                      onClick={() => removeDocumentFile(index)}
+              {documentFiles.length > 0 && (
+                <div className="mt-4 space-y-2">
+                  {documentFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between bg-black p-2 rounded-md"
                     >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+                      <div className="flex items-center">
+                        <span className="ml-2 text-sm truncate max-w-[180px]">
+                          {file.name}
+                        </span>
+                      </div>
+                      <button
+                        className="text-red-500 hover:text-red-400"
+                        onClick={() => removeDocumentFile(index)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="bg-[#171717] p-4 rounded-lg text-white">
-          <h3>Comments</h3>
-          <hr className="my-5"></hr>
-          <div className="col-span-12 space-y-1 flex gap-2">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Textarea
-              placeholder="Please add your comment (optional)"
-              id="message"
-              className="bg-black text-white border-zinc-800 h-[90px]"
-            />
+          <div className="bg-[#171717] p-4 rounded-lg text-white">
+            <h3>Comments</h3>
+            <hr className="my-5"></hr>
+            <div className="col-span-12 space-y-1 flex gap-2">
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Textarea
+                placeholder="Please add your comment (optional)"
+                id="message"
+                className="bg-black text-white border-zinc-800 h-[90px]"
+              />
+            </div>
           </div>
-        </div>
         </div>
       </div>
 

@@ -141,37 +141,39 @@ const Pages = () => {
         </Button>
       </div>
 
-      <div className="flex  gap-5 mb-2 items-center">
+      <div className="flex gap-1 md:gap-5 mb-2 items-center">
         {/* Main tabs container - will wrap on small screens */}
-        <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
-          {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
-            <Button
-              key={tab}
-              variant={selectedTab === tab ? "secondary" : "ghost"}
-              onClick={() => setSelectedTab(tab)}
-              className={cn(
-                "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
-                selectedTab === tab
-                  ? "bg-[#171717] text-white"
-                  : "hover:bg-[#171717]"
-              )}
-            >
-              <div className="flex justify-center items-center min-w-0 sm:min-w-16">
-                {tab}
-                {selectedTab === tab && <span className="ml-1">...</span>}
-              </div>
-            </Button>
-          ))}
+        <div className="overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
+            {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+              <Button
+                key={tab}
+                variant={selectedTab === tab ? "secondary" : "ghost"}
+                onClick={() => setSelectedTab(tab)}
+                className={cn(
+                  "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
+                  selectedTab === tab
+                    ? "bg-[#171717] text-white"
+                    : "hover:bg-[#171717]"
+                )}
+              >
+                <div className="flex justify-center items-center min-w-0 sm:min-w-16">
+                  {tab}
+                  {selectedTab === tab && <span className="ml-1">...</span>}
+                </div>
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Add tab button */}
         <div className="relative">
-          <Button 
+          <Button
             variant="ghost"
             onClick={() => setAddTab(!addTab)}
-            className="text-xs sm:text-sm px-2 flex items-center justify-center py-1 sm:py-2 rounded-full min-w-[32px] lg:min-w-[auto] bg-transparent hover:bg-transparent"
+            className="text-xs sm:text-sm px-2 flex items-center min-w-9 min-h-9 justify-center py-1 sm:py-2 rounded-full  bg-zinc-800 lg:bg-transparent  lg:min-w-[auto]  hover:bg-transparent"
           >
-            <PlusIcon className="h-3 w-3" />
+            <PlusIcon className="h-3 w-3 " />
             <span className="hidden lg:flex ml-1">Add Tab</span>
           </Button>
           {addTab && (
