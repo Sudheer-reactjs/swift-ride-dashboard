@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -53,12 +54,16 @@ const vehicles = Array(15).fill({
   watchers: "1",
 });
 
-const vehicleGroups = [
+const vehicle = [
   { id: "V001", name: "Tesla Model 3" },
   { id: "V002", name: "Ford Mustang" },
   { id: "V003", name: "BMW X5" },
 ];
-
+const vehicleGroup = [
+    { id: "V005", country: "USA",  region: "Southeast Region", state: "Atlanta" },
+    { id: "V006", country: "USA",  region: "Southeast Region", state: "Atlanta" },
+  ];
+  
 const vehicleStatuses = [
   { id: "active", label: "Active", color: "bg-green-500" },
   { id: "in-shop", label: "In Shop", color: "bg-orange-500" },
@@ -70,37 +75,57 @@ const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 
 const Pages = () => {
   const [search, setSearch] = useState("");
+  const [searchGroup, SetSearchGroup] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
-  const [selectedGroups, setSelectedGroups] = useState<{
+  const [selectedVehicle, setSelectedVehicle] = useState<{
     id: string;
     name: string;
   } | null>(null);
-  console.log("selectedGroups:", selectedGroups);
+  const [selectedVehicleGroup, setSelectedVehicleGroup] = useState<{
+    id: string; country: string; region: string; state: string;
+  } | null>(null);
   const [selectedStatuses, setSelectedStatuses] = useState<StatusItem[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [queryGroup, setQueryGroup] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState("private");
 
-  const toggleFilterPanel = () => {
-    setIsOpen((prev) => !prev);
-  };
+////Vehicle
   const handleSelectVehicle = (vehicle: { id: string; name: string }) => {
-    setSelectedGroups(vehicle);
+    setSelectedVehicle(vehicle);
     setQuery(`${vehicle.id} [${vehicle.name}]`);
   };
-
-  const handleClearSearch = () => {
-    setQuery("");
-    setSelectedGroups(null);
-  };
-  const filteredVehicles = vehicleGroups.filter((vehicle) =>
+  const handleClearSearch = () => { 
+        setQuery("");
+        setSelectedVehicle(null);
+    };
+  const filteredVehicles = vehicle.filter((vehicle) =>
     vehicle.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  ////VehicleGroup
+  const handleSelectVehicleGroup = (vehicleGroup: { id: string; country: string; region: string; state: string }) => {
+    setSelectedVehicleGroup(vehicleGroup);
+    setQueryGroup(`${vehicleGroup.country}/${vehicleGroup.region}/${vehicleGroup.state}`);
+  };
+  
+  const handleVehicleGroupClearSearch = () => {
+    setQueryGroup("");
+    setSelectedVehicleGroup(null);
+  };
+  
+  const filteredVehicleGroup = vehicleGroup.filter((vg) =>
+    `${vg.country} ${vg.region} ${vg.state}`.toLowerCase().includes(search.toLowerCase())
+  );
+  
+  const toggleFilterPanel = () => { 
+    setIsOpen((prev) => !prev);
+  };
 
   const getIcon = () => {
     switch (selected) {
@@ -297,6 +322,68 @@ const Pages = () => {
                       <span className="text-sm text-gray-400 flex items-center gap-1">
                         <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
                         Active • Car • Management
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </ScrollArea>
+              <div className="flex justify-between gap-2 mt-2">
+                <Button variant="ghost" size="sm" className="w-full h-10">
+                  Cancel
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className={`w-full h-10 ${
+                    query === "" ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={query === ""}
+                >
+                  Apply
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
+              >
+                Vehicle Group
+                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
+              <div className="relative ">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  placeholder="Search..."
+                  value={queryGroup}
+                  onChange={(e) => setQueryGroup(e.target.value)}
+                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
+                />
+                {queryGroup && (
+                  <X
+                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
+                    onClick={handleVehicleGroupClearSearch}
+                  />
+                )}
+              </div>
+              <ScrollArea className="h-56 border-y border-[#27272A] my-4">
+                {filteredVehicleGroup.map((vehicleGroup) => (
+                  <div
+                    key={vehicleGroup.id}
+                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                    onClick={() => handleSelectVehicleGroup(vehicleGroup)}
+                  >
+                    <div className="flex flex-col">
+                      <span className="opacity-60 text-neutral-50 text-xs font-normal ">
+                        {vehicleGroup.country}/{vehicleGroup.region} 
+                      </span>
+                      <span className="text-neutral-50 text-sm font-normal">
+                        {vehicleGroup.state}
                       </span>
                     </div>
                   </div>
