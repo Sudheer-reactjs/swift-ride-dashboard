@@ -18,6 +18,7 @@ import {
   TriangleAlert,
   UserPlus,
   Wrench,
+  X,
 } from "lucide-react";
 
 import Image from "next/image";
@@ -49,7 +50,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-  
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+
 const allTabs = [
   { id: "overview", label: "Overview" },
   { id: "specs", label: "Specs" },
@@ -74,6 +84,7 @@ const allTabs = [
 const VehicleDetail = () => {
   const router = useRouter();
   // const [activeTab, setActiveTab] = useState("overview");
+  const [submissionOpen, setSubmissionOpen] = useState(false);
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
   const [open, setOpen] = useState(false);
   const { vin } = useParams();
@@ -83,7 +94,9 @@ const VehicleDetail = () => {
   const [activeTab, setActiveTab] = useState(allTabs[0].id);
   const containerRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
-  const [visibleTabs, setVisibleTabs] = useState<{ id: string; label: string }[]>([]);
+  const [visibleTabs, setVisibleTabs] = useState<
+    { id: string; label: string }[]
+  >([]);
   const [moreTabs, setMoreTabs] = useState<{ id: string; label: string }[]>([]);
 
   // Handle clicks outside the dropdown to close it
@@ -102,26 +115,26 @@ const VehicleDetail = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
+
   const updateTabs = () => {
     const containerWidth = window.innerWidth; // Get the screen width
     const mobileBreakpoint = 768; // Define a breakpoint for mobile
     const tabWidth = containerWidth < mobileBreakpoint ? 120 : 140; // Adjust width based on screen size
-  
+
     let totalWidth = 0;
     const tempVisibleTabs: { id: string; label: string }[] = [];
     const tempMoreTabs: { id: string; label: string }[] = [];
-  
+
     allTabs.forEach((tab) => {
       totalWidth += tabWidth;
-  
+
       if (totalWidth < containerWidth - 0) {
         tempVisibleTabs.push(tab);
       } else {
         tempMoreTabs.push(tab);
       }
     });
-  
+
     setVisibleTabs(tempVisibleTabs);
     setMoreTabs(tempMoreTabs);
   };
@@ -214,30 +227,41 @@ const VehicleDetail = () => {
                 <Fuel size={16} className="text-white" />
                 <span>Add Fuel Entry</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
-              onClick={() => router.push("/vehicle-list/expense-entry")}
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => router.push("/vehicle-list/expense-entry")}
               >
                 <CreditCard size={16} className="text-white" />
                 <span>Add Expense Entry</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
-               onClick={() => router.push("/vehicle-list/maintenance-entry")}
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => router.push("/vehicle-list/maintenance-entry")}
               >
                 <Wrench size={16} className="text-white" />
                 <span>Add Service Entry</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => router.push("/vehicle-list/add-issue")}
+              >
                 <TriangleAlert size={16} className="text-white" />
                 <span>Add Issue</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+
+              <DropdownMenuItem
+                className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+                onClick={() => setSubmissionOpen(true)}
+              >
                 <TextSearch size={16} className="text-white" />
                 <span>Add Inspection Submission</span>
               </DropdownMenuItem>
+
               <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
                 <FileSpreadsheet size={16} className="text-white" />
                 <span>Add Work Order</span>
               </DropdownMenuItem>
+
               <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
                 <Bell size={16} className="text-white" />
                 <span>Add Service Reminder</span>
@@ -256,63 +280,65 @@ const VehicleDetail = () => {
       </div>
 
       <div className="w-full  border-b border-[#262626]" ref={containerRef}>
-      <div className="flex items-center">
-        {visibleTabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              "px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
-              "border-b-2 border-transparent hover:text-white",
-              tab.id === activeTab
-                ? "text-emerald-600 border-b-2 border-emerald-600"
-                : "border-transparent"
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
-
-        {moreTabs.length > 0 && (
-          <div className="relative">
+        <div className="flex items-center">
+          {visibleTabs.map((tab) => (
             <button
-              ref={moreButtonRef}
-              onClick={() => setShowMoreDropdown((prev) => !prev)}
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "px-2.5 py-2 flex items-center gap-1 text-xs font-medium ",
-                "text-neutral-300 border-b-2 border-transparent hover:text-white",
-                showMoreDropdown
+                "px-2.5 py-2 transition-colors text-neutral-300 text-xs font-medium",
+                "border-b-2 border-transparent hover:text-white",
+                tab.id === activeTab
                   ? "text-emerald-600 border-b-2 border-emerald-600"
                   : "border-transparent"
               )}
             >
-              More <ChevronDown size={16} />
+              {tab.label}
             </button>
+          ))}
 
-            {showMoreDropdown && (
-              <div className="absolute right-0 top-full mt-1 w-48 bg-[#0A0A0A] border border-[#262626] rounded-md shadow-lg z-10 max-h-60 overflow-auto">
-                {moreTabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      setActiveTab(tab.id);
-                      setShowMoreDropdown(false);
-                    }}
-                    className={cn(
-                      "block w-full text-left px-4 py-2 text-xs",
-                      "hover:bg-[#1A1A1A] transition-colors duration-150",
-                      tab.id === activeTab ? "text-emerald-500" : "text-neutral-50"
-                    )}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+          {moreTabs.length > 0 && (
+            <div className="relative">
+              <button
+                ref={moreButtonRef}
+                onClick={() => setShowMoreDropdown((prev) => !prev)}
+                className={cn(
+                  "px-2.5 py-2 flex items-center gap-1 text-xs font-medium ",
+                  "text-neutral-300 border-b-2 border-transparent hover:text-white",
+                  showMoreDropdown
+                    ? "text-emerald-600 border-b-2 border-emerald-600"
+                    : "border-transparent"
+                )}
+              >
+                More <ChevronDown size={16} />
+              </button>
+
+              {showMoreDropdown && (
+                <div className="absolute right-0 top-full mt-1 w-48 bg-[#0A0A0A] border border-[#262626] rounded-md shadow-lg z-10 max-h-60 overflow-auto">
+                  {moreTabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveTab(tab.id);
+                        setShowMoreDropdown(false);
+                      }}
+                      className={cn(
+                        "block w-full text-left px-4 py-2 text-xs",
+                        "hover:bg-[#1A1A1A] transition-colors duration-150",
+                        tab.id === activeTab
+                          ? "text-emerald-500"
+                          : "text-neutral-50"
+                      )}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
       <div className="grid grid-cols-12 gap-4 w-full">
         {activeTab === "overview" && <Overview />}
         {activeTab === "specs" && <Specs />}
@@ -333,6 +359,58 @@ const VehicleDetail = () => {
         {activeTab === "location-history" && <LocationHistory />}
         {activeTab === "parts-history" && <PartsHistory />}
       </div>
+
+      {submissionOpen && (
+        <Dialog open={submissionOpen} onOpenChange={setSubmissionOpen}>
+          <DialogContent className=" bg-[#171717] text-white rounded-lg shadow-none border-none max-w-2xl w-[96%] p-0 gap-0">
+            <DialogHeader className="p-4 flex justify-between items-center gap-2 flex-row border-b-[1px] border-neutral-800">
+              <DialogTitle className="text-neutral-50 text-lg font-semibold">
+                Select Inspection Form
+              </DialogTitle>
+              <Button
+                onClick={() => setSubmissionOpen(false)}
+                className="bg-transparent hover:bg-transparent text-neutral-400 p-0 !mt-0 w-6 h-6 !border-0"
+              >
+                <X className="!w-6 !h-6" />
+              </Button>
+              <DialogDescription className="hidden">
+                 Submission
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-6 px-5 space-y-6">
+               <Label className="text-neutral-50 text-sm font-medium">All</Label>
+                <div className="w-full spark-stack-item">
+                  <div className="overflow-hidden rounded w-full scrollbar-hide">
+                    <div className="overflow-y-auto max-h-80">
+                        <div className="rounded-xl flex flex-col">
+                           <div className="flex flex-col fl-list-item rounded-md border border-zinc-800 p-2">
+                           <Link
+                            href="/vehicle-list/vehicle-inspection"
+                            className="text-emerald-500 text-sm font-normal"
+                          >
+                           Driver Vehicle Inspection Report (Simple)
+                          </Link>
+                           </div>
+                        </div>
+                     </div>
+                  </div> 
+                </div>
+            </div>
+
+            {/* Buttons */}
+            <DialogFooter className="p-4 flex !justify-between space-x-3 py-6">
+            <Button className="px-4 py-3 bg-white/0 rounded-md  text-neutral-50 text-sm font-normal h-10 hover:bg-zinc-800">Add Inspection Form</Button>
+              <Button
+                variant="ghost"
+                onClick={() => setSubmissionOpen(false)}
+                className="py-2 bg-zinc-800 rounded-md text-neutral-50 text-sm font-normal h-10" 
+              >
+                Cancel
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

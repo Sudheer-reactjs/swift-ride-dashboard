@@ -23,6 +23,8 @@ import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
 import { FileIcon } from "@/lib/svg";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 const Page = () => {
   const [selectedOption, setSelectedOption] = useState("singleexpense");
@@ -391,6 +393,23 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="col-span-12 mx-[-16px] bg-[#09090b] mt-[-24px]">
+                  <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <h3>Comments</h3>
+          <hr className="my-5"></hr>
+          <div className="col-span-12 space-y-1 flex gap-2">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Textarea
+              placeholder="Please add your comment (optional)"
+              id="message"
+              className="bg-black text-white border-zinc-800 h-[90px]"
+            />
+          </div>
+          </div>
+        </div>
                 </>
               )}
               {selectedOption === "recurringexpense" && (
