@@ -443,7 +443,7 @@ const Page = () => {
         <p className="text-sm">
           {selectedRows.length} of {vehicles.length} row(s) selected.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-col md:flex-row ">
           <div className="flex items-center gap-3">
             <span>Row Per Page</span>
             <DropdownMenu>

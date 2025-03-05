@@ -53,15 +53,6 @@ const vehicles = Array(15).fill({
   watchers: "1",
 });
 
-const vehicleTypes = [
-  "ATV",
-  "Boat",
-  "Bus",
-  "Car",
-  "Forklift",
-  "Generator",
-  "Loader",
-];
 const vehicleGroups = [
   { id: "V001", name: "Tesla Model 3" },
   { id: "V002", name: "Ford Mustang" },
@@ -80,7 +71,6 @@ const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
 const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<{
     id: string;
     name: string;
@@ -130,7 +120,7 @@ const Pages = () => {
     <>
       {/* Header Actions */}
       <div className="flex flex-wrap justify-between items-centre mb-4 gap-2">
-        <h2 className="text-neutral-50 text-3xl font-semibold">Vehicles</h2>
+        <h2 className="text-neutral-50 text-3xl font-semibold">Maintenance History</h2>
         <Button
           variant="outline"
           className="flex items-center h-10 bg "
@@ -145,7 +135,7 @@ const Pages = () => {
         {/* Main tabs container - will wrap on small screens */}
         <div className="overflow-x-auto whitespace-nowrap scrollbar-hide">
           <div className="inline-flex items-center text-sm gap-1 border-[0.5px] p-[2px] rounded-sm border-black-700">
-            {["All", "Assigned", "Unassigned", "Archived"].map((tab) => (
+            {["All"].map((tab) => (
               <Button
                 key={tab}
                 variant={selectedTab === tab ? "secondary" : "ghost"}
@@ -260,20 +250,13 @@ const Pages = () => {
           />
         </div>
         <div className="hidden xl:flex flex-wrap gap-2">
-          <DropdownFilter
-            label="Vehicle Type"
-            items={vehicleTypes}
-            selectedItems={selectedTypes}
-            setSelectedItems={setSelectedTypes}
-          />
-
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
               >
-                Vehicle group{" "}
+                Vehicle
                 <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
               </Button>
             </PopoverTrigger>
@@ -293,7 +276,7 @@ const Pages = () => {
                   />
                 )}
               </div>
-              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
+              <ScrollArea className="h-56 border-y border-[#27272A] my-4">
                 {filteredVehicles.map((vehicle) => (
                   <div
                     key={vehicle.id}

@@ -316,7 +316,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between items-center mt-4">
+        <div className="flex flex-wrap justify-between items-center mt-4 gap-2">
           <p className="text-sm">
             {selectedRows.length} of {vehicles.length} row(s) selected.
           </p>

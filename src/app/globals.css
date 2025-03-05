@@ -145,6 +145,15 @@ body{
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+.focus-visible\:outline-none:focus-visible {
+  outline: 0px solid #0000 !important;
+  outline-offset: 0px !important;
+}
+.focus-visible\:ring-1:focus-visible {
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  box-shadow: none !important;
+}
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -156,7 +165,6 @@ body{
 }
 .size-span input, .space-y-1 button {
   font-size: 12px;
-  padding: 4px 8px;
 }
 }
 /* Custom scrollbar styles */

@@ -93,7 +93,6 @@ const vehicleStatuses = [
   "Archived",
 ];
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
-const rowsPerPageOptions = [10, 20, 30];
 
 const Pages = () => {
   const [search, setSearch] = useState("");
@@ -105,6 +104,7 @@ const Pages = () => {
   const [meterReading, setMeterReading] = useState("");
   const [meterDate, setMeterDate] = useState(new Date());
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -137,6 +137,7 @@ const Pages = () => {
     setIsOpen((prev) => !prev);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const totalPages = Math.ceil(vehicles.length / rowsPerPage);
 
   const handleRowSelect = (index: number) => {
@@ -470,99 +471,73 @@ const Pages = () => {
                   Apply
                 </Button>
               </div>
-            </div>
+            </div> 
           </div>
       </div>
-
-      <div className="flex flex-wrap justify-between items-center mt-4">
-          <p className="text-sm">
+       {/* Pagination */}
+      <div className=" w-[100%]  text-gray-400 text-sm  flex flex-wrap gap-2 justify-between items-center mt-4">
+      <p className="text-sm">
           {selectedRows.length} of {vehicles.length} row(s) selected.
         </p>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <span>Row Per Page</span>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2 px-3">
-                  {" "}
-                  {rowsPerPage} <ChevronDown className="w-2 h-4" />{" "}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {rowsPerPageOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option}
-                    onClick={() => setRowsPerPage(option)}
-                  >
+              <div className="flex items-start gap-2 space-x-2 flex-col md:flex-row">
+                <div className="flex items-center justify-normal gap-2 space-x-2 flex-wrap">
+                  <span>Rows per page</span>
+                  <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
+                    <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
+                      {rowsPerPage}
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center gap-2 space-x-2 flex-wrap">
+                  <span>Page {currentPage} of 1</span>
+                  <Button variant="outline">
                     {" "}
-                    {option}{" "}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div>Page 1 of 10</div>
-          <div className="gap-2 flex flex-wrap">
-            <Button variant="outline" onClick={() => setCurrentPage(1)}
-              className="px-3"
-              >
-              {" "}
-              <ChevronsLeft className="w-4 h-4" />{" "}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-             className="px-3"
-            >
-              {" "}
-              <ChevronLeft className="w-4 h-4" />{" "}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-               className="px-3"
-            >
-              {" "}
-              <ChevronRight className="w-4 h-4" />{" "}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage(totalPages)}
-               className="px-3"
-            >
-              {" "}
-              <ChevronsRight className="w-4 h-4" />{" "}
-            </Button>
-          </div>
-        </div>
-      </div>
+                    <ChevronsLeft className="w-4 h-4" />{" "}
+                  </Button>
+                  <Button variant="outline">
+                    {" "}
+                    <ChevronLeft className="w-4 h-4" />{" "}
+                  </Button>
+                  <Button variant="outline">
+                    {" "}
+                    <ChevronRight className="w-4 h-4" />{" "}
+                  </Button>
+                  <Button variant="outline">
+                    {" "}
+                    <ChevronsRight className="w-4 h-4" />{" "}
+                  </Button>
+                </div>
+              </div>
+            </div>
+
       </div>
 
       {/* Dialog for new saved view */}
       {open && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="sm:max-w-screen-md">
-            <DialogHeader>
-              <div className="flex justify-between items-center pb-4 border-b border-gray">
-                <DialogTitle className="text-xl font-semibold">
-                  Add Meter Entry
+         <DialogContent className=" bg-[#171717] text-white rounded-lg shadow-none border-none max-w-2xl w-[96%] p-0 gap-0">
+            <DialogHeader className="p-4 flex justify-between items-center gap-2 flex-row border-b-[1px] border-neutral-800">
+            <DialogTitle className="text-neutral-50 text-lg font-semibold">
+                  Add Meter Entry 
                 </DialogTitle>
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-gray-400 hover:text-white"
+                 className="bg-transparent hover:bg-transparent text-neutral-400 p-0 !mt-0 w-6 h-6 !border-0"
                 >
                   <X size={25} />
                 </button>
-              </div>
             </DialogHeader>
 
             {/* Vehicle Selection */}
-            <div className="mb-4">
+            <div className=" py-6 px-5">
               <label className="block text-sm font-medium mb-2">Vehicle</label>
               <Select onValueChange={setVehicle}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="bg-black text-white border-zinc-800 h-10">
                   <SelectValue placeholder="Please Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -575,7 +550,7 @@ const Pages = () => {
 
             {/* Render additional fields only if vehicle is selected */}
             {vehicle && (
-              <>
+              <div className="py-6 px-5 space-y-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Primary Meter</label>
                   <div className="grid grid-flow-col gap-2 items-center">
@@ -585,21 +560,19 @@ const Pages = () => {
                         placeholder="Enter Meter Reading"
                         value={meterReading}
                         onChange={(e) => setMeterReading(e.target.value)}
-                        className="w-full bg-white"
+                        className="w-full bg-white min-h-10 border-0 text-zinc-400"
                       />
-                      <span className="text-sm absolute right-2  text-gray-500">
-                        mi
-                      </span>
                     </div>
                     <div className="items-center ">
                       <Checkbox /> Void
                     </div>
                   </div>
-                </div>
-
-                <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500">
                   Last updated: 20,811 mi (13 days ago)
                 </p>
+                </div>
+
+               
 
                 <div className="flex flex-col space-y-2">
                   <label htmlFor="meter-date" className="text-sm font-medium ">
@@ -616,7 +589,8 @@ const Pages = () => {
                             meterDate ? format(meterDate, "MM/dd/yyyy") : ""
                           }
                           placeholder="MM/DD/YYYY"
-                          className="pl-10 cursor-pointer"
+                          className="pl-10 cursor-pointer bg-black text-white border-zinc-800 h-10"
+                          
                         />
                         <CalendarIcon className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
                       </div>
@@ -635,13 +609,14 @@ const Pages = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-              </>
+              </div>
             )}
 
-            <DialogFooter className="flex justify-end gap-2">
+       <DialogFooter className="p-4 flex  space-x-3 py-6 gap-2 md:gap-0">
               {/* Cancel Button */}
               <Button
                 variant="outline"
+                className="bg-transparent border-0 min-h-10"
                 onClick={() => {
                   setVehicle("");
                   setOpen(false);
@@ -651,12 +626,16 @@ const Pages = () => {
               </Button>
 
               {/* Save and Add Another Button */}
-              <Button disabled={!vehicle || !meterReading || !meterDate}>
+              <Button 
+               className="bg-zinc-950 rounded-md border border-zinc-800 text-neutral-50 text-sm min-h-10"
+              disabled={!vehicle || !meterReading || !meterDate}>
                 Save and Add Another
               </Button>
 
               {/* Save Button */}
-              <Button disabled={!vehicle || !meterReading || !meterDate}>
+              <Button 
+              className="bg-emerald-800 rounded-md text-neutral-50 min-h-10"
+              disabled={!vehicle || !meterReading || !meterDate}>
                 Save
               </Button>
             </DialogFooter>

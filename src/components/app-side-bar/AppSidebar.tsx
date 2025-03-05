@@ -48,9 +48,17 @@ const data = {
       icon: RemindersIcon,
     },
     {
-      title: "Service",
-      url: "/service",
+      title: "Maintenance",
+      url: "#",
       icon: ServiceIcon,
+      items: [
+        { title: "Maintenance History", url: "/maintenance-history" },
+        // { title: "Work Orders", url: "/work-orders" },
+        // { title: "Maintenance Tasks", url: "/maintenance-tasks" },
+        // { title: "Maintenance Programs", url: "/maintenance/programs" },
+        // { title: "Replacement Analysis", url: "/replacement-analysis" },
+        // { title: "Shop Directory", url: "/shop-directory" },
+      ],
     },
     {
       title: "Subscribers",
