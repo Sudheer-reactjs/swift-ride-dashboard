@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import DropdownFilter from "../add-vehicle/DropdownFilter";
+import DropdownFilter from "../../table-filter/VehicleTypeFilter";
 import {
   Search,
   ChevronLeft,

@@ -21,22 +21,13 @@ import {
   Users,
   Globe,
   PlusIcon,
-  ChevronDown,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
+import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
 import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import StatusDropdown, {
-  StatusItem,
-} from "@/components/vehicle-list/add-vehicle/StatusDropdown";
+import VehicleGroup from "@/components/table-filter/VehicleGroup";
+import VehicleStatus from "@/components/table-filter/VehicleStatusFilter";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -62,10 +53,9 @@ const vehicleTypes = [
   "Generator",
   "Loader",
 ];
-const vehicleGroups = [
-  { id: "V001", name: "Tesla Model 3" },
-  { id: "V002", name: "Ford Mustang" },
-  { id: "V003", name: "BMW X5" },
+const vehicleGroup = [
+  { id: "V005", country: "USA", region: "Southeast Region", state: "Atlanta" },
+  { id: "V006", country: "USA", region: "Southeast Region", state: "Miami" },
 ];
 
 const vehicleStatuses = [
@@ -81,17 +71,16 @@ const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
-  console.log("selectedGroups:", selectedGroups);
-  const [selectedStatuses, setSelectedStatuses] = useState<StatusItem[]>([]);
+  const [selectedTypesGroup, setSelectedTypesGroup] = useState<
+  { id: string; country: string; region: string; state: string }[]
+>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<
+  { id: string; label: string; color: string }[]
+>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState("private");
@@ -99,18 +88,6 @@ const Pages = () => {
   const toggleFilterPanel = () => {
     setIsOpen((prev) => !prev);
   };
-  const handleSelectVehicle = (vehicle: { id: string; name: string }) => {
-    setSelectedGroups(vehicle);
-    setQuery(`${vehicle.id} [${vehicle.name}]`);
-  };
-
-  const handleClearSearch = () => {
-    setQuery("");
-    setSelectedGroups(null);
-  };
-  const filteredVehicles = vehicleGroups.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase())
-  );
 
   const getIcon = () => {
     switch (selected) {
@@ -266,78 +243,14 @@ const Pages = () => {
             selectedItems={selectedTypes}
             setSelectedItems={setSelectedTypes}
           />
+           <VehicleGroup 
+              label="Vehicle Groups"
+              items={vehicleGroup}
+              selectedItems={selectedTypesGroup}
+              setSelectedItems={setSelectedTypesGroup}
+           />
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-              >
-                Vehicle group{" "}
-                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-              <div className="relative ">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  placeholder="Search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
-                />
-                {query && (
-                  <X
-                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-                    onClick={handleClearSearch}
-                  />
-                )}
-              </div>
-              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
-                {filteredVehicles.map((vehicle) => (
-                  <div
-                    key={vehicle.id}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                    onClick={() => handleSelectVehicle(vehicle)}
-                  >
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span>
-                        {vehicle.id} [{vehicle.name}]
-                      </span>
-                      <span className="text-sm text-gray-400 flex items-center gap-1">
-                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
-                        Active • Car • Management
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </ScrollArea>
-              <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm" className="w-full h-10">
-                  Cancel
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`w-full h-10 ${
-                    query === "" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={query === ""}
-                >
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-
-          <StatusDropdown
+          <VehicleStatus
             label="Vehicle Status"
             items={vehicleStatuses}
             selectedItems={selectedStatuses}

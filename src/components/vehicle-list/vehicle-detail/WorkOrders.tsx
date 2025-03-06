@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from 'lucide-react'
 import React, { useState } from 'react'
-import DropdownFilter from '../add-vehicle/DropdownFilter'
+import DropdownFilter from '../../table-filter/VehicleTypeFilter'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'

@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
+import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
 import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
 import {
   Popover,
@@ -35,9 +35,6 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import StatusDropdown, {
-  StatusItem,
-} from "@/components/vehicle-list/add-vehicle/StatusDropdown";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -60,22 +57,15 @@ const vehicle = [
   { id: "V003", name: "BMW X5" },
 ];
 const vehicleGroup = [
-    { id: "V005", country: "USA",  region: "Southeast Region", state: "Atlanta" },
-    { id: "V006", country: "USA",  region: "Southeast Region", state: "Atlanta" },
-  ];
-  
-const vehicleStatuses = [
-  { id: "active", label: "Active", color: "bg-green-500" },
-  { id: "in-shop", label: "In Shop", color: "bg-orange-500" },
-  { id: "inactive", label: "Inactive", color: "bg-blue-500" },
-  { id: "out-of-service", label: "Out of Service", color: "bg-red-500" },
-  { id: "sold", label: "Sold", color: "bg-gray-500" },
+  { id: "V005", country: "USA", region: "Southeast Region", state: "Atlanta" },
+  { id: "V006", country: "USA", region: "Southeast Region", state: "Miami" },
 ];
+  
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
+const maintenanceTasks = ["ABS Control Module Replacement", "ABd Control Module Replacement", "ABf Control Module Replacement"];
 
 const Pages = () => {
   const [search, setSearch] = useState("");
-  const [searchGroup, SetSearchGroup] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedVehicle, setSelectedVehicle] = useState<{
     id: string;
@@ -84,8 +74,8 @@ const Pages = () => {
   const [selectedVehicleGroup, setSelectedVehicleGroup] = useState<{
     id: string; country: string; region: string; state: string;
   } | null>(null);
-  const [selectedStatuses, setSelectedStatuses] = useState<StatusItem[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
+  const [selectedMaintenanceTasks, setSelectedMaintenanceTasks] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const [open, setOpen] = useState(false);
@@ -195,7 +185,7 @@ const Pages = () => {
             <Card
               // ref={dropdownRef}
               className={cn(
-                "absolute right-[30px] mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
+                "absolute left-0 mt-1 w-64 lg:w-96 bg-black text-white border-[2px] border-[#171717] rounded-md shadow-lg p-4 z-10"
               )}
             >
               {/* Search Input */}
@@ -407,11 +397,11 @@ const Pages = () => {
             </PopoverContent>
           </Popover>
 
-          <StatusDropdown
-            label="Vehicle Status"
-            items={vehicleStatuses}
-            selectedItems={selectedStatuses}
-            setSelectedItems={setSelectedStatuses}
+          <DropdownFilter
+            label="Maintenance Tasks"
+            items={maintenanceTasks}
+            selectedItems={selectedMaintenanceTasks}
+            setSelectedItems={setSelectedMaintenanceTasks}
           />
           <DropdownFilter
             label="Watchers"
@@ -419,6 +409,7 @@ const Pages = () => {
             selectedItems={selectedWatchers}
             setSelectedItems={setSelectedWatchers}
           />
+          
         </div>
         <Button
           variant="outline"

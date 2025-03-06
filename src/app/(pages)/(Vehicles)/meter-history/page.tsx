@@ -35,7 +35,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import DropdownFilter from "../../../../components/vehicle-list/add-vehicle/DropdownFilter";
+import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
 import {
   Table,
   TableBody,
@@ -66,7 +66,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import VehicleFilter from "@/components/table-filter/VehicleFilter";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 const vehicles = Array(15).fill({
   vehicle: "1100 [2018 Toyota Prius]",
   meterDate: "02/01/2025",
@@ -78,12 +79,16 @@ const vehicles = Array(15).fill({
   autoVoidReason: "--",
 });
 
-const vehiclesdrop = [
-  { id: 2100, name: "2016 Ford F-150" },
-  { id: 2101, name: "2018 Toyota Tacoma" },
-  { id: 2102, name: "2020 Chevrolet Silverado" },
-  { id: 2103, name: "2017 Ram 1500" },
+type Vehicle = {
+  id: string;
+  name: string;
+  status: string;
+};
+const vehiclesdrop: Vehicle[] = [
+  { id: "1", name: "2100 [2016 Ford F-150]", status: "Active" },
+  { id: "2", name: "2100 [2016 SUV F-150]", status: "Inactive" },
 ];
+
 
 const vehicleStatuses = [
   "Active",
@@ -100,6 +105,8 @@ const Pages = () => {
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  //Vehicle
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle[]>([]);
   const [vehicle, setVehicle] = useState("");
   const [meterReading, setMeterReading] = useState("");
   const [meterDate, setMeterDate] = useState(new Date());
@@ -110,15 +117,6 @@ const Pages = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [filterDateRange, setFilterDateRange] = useState<DateRange | undefined>(
     undefined
-  );
-  const [query, setQuery] = useState("");
-  const [selectedVehicle, setSelectedVehicle] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
-
-  const filteredVehicles = vehiclesdrop.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const meterDateLabel =
@@ -154,16 +152,6 @@ const Pages = () => {
     }
   };
 
-  const handleSelectVehicle = (vehicle: { id: number; name: string }) => {
-    setSelectedVehicle(vehicle);
-    setQuery(`${vehicle.id} [${vehicle.name}]`);
-  };
-
-  const handleClearSearch = () => {
-    setQuery("");
-    setSelectedVehicle(null);
-  };
-  console.log(selectedVehicle);
   return (
     <div className="flex w-full flex-col gap-4 size-span">
       <Breadcrumb>
@@ -226,75 +214,12 @@ const Pages = () => {
             </PopoverContent>
           </Popover>
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-              >
-                Vehicle
-                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-              <div className="relative ">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  placeholder="Search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
-                />
-                {query && (
-                  <X
-                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-                    onClick={handleClearSearch}
-                  />
-                )}
-              </div>
-              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
-                {filteredVehicles.map((vehicle) => (
-                  <div
-                    key={vehicle.id}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                    onClick={() => handleSelectVehicle(vehicle)}
-                  >
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span>
-                        {vehicle.id} [{vehicle.name}]
-                      </span>
-                      <span className="text-sm text-gray-400 flex items-center gap-1">
-                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
-                        Active • Car • Management
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </ScrollArea>
-              <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm" className="w-full h-10">
-                  Cancel
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`w-full h-10 ${
-                    query === "" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={query === ""}
-                >
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
+          <VehicleFilter 
+          label="Vehicle" 
+          items={vehiclesdrop} 
+          selectedItems={selectedVehicle} 
+          setSelectedItems={setSelectedVehicle} 
+          />
 
           <DropdownFilter
             label="Meter Type"

@@ -7,7 +7,7 @@ import {
   Search,
 } from "lucide-react";
 import React, { useState } from "react";
-import DropdownFilter from "../add-vehicle/DropdownFilter";
+import DropdownFilter from "../../table-filter/VehicleTypeFilter";
 import {
   Table,
   TableBody,

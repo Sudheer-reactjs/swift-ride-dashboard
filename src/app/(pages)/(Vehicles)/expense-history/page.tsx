@@ -21,11 +21,11 @@ import {
   Plus,
   Search,
   Trash2,
-  X,
+
 } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import DropdownFilter from "@/components/vehicle-list/add-vehicle/DropdownFilter";
+import DropdownFilter from "@/components/table-filter/VehicleTypeFilter";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
@@ -34,7 +34,6 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { DateRange } from "react-day-picker";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Table,
@@ -52,6 +51,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import VehicleFilter from "@/components/table-filter/VehicleFilter";
 
 const vehicles = Array(15).fill({
   vehicle: "1100 [2018 Toyota Prius]",
@@ -64,13 +64,15 @@ const vehicles = Array(15).fill({
   autoVoidReason: "--",
 });
 
-const vehiclesdrop = [
-  { id: 2100, name: "2016 Ford F-150" },
-  { id: 2101, name: "2018 Toyota Tacoma" },
-  { id: 2102, name: "2020 Chevrolet Silverado" },
-  { id: 2103, name: "2017 Ram 1500" },
+type Vehicle = {
+  id: string;
+  name: string;
+  status: string;
+};
+const vehiclesdrop: Vehicle[] = [
+  { id: "1", name: "2100 [2016 Ford F-150]", status: "Active" },
+  { id: "2", name: "2100 [2016 SUV F-150]", status: "Inactive" },
 ];
-
 const vehicleType = [
   "Annual Inspection Fees",
   "Depreciation",
@@ -87,32 +89,15 @@ const rowsPerPageOptions = [10, 20, 30];
 const Page = () => {
   const [selectedTab, setSelectedTab] = useState("Past");
   const [search, setSearch] = useState("");
+    //Vehicle
+    const [selectedVehicle, setSelectedVehicle] = useState<Vehicle[]>([]);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-  const [query, setQuery] = useState("");
-  const [selectedVehicle, setSelectedVehicle] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const handleSelectVehicle = (vehicle: { id: number; name: string }) => {
-    setSelectedVehicle(vehicle);
-    setQuery(`${vehicle.id} [${vehicle.name}]`);
-  };
-
-  const handleClearSearch = () => {
-    setQuery("");
-    setSelectedVehicle(null);
-  };
-
-  const filteredVehicles = vehiclesdrop.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase())
-  );
 
   const paginatedVehicles = vehicles.slice(
     (currentPage - 1) * rowsPerPage,
@@ -138,7 +123,7 @@ const Page = () => {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  console.log(selectedVehicle);
+
   const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-4 size-span">
@@ -195,76 +180,12 @@ const Page = () => {
           />
         </div>
         <div className="hidden lg:flex flex-wrap gap-2">
-        <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-              >
-                Vehicle
-                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-              <div className="relative ">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  placeholder="Search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
-                />
-                {query && (
-                  <X
-                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-                    onClick={handleClearSearch}
-                  />
-                )}
-              </div>
-              <ScrollArea className="h-40 border-y border-[#27272A] my-4">
-                {filteredVehicles.map((vehicle) => (
-                  <div
-                    key={vehicle.id}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                    onClick={() => handleSelectVehicle(vehicle)}
-                  >
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span>
-                        {vehicle.id} [{vehicle.name}]
-                      </span>
-                      <span className="text-sm text-gray-400 flex items-center gap-1">
-                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
-                        Active • Car • Management
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </ScrollArea>
-              <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm" className="w-full h-10">
-                  Cancel
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`w-full h-10 ${
-                    query === "" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={query === ""}
-                >
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-
+        <VehicleFilter
+          label="Vehicle" 
+          items={vehiclesdrop} 
+          selectedItems={selectedVehicle} 
+          setSelectedItems={setSelectedVehicle} 
+          />
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -294,7 +215,7 @@ const Page = () => {
             setSelectedItems={setSelectedStatuses}
           />
           <DropdownFilter
-            label="Void Status"
+            label="Watcher"  
             items={vehicleWatchers}
             selectedItems={selectedWatchers}
             setSelectedItems={setSelectedWatchers}
