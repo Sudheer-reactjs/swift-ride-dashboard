@@ -5,115 +5,95 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Filter,
   Plus,
-  X,
   Lock,
   Search,
   Users,
   Globe,
   PlusIcon,
-  ChevronDown,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
-import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import MaintenanceHistoryTable from "@/components/maintenance/maintenance-history/MaintenanceHistoryTable";
+import VehicleFilter from "@/components/table-filter/VehicleFilter";
+import VehicleGroup from "@/components/table-filter/VehicleGroup";
+import WatchersFilter from "@/components/table-filter/WatchersFilter";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const vehicles = Array(15).fill({
-  name: "1100 [2018 Toyota Prius]",
-  operator: "Jacob Silva",
-  year: 2018,
-  make: "Toyota",
-  model: "Prius",
-  vin: "JTDKBRFU9J3059307",
-  status: "Active",
-  type: "Pickup Truck",
-  group: "Management",
-  currentmeter: "100,000",
-  licenseplate: "8DZM123",
-  watchers: "1",
+  vehicle: "2100 [2016 Ford F-150]",
+  actualCompletion: "01/19/2025 11:08am",
+  watchers: "-",
+  repairPriorityClass: "-",
+  meter: "55,208 mi",
+  maintenanceTaskster: "Engine Oil & Filter Replacement; Brake Inspection; +2 more",
+  issues: "-",
 });
-
-const vehicle = [
-  { id: "V001", name: "Tesla Model 3" },
-  { id: "V002", name: "Ford Mustang" },
-  { id: "V003", name: "BMW X5" },
+type Vehicle = {
+  id: string;
+  name: string;
+  status: string;
+};
+const vehiclesdrop: Vehicle[] = [
+  { id: "1", name: "2100 [2016 Ford F-150]", status: "Active" },
+  { id: "2", name: "2100 [2016 SUV F-150]", status: "Inactive" },
 ];
 const vehicleGroup = [
   { id: "V005", country: "USA", region: "Southeast Region", state: "Atlanta" },
   { id: "V006", country: "USA", region: "Southeast Region", state: "Miami" },
 ];
-  
 const vehicleWatchers = ["Jacob Silva", "John Doe", "Jane Doe"];
-const maintenanceTasks = ["ABS Control Module Replacement", "ABd Control Module Replacement", "ABf Control Module Replacement"];
-
+const maintenanceTasks = [
+  "ABS Control Module Replacement",
+  "ABd Control Module Replacement",
+  "ABf Control Module Replacement",
+];
+const filterOptions = [
+  "Filter 1",
+  "Filter 2",
+  "Filter 3",
+  "Filter 4",
+  "Filter 5",
+];
 const Pages = () => {
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
-  const [selectedVehicle, setSelectedVehicle] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
-  const [selectedVehicleGroup, setSelectedVehicleGroup] = useState<{
-    id: string; country: string; region: string; state: string;
-  } | null>(null);
   const [selectedWatchers, setSelectedWatchers] = useState<string[]>([]);
-  const [selectedMaintenanceTasks, setSelectedMaintenanceTasks] = useState<string[]>([]);
+  const [selectedMaintenanceTasks, setSelectedMaintenanceTasks] = useState<
+    string[]
+  >([]);
   const [isOpen, setIsOpen] = useState(false);
   const [addTab, setAddTab] = useState(false);
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [queryGroup, setQueryGroup] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState("private");
+  const [filterOpen, setFilterOpen] = useState(false);
 
-////Vehicle
-  const handleSelectVehicle = (vehicle: { id: string; name: string }) => {
-    setSelectedVehicle(vehicle);
-    setQuery(`${vehicle.id} [${vehicle.name}]`);
-  };
-  const handleClearSearch = () => { 
-        setQuery("");
-        setSelectedVehicle(null);
-    };
-  const filteredVehicles = vehicle.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle[]>([]);
+  const [selectedTypesGroup, setSelectedTypesGroup] = useState<
+    { id: string; country: string; region: string; state: string }[]
+  >([]);
 
-  ////VehicleGroup
-  const handleSelectVehicleGroup = (vehicleGroup: { id: string; country: string; region: string; state: string }) => {
-    setSelectedVehicleGroup(vehicleGroup);
-    setQueryGroup(`${vehicleGroup.country}/${vehicleGroup.region}/${vehicleGroup.state}`);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  // Toggle filter selection
+  const toggleFilter = (filter: string) => {
+    setSelectedFilters((prev) =>
+      prev.includes(filter)
+        ? prev.filter((f) => f !== filter)
+        : [...prev, filter]
+    );
   };
-  
-  const handleVehicleGroupClearSearch = () => {
-    setQueryGroup("");
-    setSelectedVehicleGroup(null);
-  };
-  
-  const filteredVehicleGroup = vehicleGroup.filter((vg) =>
-    `${vg.country} ${vg.region} ${vg.state}`.toLowerCase().includes(search.toLowerCase())
-  );
-  
-  const toggleFilterPanel = () => { 
+
+  const toggleFilterPanel = () => {
     setIsOpen((prev) => !prev);
   };
 
@@ -135,15 +115,17 @@ const Pages = () => {
     <>
       {/* Header Actions */}
       <div className="flex flex-wrap justify-between items-centre mb-4 gap-2">
-        <h2 className="text-neutral-50 text-3xl font-semibold">Maintenance History</h2>
+        <h2 className="text-neutral-50 text-3xl font-semibold">
+          Maintenance History
+        </h2>
         <Button
-          variant="outline"
-          className="flex items-center h-10 bg "
-          onClick={() => router.push("/vehicle-list/add")}
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add Vehicle
-        </Button>
+        variant="outline"
+        className="flex items-center h-10"
+        onClick={() => router.push("/maintenance-history/new")}
+      >
+        <Plus className="mr-2 h-4 w-4" />
+        Add Vehicle
+      </Button>
       </div>
 
       <div className="flex gap-1 md:gap-5 mb-2 items-center">
@@ -265,259 +247,102 @@ const Pages = () => {
           />
         </div>
         <div className="hidden xl:flex flex-wrap gap-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-              >
-                Vehicle
-                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-              <div className="relative ">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  placeholder="Search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
-                />
-                {query && (
-                  <X
-                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-                    onClick={handleClearSearch}
-                  />
-                )}
-              </div>
-              <ScrollArea className="h-56 border-y border-[#27272A] my-4">
-                {filteredVehicles.map((vehicle) => (
-                  <div
-                    key={vehicle.id}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                    onClick={() => handleSelectVehicle(vehicle)}
-                  >
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span>
-                        {vehicle.id} [{vehicle.name}]
-                      </span>
-                      <span className="text-sm text-gray-400 flex items-center gap-1">
-                        <div className="w-2.5 h-2.5 bg-green-700 rounded-full" />{" "}
-                        Active • Car • Management
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </ScrollArea>
-              <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm" className="w-full h-10">
-                  Cancel
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`w-full h-10 ${
-                    query === "" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={query === ""}
-                >
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="h-10 flex items-center justify-between px-3 py-2 border rounded-md text-sm bg-black text-white border-[#27272A]"
-              >
-                Vehicle Group
-                <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-80 p-2 bg-[#09090B] text-white rounded-lg shadow-lg">
-              <div className="relative ">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  placeholder="Search..."
-                  value={queryGroup}
-                  onChange={(e) => setQueryGroup(e.target.value)}
-                  className="pl-10 mb-2 border border-gray-600 h-10 bg-[#09090B] text-white pr-8"
-                />
-                {queryGroup && (
-                  <X
-                    className="absolute right-2 top-3 w-4 h-4 cursor-pointer text-gray-400 hover:text-white"
-                    onClick={handleVehicleGroupClearSearch}
-                  />
-                )}
-              </div>
-              <ScrollArea className="h-56 border-y border-[#27272A] my-4">
-                {filteredVehicleGroup.map((vehicleGroup) => (
-                  <div
-                    key={vehicleGroup.id}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                    onClick={() => handleSelectVehicleGroup(vehicleGroup)}
-                  >
-                    <div className="flex flex-col">
-                      <span className="opacity-60 text-neutral-50 text-xs font-normal ">
-                        {vehicleGroup.country}/{vehicleGroup.region} 
-                      </span>
-                      <span className="text-neutral-50 text-sm font-normal">
-                        {vehicleGroup.state}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </ScrollArea>
-              <div className="flex justify-between gap-2 mt-2">
-                <Button variant="ghost" size="sm" className="w-full h-10">
-                  Cancel
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`w-full h-10 ${
-                    query === "" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={query === ""}
-                >
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-
+          <VehicleFilter
+            label="Vehicle"
+            items={vehiclesdrop}
+            selectedItems={selectedVehicle}
+            setSelectedItems={setSelectedVehicle}
+          />
+          <VehicleGroup
+            label="Vehicle Groups"
+            items={vehicleGroup}
+            selectedItems={selectedTypesGroup}
+            setSelectedItems={setSelectedTypesGroup}
+          />
           <DropdownFilter
             label="Maintenance Tasks"
             items={maintenanceTasks}
             selectedItems={selectedMaintenanceTasks}
             setSelectedItems={setSelectedMaintenanceTasks}
           />
-          <DropdownFilter
+          <WatchersFilter
             label="Watchers"
             items={vehicleWatchers}
             selectedItems={selectedWatchers}
             setSelectedItems={setSelectedWatchers}
           />
-          
         </div>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 h-10 mb-2"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <Filter />
-          Filters
-        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 h-10 mb-2"
+            >
+              <Filter />
+              Filters
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80 p-4 bg-zinc-950 rounded-md shadow-[0px_2px_4px_-1px_rgba(0,0,0,0.06)] border-0">
+            {/* Header Section */}
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
+              <div className="text-neutral-50 text-sm font-medium leading-tight">
+                Filters
+              </div>
+              <button
+                className="text-zinc-400 text-sm font-medium leading-tight bg-transparent"
+                onClick={() => setSelectedFilters([])}
+              >
+                Clear all filters
+              </button>
+            </div>
+
+            {/* Scrollable Filter List */}
+            <ScrollArea className="max-h-80 overflow-y-auto custom-scrollbar">
+              <ul className="text-neutral-50 text-sm font-normal leading-tight">
+                {filterOptions.map((filter, index) => (
+                  <li
+                    key={filter}
+                    className={`cursor-pointer p-4 text-neutral-50 text-sm font-normal 
+      ${
+        selectedFilters.includes(filter) ? "bg-[#065f46]" : "hover:bg-[#262626]"
+      } 
+      ${index !== filterOptions.length - 1 ? "border-b border-zinc-800" : ""}`}
+                    onClick={() => toggleFilter(filter)}
+                  >
+                    {filter}
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
+
+            {/* Footer with Apply & Cancel Buttons */}
+            <div className="flex justify-between pt-4 gap-2 border-t border-zinc-800 ">
+              <Button
+                variant="outline"
+                className="text-sm min-w-28 bg-zinc-950 rounded-md h-10 px-4 py-2 border border-zinc-800  text-neutral-50"
+                size="sm"
+              >
+                <PlusIcon /> Add Filter
+              </Button>
+              <Button
+                variant="default"
+                className="text-sm min-w-28 bg-neutral-50 rounded-md h-10 px-4 py-2  text-zinc-900"
+                size="sm"
+                disabled={selectedFilters.length === 0}
+              >
+                Apply
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {/* Table Container */}
-      <VehicleTable
+      <MaintenanceHistoryTable
         vehicles={vehicles}
         isOpen={isOpen}
         toggleFilterPanel={toggleFilterPanel}
       />
-
-      {/* Pagination */}
-
-      {open && (
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="sm:max-w-screen-md bg-[#171717] text-white rounded-lg shadow-lg">
-            {/* Header */}
-            <div className="flex justify-between items-center py-4 border-b border-gray">
-              <DialogTitle className="text-xl font-semibold">
-                New Saved View
-              </DialogTitle>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-gray-400 hover:text-white"
-              >
-                <X size={25} />
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className=" space-y-4">
-              {/* Name Input */}
-              <div>
-                <label className="block text-sm font-medium text-[#FAFAFA]">
-                  Name <span className="text-red-500">*</span>
-                </label>
-                <Input
-                  placeholder="Please Select"
-                  className="mt-1 bg-[#09090B] border-[#27272A] text-white"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-
-              {/* Description Input */}
-              <div>
-                <label className="block text-sm font-medium text-[#FAFAFA]">
-                  Description
-                </label>
-                <Textarea
-                  placeholder="Help others understand the purpose of this view (Optional)"
-                  className="mt-1 bg-[#09090B] border-[#27272A] text-[#FAFAFA]"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
-
-              {/* Shared With */}
-              <div>
-                <label className="block text-sm font-medium text-[#FAFAFA]">
-                  Shared with
-                </label>
-                <Select onValueChange={(value) => setSelected(value)}>
-                  <SelectTrigger className="mt-1 bg-[#09090B] border-[#27272A] text-white flex items-center">
-                    <div className="flex items-center">
-                      {getIcon()}
-                      <SelectValue placeholder="Private" />
-                    </div>
-                  </SelectTrigger>
-                  <SelectContent className="bg-black border-[#27272A] text-white">
-                    <SelectItem value="private">Private</SelectItem>
-                    <SelectItem value="team">Team</SelectItem>
-                    <SelectItem value="public">Public</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-[18px] text-[#A1A1AA] mt-1">
-                  {selected === "private"
-                    ? "Visible only to you"
-                    : selected === "team"
-                    ? "Visible to your team"
-                    : "Visible to everyone"}
-                </p>
-              </div>
-            </div>
-
-            {/* Buttons */}
-            <div className="p-4 flex justify-end space-x-3">
-              <Button
-                variant="ghost"
-                onClick={() => setOpen(false)}
-                className="text-[#FAFAFA] h-10 w-[65px] hover:text-white"
-              >
-                Cancel
-              </Button>
-              <Button className="bg-[#065F46] text-white h-10 w-[65px] hover:bg-green-900">
-                Save
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
     </>
   );
 };

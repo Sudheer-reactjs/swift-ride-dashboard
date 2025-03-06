@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -44,18 +43,14 @@ import {
 import Link from "next/link";
 
 interface Vehicle {
-  name: string;
-  operator: string;
-  year: string;
-  make: string;
-  model: string;
-  vin: string;
-  status: string;
-  type: string;
-  group: string;
-  currentmeter: string;
-  licenseplate: string;
-  watchers: number;
+    vehicle: string;
+    actualCompletion: string;
+    watchers: string;
+    repairPriorityClass: string;
+    maintenanceTaskster: string;
+    vin: string;
+    issues: string;
+    meter: string;
 }
 
 interface VehicleTableProps {
@@ -64,7 +59,7 @@ interface VehicleTableProps {
   toggleFilterPanel: () => void;
 }
 
-const VehicleTable: React.FC<VehicleTableProps> = ({
+const MaintenanceHistoryTable: React.FC<VehicleTableProps> = ({
   vehicles,
   isOpen,
   toggleFilterPanel,
@@ -107,7 +102,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
           <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1300px]">
             <TableHeader>
               <TableRow>
-                <TableHead className="flex items-center gap-2 text-xs">
+                <TableHead className="flex items-center gap-2 text-xs ">
                   <Checkbox
                     id="select-all"
                     className="bg-zinc-950 rounded-sm border border-neutral-600"
@@ -117,33 +112,28 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                     }
                     onCheckedChange={handleSelectAll}
                   />{" "}
-                  Name
+                  Vehicle
                 </TableHead>
-                <TableHead className="">Operator</TableHead>
-                <TableHead className="">Year</TableHead>
-                <TableHead className="">Make</TableHead>
-                <TableHead className="">Model</TableHead>
-                <TableHead className="">VIN</TableHead>
-                <TableHead className="">Status</TableHead>
-                <TableHead className="">Type</TableHead>
-                <TableHead className="">Group</TableHead>
-                <TableHead className="">Current Meter</TableHead>
-                <TableHead className="">License Plate</TableHead>
+                <TableHead className="">Actual Completion Date</TableHead>
                 <TableHead className="">Watchers</TableHead>
+                <TableHead className="">Repair Priority Class</TableHead>
+                <TableHead className="">Meter</TableHead>
+                <TableHead className="">Maintenance Tasks</TableHead>
+                <TableHead className="">Issues</TableHead>
                 <TableHead className="">{"  "} </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paginatedVehicles.map((vehicle, index) => (  
+              {paginatedVehicles.map((vehicle, index) => (
                 <Link
                   key={index}
-                  href={`vehicle-list/vehicle-detail/${vehicle.vin}`}
+                  href={`/maintenance-history/${vehicle.vin}`}
                   passHref
-                  legacyBehavior
+                  legacyBehavior 
                 >
                   <TableRow key={index} className="bg-black-800 text-xs">
                     <TableCell className="min-w-64">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 ">
                         <Checkbox
                           id={`checkbox-${index}`}
                           checked={selectedRows.includes(index)}
@@ -162,37 +152,17 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        {vehicle.name}
+                        <span className="text-emerald-500 underline">{vehicle.vehicle}</span>
                       </div>
                     </TableCell>
                     <TableCell className="min-w-44">
-                      <div className="flex items-center gap-2">
-                       <Avatar className="w-6 h-6">
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.operator}
-                      </div>
+                        {vehicle.actualCompletion}
                     </TableCell>
-                    <TableCell className="">{vehicle.year}</TableCell>
-                    <TableCell className="">{vehicle.make}</TableCell>
-                    <TableCell className="">{vehicle.model}</TableCell>
-                    <TableCell className="">{vehicle.vin}</TableCell>
-                    <TableCell className="">
-                      <Badge variant="secondary">{vehicle.status}</Badge>
-                    </TableCell>
-                    <TableCell className="">{vehicle.type}</TableCell>
-                    <TableCell className="">{vehicle.group}</TableCell>
-                    <TableCell className="">
-                      {vehicle.currentmeter} mi
-                    </TableCell>
-                    <TableCell className="">{vehicle.licenseplate}</TableCell>
-                    <TableCell className="">
-                      {vehicle.watchers} watchers
-                    </TableCell>
+                    <TableCell className="">{vehicle.watchers}</TableCell>
+                    <TableCell className="">{vehicle.repairPriorityClass}</TableCell>
+                    <TableCell className="">{vehicle.meter}</TableCell>
+                    <TableCell className="">{vehicle.maintenanceTaskster}</TableCell>
+                    <TableCell className="">{vehicle.issues}</TableCell>
                     <TableCell className="hover:border border-[#262626]">
                       <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -212,7 +182,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                </Link>
+               </Link>
               ))}
             </TableBody>
           </Table>
@@ -386,4 +356,4 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
   );
 };
 
-export default VehicleTable;
+export default MaintenanceHistoryTable;

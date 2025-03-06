@@ -253,9 +253,10 @@ const Pages = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-xs">
                       <Checkbox
                         id="select-all"
+                          className="bg-zinc-950 rounded-sm border border-neutral-600"
                         checked={
                           selectedRows.length === paginatedVehicles.length
                         }
@@ -275,15 +276,16 @@ const Pages = () => {
               </TableHeader>
               <TableBody>
                 {paginatedVehicles.map((vehicle, index) => (
-                  <TableRow key={index} className="bg-black-800">
+                  <TableRow key={index} className="bg-black-800 text-xs">
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Checkbox
                           id={`checkbox-${index}`}
+                            className="bg-zinc-950 rounded-sm border border-neutral-600"
                           checked={selectedRows.includes(index)}
                           onCheckedChange={() => handleRowSelect(index)}
                         />
-                        <Avatar>
+                        <Avatar className="w-6 h-6">
                           <AvatarImage
                             src="https://github.com/shadcn.png"
                             alt="@shadcn"

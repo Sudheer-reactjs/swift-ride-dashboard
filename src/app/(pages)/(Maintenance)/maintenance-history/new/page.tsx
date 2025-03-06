@@ -18,7 +18,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, ChevronLeft, Clock4 } from "lucide-react";
-import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
 import { FileIcon } from "@/lib/svg";
@@ -28,6 +27,7 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import MaintenanceEntryTab from "@/components/vehicle-list/vehicle-list-entry/MaintenanceEntryTab";
 import LineItemsCard from "@/components/vehicle-list/vehicle-list-entry/LineItemsCard";
 import CostSummaryTable from "@/components/vehicle-list/vehicle-list-entry/CostSummaryTable";
+import { useRouter } from "next/navigation";
 const generateTimeOptions = () => {
   const times = [];
   let hour = 0;
@@ -47,6 +47,20 @@ const generateTimeOptions = () => {
 
   return times;
 };
+const vehicles = [
+  {
+    id: "2100",
+    name: "[2016 Ford F-150]",
+    status: "Active",
+    image: "https://github.com/shadcn.png",
+  },
+  {
+    id: "2200",
+    name: "[2017 Chevrolet Silverado]",
+    status: "Inactive",
+    image: "https://github.com/shadcn.png",
+  },
+];
 
 const Page = () => {
   const timeOptions = generateTimeOptions();
@@ -56,6 +70,7 @@ const Page = () => {
   const [documentFiles, setDocumentFiles] = useState<File[]>([]);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const documentInputRef = useRef<HTMLInputElement>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
 
   const handlePhotoDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -124,15 +139,18 @@ const Page = () => {
   const removeDocumentFile = (index: number) => {
     setDocumentFiles(documentFiles.filter((_, i) => i !== index));
   };
+    const router = useRouter();
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-      <Link
-        href="/vehicle-list"
-        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal"
+      <Button
+        variant="ghost"
+        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal max-w-max hover:bg-transparent px-0"
+        onClick={() => router.back()}
       >
-        <ChevronLeft size={24} className="text-[#A1A1AA]" /> Maintenance Entries
-      </Link>
+        <ChevronLeft size={24} className="text-[#A1A1AA]" />
+        Maintenance Entries
+      </Button>
       <div className="flex justify-between items-center flex-wrap gap-2">
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
           New Maintenance Entry
@@ -159,16 +177,45 @@ const Page = () => {
               <Label className="text-sm font-medium text-gray-100">
                 Vehicle
               </Label>
-              <Select>
-                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
-                  <SelectValue
-                    className="text-zinc-400"
-                    placeholder="Please Select"
-                  />
+              <Select onValueChange={(value) => setSelectedVehicle(value)}>
+                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10 flex items-center justify-between px-3">
+                  {selectedVehicle ? (
+                    <div className="flex items-center gap-2">
+                      <span>{selectedVehicle}</span>
+                    </div>
+                  ) : (
+                    <SelectValue placeholder="Please Select" />
+                  )}
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="device1">Device 1</SelectItem>
-                  <SelectItem value="device2">Device 2</SelectItem>
+                  {vehicles.map((vehicle) => (
+                    <SelectItem
+                      key={vehicle.id}
+                      value={`${vehicle.id} ${vehicle.name}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Avatar className="w-6 h-6">
+                          <AvatarImage src={vehicle.image} alt={vehicle.name} />
+                          <AvatarFallback>V</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-neutral-50 text-sm font-normal">
+                            {vehicle.id} {vehicle.name}
+                          </span>
+                          <span className="text-sm text-gray-400 flex items-center gap-1">
+                            <div
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                vehicle.status === "Active"
+                                  ? "bg-green-700"
+                                  : "bg-red-700"
+                              }`}
+                            />
+                            {vehicle.status}
+                          </span>
+                        </div>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -337,7 +384,7 @@ const Page = () => {
                 onDrop={handlePhotoDrop}
                 onDragOver={handleDragOver}
                 onClick={handlePhotoClick}
-              > 
+              >
                 <input
                   type="file"
                   ref={photoInputRef}

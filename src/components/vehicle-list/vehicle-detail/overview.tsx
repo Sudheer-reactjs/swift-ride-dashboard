@@ -135,7 +135,7 @@ const Overview: FC<VehicleDetailsProps> = ({  }) => {
           <div className="flex flex-wrap justify-between items-center mb-3">
             <h2 className="text-base font-semibold">Integrations</h2>
           </div>
-          <div className="text-center text-zinc-400 text-sm mt-8 font-normal font-['Inter'] leading-tight">
+          <div className="text-center text-zinc-400 text-sm mt-8 font-normal leading-tight">
             This vehicle has no Fuel Cards or Telematics Devices assigned
           </div>
         </div>

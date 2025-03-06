@@ -28,6 +28,7 @@ import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilte
 import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
 import VehicleGroup from "@/components/table-filter/VehicleGroup";
 import VehicleStatus from "@/components/table-filter/VehicleStatusFilter";
+import WatchersFilter from "@/components/table-filter/WatchersFilter";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -256,7 +257,7 @@ const Pages = () => {
             selectedItems={selectedStatuses}
             setSelectedItems={setSelectedStatuses}
           />
-          <DropdownFilter
+          <WatchersFilter
             label="Watchers"
             items={vehicleWatchers}
             selectedItems={selectedWatchers}

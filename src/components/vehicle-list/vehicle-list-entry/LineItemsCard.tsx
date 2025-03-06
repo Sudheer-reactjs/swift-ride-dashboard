@@ -14,7 +14,7 @@ const IssueTracker = () => {
   return (
     <div className="w-full md:px-4 space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-neutral-50 text-base font-medium">Issues</h2>
+        <h2 className="text-neutral-50 text-base font-medium">Line Items</h2>
         <Button className="text-emerald-500 text-xs font-medium bg-transparent p-0 hover:bg-transparent">
           View Service Reminders
         </Button>

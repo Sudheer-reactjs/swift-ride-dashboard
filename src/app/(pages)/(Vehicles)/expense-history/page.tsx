@@ -239,10 +239,11 @@ const Page = () => {
                 <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1300px]">
               <TableHeader>
                 <TableRow>
-                  <TableHead>
+                  <TableHead className="text-xs">
                     <div className="flex items-center gap-2">
                       <Checkbox
                         id="select-all"
+                          className="bg-zinc-950 rounded-sm border border-neutral-600"
                         checked={
                           selectedRows.length === paginatedVehicles.length
                         }
@@ -262,15 +263,16 @@ const Page = () => {
               </TableHeader>
               <TableBody>
                 {paginatedVehicles.map((vehicle, index) => (
-                  <TableRow key={index} className="bg-black-800">
+                  <TableRow key={index} className="bg-black-800 text-xs">
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Checkbox
+                          className="bg-zinc-950 rounded-sm border border-neutral-600"
                           id={`checkbox-${index}`}
                           checked={selectedRows.includes(index)}
                           onCheckedChange={() => handleRowSelect(index)}
                         />
-                        <Avatar>
+                        <Avatar className="w-6 h-6">
                           <AvatarImage
                             src="https://github.com/shadcn.png"
                             alt="@shadcn"

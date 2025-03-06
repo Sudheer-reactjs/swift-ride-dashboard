@@ -16,7 +16,7 @@ const TopBar = () => {
     console.log("Searching for:", query);
   };
   return (
-    <div className="flex w-full gap-4 p-4 bg-bgCard sticky top-0 z-10 justify-between ">
+    <div className="flex w-full gap-4 p-4 bg-bgCard sticky top-0 z-10 justify-between  ">
        <MobileTrigger /> 
       <div className="flex md:grid auto-rows-min gap-[14px] md:gap-4 md:grid-cols-2 md:w-full items-center justify-between">
        
