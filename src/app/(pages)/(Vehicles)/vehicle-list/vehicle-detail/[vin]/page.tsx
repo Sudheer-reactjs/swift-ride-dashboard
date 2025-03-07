@@ -257,7 +257,8 @@ const VehicleDetail = () => {
                 <span>Add Inspection Submission</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800">
+              <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
+              onClick={() => router.push("/work-orders/new")}>
                 <FileSpreadsheet size={16} className="text-white" />
                 <span>Add Work Order</span>
               </DropdownMenuItem>

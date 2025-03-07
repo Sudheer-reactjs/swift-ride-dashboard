@@ -53,7 +53,7 @@ const data = {
       icon: ServiceIcon,
       items: [
         { title: "Maintenance History", url: "/maintenance-history" },
-        // { title: "Work Orders", url: "/work-orders" },
+        { title: "Work Orders", url: "/work-orders" },
         // { title: "Maintenance Tasks", url: "/maintenance-tasks" },
         // { title: "Maintenance Programs", url: "/maintenance/programs" },
         // { title: "Replacement Analysis", url: "/replacement-analysis" },

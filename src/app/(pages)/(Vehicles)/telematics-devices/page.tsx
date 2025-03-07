@@ -110,7 +110,7 @@ const Page = () => {
               variant={selectedTab === tab ? "secondary" : "ghost"}
               onClick={() => setSelectedTab(tab)}
               className={cn(
-                "text-xs sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
+                "text-xs text-zinc-500 sm:text-sm flex items-center rounded-md px-2 sm:px-3 py-1 sm:py-2 transition-all",
                 selectedTab === tab
                   ? "bg-[#171717] text-white"
                   : "hover:bg-[#171717]"
