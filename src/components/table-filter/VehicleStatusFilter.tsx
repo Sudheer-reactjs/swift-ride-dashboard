@@ -98,7 +98,7 @@ const VehicleStatus: React.FC<DropdownFilterProps> = ({
           </div>
 
           <Input
-            placeholder={selectedItems.length > 0 ? "" : "Select status(es)"}
+            placeholder={selectedItems.length > 0 ? "" : "Select status(s)"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-[#171717] text-white border min-h-10 border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3"
