@@ -54,7 +54,7 @@ const data = {
       items: [
         { title: "Maintenance History", url: "/maintenance-history" },
         { title: "Work Orders", url: "/work-orders" },
-        // { title: "Maintenance Tasks", url: "/maintenance-tasks" },
+        { title: "Maintenance Tasks", url: "/maintenance-tasks" },
         // { title: "Maintenance Programs", url: "/maintenance/programs" },
         // { title: "Replacement Analysis", url: "/replacement-analysis" },
         // { title: "Shop Directory", url: "/shop-directory" },

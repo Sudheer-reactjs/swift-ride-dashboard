@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,6 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const chipContainerRef = useRef<HTMLDivElement>(null);
-  const [inputHeight, setInputHeight] = useState(40);
 
   // Filter items based on search input
   const filteredItems = items.filter(
@@ -55,13 +54,6 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
     setSelectedItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Adjust input height dynamically based on selected items
-  useEffect(() => {
-    if (chipContainerRef.current) {
-      setInputHeight(chipContainerRef.current.clientHeight + 20);
-    }
-  }, [selectedItems]);
-
   const isApplyDisabled = selectedItems.length === 0;
 
   return (
@@ -74,8 +66,11 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-[#27272A] rounded-lg shadow-lg">
-        <div className="relative border-b border-[#27272A] pb-3">
-          <div ref={chipContainerRef} className="absolute left-3 top-2 flex flex-wrap gap-1 max-h-24 overflow-y-auto">
+       
+      <div className="relative bg-[#171717] border border-gray-600 rounded-md">
+        
+        {selectedItems.length > 0 && (  
+          <div ref={chipContainerRef}  className="flex p-2 pb-0 flex-wrap gap-1 max-h-24 overflow-y-auto" >
             {selectedItems.map((item) => (
               <span key={item.id} className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md flex items-center">
                 {item.name}
@@ -85,17 +80,17 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
               </span>
             ))}
           </div>
+           )}
 
           <Input
             placeholder={selectedItems.length > 0 ? "" : "Select vehicle(s)"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#171717] text-white border min-h-10 border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3"
-            style={{ height: `${inputHeight}px`, paddingTop: selectedItems.length > 0 ? "40px" : "0px" }}
+            className="w-full bg-[#171717] text-white border-0 h-10  focus:ring-0 focus:outline-none"
           />
         </div>
 
-        <ScrollArea className="max-h-52 mt-2 overflow-y-auto custom-scrollbar">
+       <ScrollArea className="max-h-52 mt-3 overflow-y-auto custom-scrollbar border-t border-[#27272A] items-center pt-3">
           {filteredItems.map((vehicle) => (
             <div
               key={vehicle.id}

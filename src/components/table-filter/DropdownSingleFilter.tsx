@@ -12,48 +12,43 @@ import { ChevronDown, X } from "lucide-react";
 interface DropdownFilterProps {
   label: string;
   items: string[];
-  selectedItems: string[];
-  setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedItem: string | null;
+  setSelectedItem: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const DropdownFilter: React.FC<DropdownFilterProps> = ({
+const DropdownSingleFilter: React.FC<DropdownFilterProps> = ({
   label,
   items,
-  selectedItems,
-  setSelectedItems,
+  selectedItem,
+  setSelectedItem,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const chipContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter items based on search input
-  const filteredItems = items.filter(
-    (item) =>
-      item.toLowerCase().includes(search.toLowerCase()) &&
-      !selectedItems.includes(item)
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Toggle item selection
-  const toggleSelection = (item: string) => {
-    setSelectedItems((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-    );
+  // Set the selected item (single selection)
+  const handleSelection = (item: string) => {
+    setSelectedItem(item);
   };
 
   // Remove selected item
-  const removeSelection = (item: string) => {
-    setSelectedItems((prev) => prev.filter((i) => i !== item));
+  const removeSelection = () => {
+    setSelectedItem(null);
   };
 
-
-  const isApplyDisabled = selectedItems.length === 0;
+  const isApplyDisabled = selectedItem === null;
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2 border-[#27272A]  h-10"
+          className="flex items-center gap-2 border-[#27272A] h-10"
         >
           {label}
           <ChevronDown />
@@ -61,58 +56,51 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-[#27272A] rounded-lg shadow-lg">
-        {/* Search Input with Selected Items */}
-        <div className="relative bg-[#171717] border border-gray-600 rounded-md">
-        
-        {selectedItems.length > 0 && (  
-          <div
-            ref={chipContainerRef}
-            className="flex p-2 pb-0 flex-wrap gap-1 max-h-24 overflow-y-auto" 
-          >
-            {selectedItems.map((item) => (
-              <span
-                key={item}
-                className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md flex items-center"
-              >
-                {item}
-                <button onClick={() => removeSelection(item)} className="ml-1">
-                  <X className="w-3 h-3 text-white hover:text-gray-400" />
+        {/* Search Input with Selected Item */}
+        <div className="relative border-b border-[#27272A] pb-3">
+          {selectedItem && (
+            <div
+              ref={chipContainerRef}
+              className="absolute  top-2 flex flex-wrap gap-1 max-h-24 overflow-y-auto w-full"
+            >
+              <span className=" text-white text-xs px-2 py-1 w-full flex justify-between items-center">
+                {selectedItem}
+                <button onClick={removeSelection} className="ml-1 ">
+                  <X className="text-white hover:text-gray-400" size={16} />
                 </button>
               </span>
-            ))}
-          </div>
-           )}
+            </div>
+          )}
 
           <Input
-            placeholder={selectedItems.length > 0 ? "" : "Select item(s)"}
+            placeholder={selectedItem ? "" : "Select an item"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-             className="w-full bg-[#171717] text-white border-0 h-10  focus:ring-0 focus:outline-none"
+            className="w-full bg-[#171717] text-white border min-h-10 border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3"
+            style={{
+              paddingTop: selectedItem ? "0px" : "0px",
+            }}
           />
         </div>
 
         {/* Scrollable List */}
-         <ScrollArea className="max-h-52 mt-3 overflow-y-auto custom-scrollbar border-t border-[#27272A] items-center pt-3">
+        <ScrollArea className="max-h-52 mt-2 overflow-y-auto custom-scrollbar">
           {filteredItems.map((item) => (
             <div
               key={item}
               className={`p-2 text-white rounded-md cursor-pointer transition flex justify-between items-center ${
-                selectedItems.includes(item)
-                  ? "bg-[#262626]"
-                  : "hover:bg-[#262626]"
+                selectedItem === item ? "bg-[#262626]" : "hover:bg-[#262626]"
               }`}
-              onClick={() => toggleSelection(item)}
+              onClick={() => handleSelection(item)}
             >
               {item}
-              {selectedItems.includes(item) && (
-                <X className="w-4 h-4 text-gray-400" />
-              )}
+             
             </div>
           ))}
         </ScrollArea>
 
         {/* Action Buttons */}
-        <div className="flex  justify-between border-t border-[#27272A] items-center mt-3 pt-3">
+        <div className="flex justify-between border-t border-[#27272A] items-center mt-3 pt-3">
           <Button
             variant="outline"
             size="sm"
@@ -139,4 +127,4 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   );
 };
 
-export default DropdownFilter;
+export default DropdownSingleFilter;

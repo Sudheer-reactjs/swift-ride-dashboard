@@ -9,18 +9,19 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronDown, X } from "lucide-react";
 
-interface VehicleGroupProps {
-  label: string;
-  items: { id: string; country: string; region: string; state: string }[];
-  selectedItems: { id: string; country: string; region: string; state: string }[];
-  setSelectedItems: React.Dispatch<
-    React.SetStateAction<
-      { id: string; country: string; region: string; state: string }[]
-    >
-  >;
+interface code {
+  id: string;
+  name: string;
 }
 
-const VehicleGroup: React.FC<VehicleGroupProps> = ({
+interface VehicleGroupProps {
+  label: string;
+  items: code[];
+  selectedItems: code[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<code[]>>;
+}
+
+const DropdownListFilter: React.FC<VehicleGroupProps> = ({
   label,
   items,
   selectedItems,
@@ -28,24 +29,17 @@ const VehicleGroup: React.FC<VehicleGroupProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const chipContainerRef = useRef<HTMLDivElement>(null);
+  const chipContainerRef = useRef<HTMLDivElement>(null);;
 
   // Filter items based on search input
   const filteredItems = items.filter(
     (item) =>
-      (item.state.toLowerCase().includes(search.toLowerCase()) ||
-        item.region.toLowerCase().includes(search.toLowerCase()) ||
-        item.country.toLowerCase().includes(search.toLowerCase())) &&
+      item.name.toLowerCase().includes(search.toLowerCase()) &&
       !selectedItems.some((selected) => selected.id === item.id)
   );
 
   // Toggle item selection
-  const toggleSelection = (item: {
-    id: string;
-    country: string;
-    region: string;
-    state: string;
-  }) => {
+  const toggleSelection = (item: code) => {
     setSelectedItems((prev) =>
       prev.some((selected) => selected.id === item.id)
         ? prev.filter((selected) => selected.id !== item.id)
@@ -64,28 +58,46 @@ const VehicleGroup: React.FC<VehicleGroupProps> = ({
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2 border-[#27272A] h-10">
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 border-[#27272A] h-10"
+        >
           {label}
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-[#27272A] rounded-lg shadow-lg">
-        {/* Search Input with Selected Items */}
         <div className="relative bg-[#171717] border border-gray-600 rounded-md">
         
         {selectedItems.length > 0 && (  
-          <div ref={chipContainerRef} className="flex p-2 pb-0 flex-wrap gap-1 max-h-24 overflow-y-auto" >
-            {selectedItems.map((item) => (
-              <span key={item.id} className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md flex items-center">
-                {item.country} / {item.region} / {item.state}
-                <button onClick={() => removeSelection(item.id)} className="ml-1">
-                  <X className="w-3 h-3 text-white hover:text-gray-400" />
-                </button>
-              </span>
-            ))}
+            <div
+            ref={chipContainerRef}
+            className="flex p-2 pb-0 flex-wrap gap-1 max-h-24 overflow-y-auto" 
+          >
+            {selectedItems.map((item) => {
+              const originalIndex = items.findIndex((i) => i.id === item.id);
+
+              return (
+                <span
+                  key={item.id}
+                  className="bg-[#262626] text-white text-xs px-2 py-1 rounded-md flex items-center"
+                >
+                  <span className="text-gray-400 mr-1">
+                    {originalIndex + 1}
+                  </span>{" "}
+                  {item.name}
+                  <button
+                    onClick={() => removeSelection(item.id)}
+                    className="ml-1"
+                  >
+                    <X className="w-3 h-3 text-white hover:text-gray-400" />
+                  </button>
+                </span>
+              );
+            })}
           </div>
-            )}
+          )}
 
           <Input
             placeholder={selectedItems.length > 0 ? "" : "Select item(s)"}
@@ -95,32 +107,26 @@ const VehicleGroup: React.FC<VehicleGroupProps> = ({
           />
         </div>
 
-        {/* Scrollable List */}
         <ScrollArea className="max-h-52 mt-3 overflow-y-auto custom-scrollbar border-t border-[#27272A] items-center pt-3">
-          {filteredItems.map((item) => (
+          {filteredItems.map((code, index) => (
             <div
-              key={item.id}
-              className={`p-2 text-white rounded-md cursor-pointer transition flex justify-between items-center ${
-                selectedItems.some((selected) => selected.id === item.id)
+              key={code.id}
+              className={`p-2 text-white rounded-md cursor-pointer transition flex gap-2 ${
+                selectedItems.some((selected) => selected.id === code.id)
                   ? "bg-[#262626]"
                   : "hover:bg-[#262626]"
               }`}
-              onClick={() => toggleSelection(item)}
+              onClick={() => toggleSelection(code)}
             >
+              <span className="text-gray-400 text-sm ">{index + 1}</span>
               <div className="flex flex-col">
-                <span className="opacity-60 text-neutral-50 text-xs font-normal">
-                  {item.country} / {item.region}
+                <span className="text-neutral-50 text-sm font-normal">
+                  {code.name}
                 </span>
-                <span className="text-neutral-50 text-sm font-normal">{item.state}</span>
               </div>
-              {selectedItems.some((selected) => selected.id === item.id) && (
-                <X className="w-4 h-4 text-gray-400" />
-              )}
             </div>
           ))}
         </ScrollArea>
-
-        {/* Action Buttons */}
         <div className="flex justify-between border-t border-[#27272A] items-center mt-3 pt-3">
           <Button
             variant="outline"
@@ -148,4 +154,4 @@ const VehicleGroup: React.FC<VehicleGroupProps> = ({
   );
 };
 
-export default VehicleGroup;
+export default DropdownListFilter;

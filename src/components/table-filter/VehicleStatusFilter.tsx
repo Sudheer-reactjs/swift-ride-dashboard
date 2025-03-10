@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,6 @@ const VehicleStatus: React.FC<DropdownFilterProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const chipContainerRef = useRef<HTMLDivElement>(null);
-  const [inputHeight, setInputHeight] = useState(40); // Default input height
 
   // Filter items based on search input
   const filteredItems = items.filter(
@@ -55,12 +54,6 @@ const VehicleStatus: React.FC<DropdownFilterProps> = ({
     setSelectedItems((prev) => prev.filter((i) => i.id !== itemId));
   };
 
-  // Adjust input height dynamically based on selected items
-  useEffect(() => {
-    if (chipContainerRef.current) {
-      setInputHeight(chipContainerRef.current.clientHeight + 20); // Add some padding
-    }
-  }, [selectedItems]);
 
   const isApplyDisabled = selectedItems.length === 0;
 
@@ -78,10 +71,12 @@ const VehicleStatus: React.FC<DropdownFilterProps> = ({
 
       <DropdownMenuContent className="p-2 w-[300px] ml-36 bg-[#0f0f0f] border border-[#27272A] rounded-lg shadow-lg">
         {/* Search Input with Selected Items */}
-        <div className="relative border-b border-[#27272A] pb-3">
+        <div className="relative bg-[#171717] border border-gray-600 rounded-md">
+        
+        {selectedItems.length > 0 && (  
           <div
             ref={chipContainerRef}
-            className="absolute left-3 top-2 flex flex-wrap gap-1 max-h-24 overflow-y-auto"
+            className="flex p-2 pb-0 flex-wrap gap-1 max-h-24 overflow-y-auto" 
           >
             {selectedItems.map((item) => (
               <span
@@ -96,21 +91,18 @@ const VehicleStatus: React.FC<DropdownFilterProps> = ({
               </span>
             ))}
           </div>
+        )}
 
           <Input
             placeholder={selectedItems.length > 0 ? "" : "Select status(s)"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#171717] text-white border min-h-10 border-gray-600 rounded-md focus:ring-0 focus:outline-none px-3"
-            style={{
-              height: `${inputHeight}px`,
-              paddingTop: selectedItems.length > 0 ? "40px" : "0px",
-            }}
+           className="w-full bg-[#171717] text-white border-0 h-10  focus:ring-0 focus:outline-none"
           />
         </div>
 
         {/* Scrollable List */}
-        <ScrollArea className="max-h-52 mt-2 overflow-y-auto custom-scrollbar">
+       <ScrollArea className="max-h-52 mt-3 overflow-y-auto custom-scrollbar border-t border-[#27272A] items-center pt-3">
           {filteredItems.map((item) => (
             <div
               key={item.id}
