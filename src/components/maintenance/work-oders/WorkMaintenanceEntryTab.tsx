@@ -37,14 +37,14 @@ const TableCell = ({ className = "", ...props }) => (
     { value: 'resolved', label: 'Resolved' },
     { value: 'closed', label: 'Closed' }
   ];
-const IssueTracker = () => {
+const WorkMaintenanceEntryTab = () => {
   const issues = [
     { id: '#5', priority: 'No Priority', summary: 'Brake light', status: 'Open', linked: '-', labels: '-', assigned: '-', work: '-' },
     { id: '#6', priority: 'No Priority', summary: 'replaced soon', status: 'Open', linked: '-', labels: '-', assigned: '-', work: '-' },
   ];
 
   return (
-    <div className="w-full py-8 md:px-4 space-y-4">
+    <div className="w-full space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-neutral-50 text-base font-medium">Issues</h2>
         <Button className="text-emerald-500 text-xs font-medium bg-transparent p-0 hover:bg-transparent">
@@ -134,4 +134,4 @@ const IssueTracker = () => {
   );
 };
 
-export default IssueTracker;
+export default WorkMaintenanceEntryTab;

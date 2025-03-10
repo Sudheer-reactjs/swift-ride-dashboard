@@ -71,32 +71,32 @@ export default function AddMultipleVehicles() {
       <Card className="w-full border-none text-white shadow-lg">
         <CardContent>
           {/* Step Indicator */}
-          <div className="grid grid-cols-2 gap-2 rounded-lg mb-6">
+          <div className="grid grid-cols-2 rounded-lg mb-6">
             <div
-              className={`py-3 text-center cursor-pointer ${
-                step === 1 ? "bg-[#171717] text-white" : "text-gray-500"
+              className={`py-4 text-center flex flex-col gap-1 cursor-pointer ring-1 ring-neutral-900 ${
+                step === 1 ? "bg-[#171717] " : ""
               }`}
               onClick={() => setStep(1)}
             >
-              <p className="font-semibold">Step 1</p>
-              <p className="text-xs">Add Vehicle Data</p>
+              <p className=" text-neutral-50 text-sm font-semibold">Step 1</p>
+              <p className="text-neutral-400 text-sm font-normal ">Add Vehicle Data</p>
             </div>
             <div
-              className={`py-3 text-center cursor-pointer ${
-                step === 2 ? "bg-[#171717] text-white" : "text-gray-500"
+              className={`py-4 text-center cursor-pointer flex flex-col gap-1  ring-1 ring-neutral-900 ${
+                step === 2 ? "bg-[#171717]" : ""
               }`}
               onClick={() => setStep(2)}
             >
-              <p className="font-semibold">Step 2</p>
-              <p className="text-xs">Review & Save</p>
+              <p className=" text-neutral-50 text-sm font-semibold">Step 2</p>
+              <p className="text-neutral-400 text-sm font-normal ">Review & Save</p>
             </div>
           </div>
 
           {/* Info Box */}
-          <div className="p-4 rounded-md mb-4">
+          <div className="py-2 rounded-md mb-4">
             <div className="flex gap-2 items-center">
               <PlayCircle className="w-5 h-5 text-white" />
-              <p className="text-gray-300 font-semibold">
+              <p className="text-neutral-50 text-sm font-normal">
                 Watch the video to learn more
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function AddMultipleVehicles() {
           {/* Step 1: Vehicle Input */}
           {step === 1 && (
             <>
-              <div className="w-full bg-[#171717] p-4 rounded-md">
+              <div className="w-full bg-[#171717] p-4 rounded-md text-neutral-400 text-xs font-normal">
                 <p className="text-[#A3A3A3] text-sm mb-2">
                   Each vehicle should be on a new line. You can copy & paste
                   your vehicle data from a spreadsheet program like Excel or
@@ -154,16 +154,15 @@ export default function AddMultipleVehicles() {
                 </div>
               </div>
 
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-neutral-400 text-xs font-normal mt-2">
              Format each line like: (Vehicle name), (VIN), (Group)
             </p>
-             <div className="text-gray-400 text-sm mt-2">
+             <div className="text-neutral-400 text-xs font-normal mt-2">
               <p className="font-semibold">(Vehicle name)</p>
                <p>The name that will be used for the vehicle in Fleetio.</p>
                <p>
                 The default status (Active) will be applied to each vehicle.
-                  The default status can be changed in account settings under
-                  <span className="underline">vehicle statuses</span>.
+                  The default status can be changed in account settings under <span className="underline"> vehicle statuses</span>.
                 </p>
                  <p>
                    The default type (“Car”) will be applied unless the VIN lookup
@@ -176,8 +175,7 @@ export default function AddMultipleVehicles() {
                    Fleetio will attempt to automatically decode each VIN,
                    importing vehicle type, details and specifications. If VIN
                    lookup does not include a type, the default from account
-                   settings will be applied.
-                   <span className="underline">Learn more</span> about VIN
+                   settings will be applied. <span className="underline">Learn more</span> about VIN
                    decoding in Fleetio.
                  </p>
                  <br />
@@ -231,7 +229,7 @@ export default function AddMultipleVehicles() {
               </Table>
             </div>
           )}
-
+       <hr className="mb-5 mt-10"></hr>
           {/* Buttons */}
           <div className="flex justify-between gap-4 mt-6">
             <Button

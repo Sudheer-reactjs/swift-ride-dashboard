@@ -123,9 +123,7 @@ const Page = () => {
                         />
                         <span className="text-sm w-full max-w-max">mi</span>
                       </div>
-                      <p className="text-zinc-400 text-sm font-normal">
-                        Lasr Updated: 20,871 mi (11 days ago)
-                      </p>
+                      
                     </div>
                     <div className="flex items-center space-x-2 max-w-max min-w-16 justify-end">
                       <Checkbox
@@ -140,6 +138,9 @@ const Page = () => {
                       </label>
                     </div>
                   </div>
+                  <p className="text-zinc-400 text-sm font-normal">
+                        Lasr Updated: 20,871 mi (11 days ago)
+                      </p>
                 </div>
 
                 <div className="col-span-12 w-full space-y-1">

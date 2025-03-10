@@ -24,10 +24,10 @@ import { FileIcon } from "@/lib/svg";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import MaintenanceEntryTab from "@/components/vehicle-list/vehicle-list-entry/MaintenanceEntryTab";
-import LineItemsCard from "@/components/vehicle-list/vehicle-list-entry/LineItemsCard";
-import CostSummaryTable from "@/components/vehicle-list/vehicle-list-entry/CostSummaryTable";
 import { useRouter } from "next/navigation";
+import MaintenanceCostSummaryTable from "@/components/maintenance/maintenance-history/MaintenanceCostSummaryTable";
+import MaintenanceMaintenanceEntryTab from "@/components/maintenance/maintenance-history/MaintenanceMaintenanceEntryTab";
+import MaintenanceLineItemsCard from "@/components/maintenance/maintenance-history/MaintenanceLineItemsCard";
 const generateTimeOptions = () => {
   const times = [];
   let hour = 0;
@@ -61,7 +61,11 @@ const vehicles = [
     image: "https://github.com/shadcn.png",
   },
 ];
-
+const status = [
+  { value: "PriorityClass1", label: "Scheduled", color: "bg-[#008000]" },
+  { value: "PriorityClass2", label: "Non-Scheduled", color: "bg-[#ffa500]" },
+  { value: "PriorityClass3", label: "Emergency", color: "bg-[#ff0000]" },
+];
 const Page = () => {
   const timeOptions = generateTimeOptions();
   const [selectedTime, setSelectedTime] = useState("");
@@ -71,6 +75,7 @@ const Page = () => {
   const photoInputRef = useRef<HTMLInputElement>(null);
   const documentInputRef = useRef<HTMLInputElement>(null);
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [selected, setSelected] = useState(status[0]);
 
   const handlePhotoDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -139,7 +144,7 @@ const Page = () => {
   const removeDocumentFile = (index: number) => {
     setDocumentFiles(documentFiles.filter((_, i) => i !== index));
   };
-    const router = useRouter();
+  const router = useRouter();
 
   return (
     <div className="flex w-full flex-col gap-6 size-span">
@@ -178,7 +183,7 @@ const Page = () => {
                 Vehicle
               </Label>
               <Select onValueChange={(value) => setSelectedVehicle(value)}>
-                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10 flex items-center justify-between px-3">
+                <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10 flex items-center justify-between px-3">
                   {selectedVehicle ? (
                     <div className="flex items-center gap-2">
                       <span>{selectedVehicle}</span>
@@ -223,17 +228,29 @@ const Page = () => {
               <Label className="text-sm font-medium text-gray-100">
                 Repair Priority Class
               </Label>
-              <Select>
-                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
-                  <SelectValue placeholder="Please Select" />
+              <Select
+                onValueChange={(value) =>
+                  setSelected(
+                    status.find((opt) => opt.value === value) || selected
+                  )
+                }
+              >
+                <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10 flex items-center">
+                  <div className="flex items-center gap-2">
+                    <SelectValue placeholder="Please Select" />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="PriorityClass1">
-                    Priority Class 1
-                  </SelectItem>
-                  <SelectItem value="PriorityClass2">
-                    Priority Class 2
-                  </SelectItem>
+                  {status.map((status) => (
+                    <SelectItem key={status.value} value={status.value}>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`w-2 h-2 rounded-full ${status.color}`}
+                        ></span>
+                        {status.label}
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <p className="text-zinc-400 text-sm font-normal">
@@ -253,7 +270,7 @@ const Page = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-normal bg-black text-white border-zinc-800 h-10",
+                        "w-full justify-start text-left font-normal bg-zinc-950 text-white border-zinc-800 h-10",
                         !date && "text-muted-foreground"
                       )}
                     >
@@ -270,15 +287,15 @@ const Page = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pl-4">
-                  <span className="text-sm w-full max-w-max">
+                <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 ">
+                  <span className="text-sm w-full max-w-max pointer-events-none absolute left-4 top-3">
                     <Clock4 size={16} className="text-zinc-400" />
                   </span>
                   <div className="relative">
                     {/* Editable Input Field */}
                     <input
                       type="text"
-                      className="w-full bg-transparent text-white border-0 h-10 min-w-3 px-3 outline-none focus:ring-0 focus:border-0"
+                      className="w-full bg-transparent text-white border-0 h-10 min-w-3 px-3 outline-none focus:ring-0 focus:border-0 pl-10"
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
                       placeholder="Pick time"
@@ -316,7 +333,7 @@ const Page = () => {
               <Input
                 type="text"
                 placeholder="Please Enter"
-                className="bg-black text-white border-zinc-800"
+                className="bg-zinc-950 text-white border-zinc-800"
               />
             </div>
 
@@ -325,7 +342,7 @@ const Page = () => {
                 Vendor
               </Label>
               <Select>
-                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10">
                   <SelectValue placeholder="Please Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -339,7 +356,7 @@ const Page = () => {
                 Labels
               </Label>
               <Select>
-                <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
+                <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10">
                   <SelectValue placeholder="Please Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -348,13 +365,22 @@ const Page = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="col-span-12 w-full space-y-1">
-              <MaintenanceEntryTab />
-            </div>
-            <div className="col-span-12 w-full space-y-1">
-              <LineItemsCard />
-            </div>
           </div>
+        </div>
+      </div>
+
+      <div className="flex max-w-3xl w-full m-auto flex-col gap-6 size-span">
+        <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <MaintenanceMaintenanceEntryTab />
+        </div>
+      </div>
+      <div className="flex max-w-3xl w-full m-auto flex-col gap-6 size-span">
+        <div className="bg-[#171717] p-4 rounded-lg text-white">
+          <MaintenanceLineItemsCard />
+        </div>
+      </div>
+      <div className="flex max-w-3xl w-full m-auto flex-col gap-6 size-span">
+        <div className="bg-[#171717] p-4 rounded-lg text-white">
           <div className="grid grid-cols-12 gap-4 md:gap-6 py-8">
             <div className="col-span-12 md:col-span-6 w-full ">
               <h3 className="text-neutral-50 text-sm font-medium mb-5 ">
@@ -363,7 +389,7 @@ const Page = () => {
               <Textarea
                 placeholder="Add notes or additional details"
                 id="message"
-                className="bg-black text-white border-zinc-800 h-[328px]"
+                className="bg-zinc-950 text-white border-zinc-800 h-[328px]"
               />
             </div>
             <div className="col-span-12 md:col-span-6 w-full ">
@@ -371,16 +397,18 @@ const Page = () => {
                 Cost Summary
               </h3>
               <hr className="my-5"></hr>
-              <CostSummaryTable />
+              <MaintenanceCostSummaryTable />
             </div>
           </div>
+        </div>
+        <div className="bg-[#171717] p-4 rounded-lg text-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Photo Upload */}
             <div className="bg-[#171717] md:p-4 rounded-lg text-white">
               <h3>Photos</h3>
               <hr className="my-5"></hr>
               <div
-                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-zinc-950 w-full"
                 onDrop={handlePhotoDrop}
                 onDragOver={handleDragOver}
                 onClick={handlePhotoClick}
@@ -412,7 +440,7 @@ const Page = () => {
                   {photoFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between bg-black p-2 rounded-md"
+                      className="flex items-center justify-between bg-zinc-950 p-2 rounded-md"
                     >
                       <div className="flex items-center">
                         <span className="ml-2 text-sm truncate w-full">
@@ -436,7 +464,7 @@ const Page = () => {
               <h3>Documents</h3>
               <hr className="my-5"></hr>
               <div
-                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+                className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-zinc-950 w-full"
                 onDrop={handleDocumentDrop}
                 onDragOver={handleDragOver}
                 onClick={handleDocumentClick}
@@ -467,7 +495,7 @@ const Page = () => {
                   {documentFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between bg-black p-2 rounded-md"
+                      className="flex items-center justify-between bg-zinc-950 p-2 rounded-md"
                     >
                       <div className="flex items-center">
                         <span className="ml-2 text-sm truncate max-w-[180px]">
@@ -486,6 +514,8 @@ const Page = () => {
               )}
             </div>
           </div>
+        </div>
+        <div className="flex max-w-3xl w-full m-auto flex-col gap-6 size-span">
           <div className="bg-[#171717] p-4 rounded-lg text-white">
             <h3>Comments</h3>
             <hr className="my-5"></hr>
@@ -500,7 +530,7 @@ const Page = () => {
               <Textarea
                 placeholder="Please add your comment (optional)"
                 id="message"
-                className="bg-black text-white border-zinc-800 h-[90px]"
+                className="bg-zinc-950 text-white border-zinc-800 h-[90px]"
               />
             </div>
           </div>

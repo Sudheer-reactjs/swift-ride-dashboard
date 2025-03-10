@@ -238,15 +238,15 @@ const Page = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 pl-4">
-                  <span className="text-sm w-full max-w-max">
+                <div className="flex items-center relative border border-zinc-800 rounded-lg bg-zinc-950 ">
+                  <span className="text-sm w-full max-w-max pointer-events-none absolute left-4 top-3">
                     <Clock4 size={16} className="text-zinc-400" />
                   </span>
                   <div className="relative">
                     {/* Editable Input Field */}
                     <input
                       type="text"
-                      className="w-full bg-transparent text-white border-0 h-10 min-w-3 px-3 outline-none focus:ring-0 focus:border-0"
+                      className="w-full bg-transparent text-white border-0 h-10 min-w-3 px-3 outline-none focus:ring-0 focus:border-0 pl-10"
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
                       placeholder="Pick time"

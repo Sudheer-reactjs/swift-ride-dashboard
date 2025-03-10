@@ -64,7 +64,7 @@ interface VehicleTableProps {
   toggleFilterPanel: () => void;
 }
 
-const VehicleTable: React.FC<VehicleTableProps> = ({
+const TelematicsDevicesTable: React.FC<VehicleTableProps> = ({
   vehicles,
   isOpen,
   toggleFilterPanel,
@@ -137,7 +137,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
               {paginatedVehicles.map((vehicle, index) => (  
                 <Link
                   key={index}
-                  href={`vehicle-list/vehicle-detail/${vehicle.vin}`}
+                  href={`#`}
                   passHref
                   legacyBehavior
                 >
@@ -402,4 +402,4 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
   );
 };
 
-export default VehicleTable;
+export default TelematicsDevicesTable;

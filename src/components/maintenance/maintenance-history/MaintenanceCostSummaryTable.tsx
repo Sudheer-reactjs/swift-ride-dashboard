@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
-export default function InvoiceTable() {
+export default function MaintenanceCostSummaryTable() {
   const [discountType, setDiscountType] = useState<"percentage" | "fixed">("percentage");
   const [discountValue, setDiscountValue] = useState(0);
   const [taxType, setTaxType] = useState<"percentage" | "fixed">("percentage");

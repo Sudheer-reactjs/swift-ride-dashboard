@@ -12,10 +12,10 @@ import {
 import { Filter, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
-import VehicleTable from "../../../../components/vehicle-list/add-vehicle/VehicleTable";
 import VehicleFilter from "@/components/table-filter/VehicleFilter";
 import VehicleStatus from "@/components/table-filter/VehicleStatusFilter";
 import VehicleGroup from "@/components/table-filter/VehicleGroup";
+import TelematicsDevicesTable from "@/components/vehicle-list/telematics-devices/TelematicsDevicesTable";
 
 const vehicles = Array(15).fill({
   name: "1100 [2018 Toyota Prius]",
@@ -173,7 +173,7 @@ const Page = () => {
       </div>
 
       {/* Table Container */}
-      <VehicleTable
+            <TelematicsDevicesTable
         vehicles={vehicles}
         isOpen={isOpen}
         toggleFilterPanel={toggleFilterPanel}

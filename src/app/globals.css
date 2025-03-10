@@ -158,7 +158,18 @@ body{
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #a1a1aa;
+}
+input::-moz-placeholder { /* Firefox 19+ */
+  color: #a1a1aa;
+}
+input:-ms-input-placeholder { /* IE 10+ */
+  color: #a1a1aa;
+}
+input:-moz-placeholder { /* Firefox 18- */
+  color: #a1a1aa;
+}
 @media (max-width: 767px){
   .size-span span.text-sm {
     font-size: 10px;
