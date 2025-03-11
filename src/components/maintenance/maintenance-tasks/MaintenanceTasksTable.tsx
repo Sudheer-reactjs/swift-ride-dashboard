@@ -103,7 +103,7 @@ const totalPages = Math.max(1, Math.ceil(vehicles.length / rowsPerPage));
       <div className="w-full relative overflow-hidden">
         {/* Table Container */}
         <div className="w-full overflow-auto rounded-lg border bg-[#171717] border-[#27272A]">
-          <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1300px]">
+          <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1500px]">
             <TableHeader>
               <TableRow>
               <TableHead className="flex items-center gap-2 text-xs ">

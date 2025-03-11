@@ -61,14 +61,14 @@ const Page = () => {
             className="h-10 border-0"
             onClick={() => router.back()}
           >
-            Cancel
+           Continue
           </Button>
           <Button
             variant="outline"
             className="h-10 bg-[#065F46] hover:bg-[#065F46] border-0"
             onClick={() => setShowFleetioRecommendations(true)}
           >
-            Continue
+            Save Maintenance Task 
           </Button>
         </div>
       </div>

@@ -143,7 +143,7 @@ const Page = () => {
       </div>
       <div className="flex mb-1  flex-col md:flex-row gap-2 items-center">
         <div className="flex space-x-2 mb-1 w-full items-center">
-          <div className="relative w-full md:w-1/2 lg:w-1/5">
+          <div className="relative w-full md:w-1/2 lg:w-1/6">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               placeholder="Search"
