@@ -137,7 +137,7 @@ const totalPages = Math.max(1, Math.ceil(vehicles.length / rowsPerPage));
               {paginatedVehicles.map((vehicle, index) => (
                 <Link
                   key={index}
-                  href={`/work-orders/${vehicle.vin}`}
+                  href={`/maintenance-tasks/${vehicle.vin}`}
                   passHref
                   legacyBehavior 
                 >

@@ -111,7 +111,7 @@ const Page = () => {
         <Button
           variant="outline"
           className="flex items-center h-10 bg "
-          onClick={() => router.push("/work-orders/new")}
+          onClick={() => router.push("/maintenance-tasks/new")}
         >
           <Plus className="mr-2 h-4 w-4" />
           Maintenance Tasks
