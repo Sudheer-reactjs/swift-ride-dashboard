@@ -8,8 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -27,6 +25,7 @@ import {
   ArrowRight,
   Pencil,
   Archive,
+  ArrowUpDown,
 } from "lucide-react";
 import {
   Select,
@@ -44,18 +43,17 @@ import {
 import Link from "next/link";
 
 interface Vehicle {
-  name: string;
-  operator: string;
-  year: string;
-  make: string;
-  model: string;
-  vin: string;
-  status: string;
-  type: string;
-  group: string;
-  currentmeter: string;
-  licenseplate: string;
-  watchers: number;
+    name: string,
+    description: string,
+    entries: string,
+    reminders: string,
+    programsnanceTasks: string,
+    orders: string,
+    repairCode: string,
+    categoryCode: string,
+    systemCode: string,
+    assemblyCode: string,
+      vin: string,
 }
 
 interface VehicleTableProps {
@@ -64,7 +62,7 @@ interface VehicleTableProps {
   toggleFilterPanel: () => void;
 }
 
-const VehicleTable: React.FC<VehicleTableProps> = ({
+const MaintenanceTasksTable: React.FC<VehicleTableProps> = ({
   vehicles,
   isOpen,
   toggleFilterPanel,
@@ -77,7 +75,8 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
 
   const [filters, setFilters] = useState([{ id: 1, field: "" }]);
 
-  const totalPages = Math.ceil(vehicles.length / rowsPerPage);
+const totalPages = Math.max(1, Math.ceil(vehicles.length / rowsPerPage));
+
 
   const handleRowSelect = (index: number) => {
     setSelectedRows((prev) =>
@@ -107,29 +106,30 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
           <Table className="w-full overflow-auto hover:cursor-pointer min-w-[1300px]">
             <TableHeader>
               <TableRow>
-                <TableHead className="flex items-center gap-2 text-xs">
-                  <Checkbox
-                    id="select-all"
-                    className="bg-zinc-950 rounded-sm border border-neutral-600"
-                    checked={
-                      selectedRows.length === paginatedVehicles.length &&
-                      paginatedVehicles.length > 0
-                    }
-                    onCheckedChange={handleSelectAll}
-                  />{" "}
-                  Name
-                </TableHead>
-                <TableHead className="">Operator</TableHead>
-                <TableHead className="">Year</TableHead>
-                <TableHead className="">Make</TableHead>
-                <TableHead className="">Model</TableHead>
-                <TableHead className="">VIN</TableHead>
-                <TableHead className="">Status</TableHead>
-                <TableHead className="">Type</TableHead>
-                <TableHead className="">Group</TableHead>
-                <TableHead className="">Current Meter</TableHead>
-                <TableHead className="">License Plate</TableHead>
-                <TableHead className="">Watchers</TableHead>
+              <TableHead className="flex items-center gap-2 text-xs ">
+        <Checkbox
+          id="select-all"
+          className="bg-zinc-950 rounded-sm border border-neutral-600"
+          checked={
+            selectedRows.length === paginatedVehicles.length &&
+            paginatedVehicles.length > 0
+          }
+          onCheckedChange={handleSelectAll}
+        />
+        <Button variant="ghost">
+          Name
+          <ArrowUpDown className="w-4 h-4 ml-1" />
+        </Button>
+      </TableHead>
+                <TableHead className="">Description</TableHead>
+                <TableHead className="">Maintenance Entries</TableHead>
+                <TableHead className="">Maintenance Reminders</TableHead>
+                <TableHead className="">Maintenance Programs</TableHead>
+                <TableHead className="">Work Orders</TableHead>
+                <TableHead className="">Default Reason For Repair Code</TableHead>
+                <TableHead className="">Default Category Code</TableHead>
+                <TableHead className="">Default System Code</TableHead>
+                <TableHead className="">Default Assembly Code</TableHead>
                 <TableHead className="">{"  "} </TableHead>
               </TableRow>
             </TableHeader>
@@ -137,13 +137,13 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
               {paginatedVehicles.map((vehicle, index) => (
                 <Link
                   key={index}
-                  href={`vehicle-list/vehicle-detail/${vehicle.vin}`}
+                  href={`/work-orders/${vehicle.vin}`}
                   passHref
-                  legacyBehavior
+                  legacyBehavior 
                 >
                   <TableRow key={index} className="bg-black-800 text-xs">
-                    <TableCell className="min-w-64">
-                      <div className="flex items-center gap-2">
+                    <TableCell className="">
+                      <div className="flex items-center gap-2 ">
                         <Checkbox
                           id={`checkbox-${index}`}
                           checked={selectedRows.includes(index)}
@@ -155,49 +155,20 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                           }}
                           onClick={(e) => e.stopPropagation()}
                         />
-                        <Avatar className="w-6 h-6">
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.name}
+                        <span >{vehicle.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="min-w-44">
-                      <div className="flex items-center gap-2">
-                        <Avatar className="w-6 h-6">
-                          <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        {vehicle.operator}
-                      </div>
-                    </TableCell>
-                    <TableCell className="">{vehicle.year}</TableCell>
-                    <TableCell className="">{vehicle.make}</TableCell>
-                    <TableCell className="">{vehicle.model}</TableCell>
-                    <TableCell className="">{vehicle.vin}</TableCell>
-                    <TableCell className="">
-                      <Badge
-                        variant="secondary"
-                        className="bg-neutral-600  rounded-full"
-                      >
-                        {vehicle.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="">{vehicle.type}</TableCell>
-                    <TableCell className="">{vehicle.group}</TableCell>
-                    <TableCell className="">
-                      {vehicle.currentmeter} mi
-                    </TableCell>
-                    <TableCell className="">{vehicle.licenseplate}</TableCell>
-                    <TableCell className="">
-                      {vehicle.watchers} watchers
-                    </TableCell>
+                    <TableCell className="">{vehicle.description}</TableCell>
+                    <TableCell className="">{vehicle.entries}</TableCell>
+                    <TableCell className="">{vehicle.reminders} </TableCell>
+                    <TableCell className="">{vehicle.programsnanceTasks}</TableCell>
+                    <TableCell className="">{vehicle.orders}</TableCell>
+                    <TableCell className="">{vehicle.repairCode}</TableCell>
+                    <TableCell className="">{vehicle.categoryCode}</TableCell>
+                    <TableCell className="">{vehicle.systemCode}</TableCell>
+                    <TableCell className="">{vehicle.assemblyCode}</TableCell>
+                  
+
                     <TableCell className="hover:border border-[#262626]">
                       <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -217,7 +188,7 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                </Link>
+               </Link>
               ))}
             </TableBody>
           </Table>
@@ -323,88 +294,88 @@ const VehicleTable: React.FC<VehicleTableProps> = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between items-center mt-4 gap-2">
-          <p className="text-sm">
-            {selectedRows.length} of {vehicles.length} row(s) selected.
-          </p>
-          <div className="flex items-start gap-2 space-x-2 flex-col md:flex-row">
-            <div className="flex items-center justify-normal gap-2 space-x-2 flex-wrap">
-              <span>Rows per page</span>
-              <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
-                <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
-                  {rowsPerPage}
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-center gap-2 space-x-2 flex-wrap">
-              <span>Page {currentPage} of 1</span>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-2 px-3"
-                  >
-                    {" "}
-                    {rowsPerPage} <ChevronDown className="w-2 h-4" />{" "}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {rowsPerPageOptions.map((option) => (
-                    <DropdownMenuItem
-                      key={option}
-                      onClick={() => setRowsPerPage(option)}
+      <div className="flex flex-wrap justify-between items-center mt-4 gap-2">
+                <p className="text-sm">
+                  {selectedRows.length} of {vehicles.length} row(s) selected.
+                </p>
+                <div className="flex items-start gap-2 space-x-2 flex-col md:flex-row">
+                  <div className="flex items-center justify-normal gap-2 space-x-2 flex-wrap">
+                    <span>Rows per page</span>
+                    <Select onValueChange={(value) => setRowsPerPage(Number(value))}>
+                      <SelectTrigger className="w-20 h-10 bg-black border border-[#27272A] text-white">
+                        {rowsPerPage}
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10">10</SelectItem>
+                        <SelectItem value="25">25</SelectItem>
+                        <SelectItem value="50">50</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-center gap-2 space-x-2 flex-wrap">
+                    <span>Page {currentPage} of 1</span>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="flex items-center gap-2 px-3"
+                        >
+                          {" "}
+                          {rowsPerPage} <ChevronDown className="w-2 h-4" />{" "}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        {rowsPerPageOptions.map((option) => (
+                          <DropdownMenuItem
+                            key={option}
+                            onClick={() => setRowsPerPage(option)}
+                          >
+                            {" "}
+                            {option}{" "}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Button
+                      variant="outline"
+                      onClick={() => setCurrentPage(1)}
+                      className="px-3"
                     >
                       {" "}
-                      {option}{" "}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(1)}
-                className="px-3"
-              >
-                {" "}
-                <ChevronsLeft className="w-3 h-4" />{" "}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                className="px-3"
-              >
-                {" "}
-                <ChevronLeft className="w-3 h-4" />{" "}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                className="px-3"
-              >
-                {" "}
-                <ChevronRight className="w-3 h-4" />{" "}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(totalPages)}
-                className="px-3"
-              >
-                {" "}
-                <ChevronsRight className="w-3 h-4" />{" "}
-              </Button>
-            </div>
-          </div>
-        </div>
+                      <ChevronsLeft className="w-3 h-4" />{" "}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      className="px-3"
+                    >
+                      {" "}
+                      <ChevronLeft className="w-3 h-4" />{" "}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      className="px-3"
+                    >
+                      {" "}
+                      <ChevronRight className="w-3 h-4" />{" "}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setCurrentPage(totalPages)}
+                      className="px-3"
+                    >
+                      {" "}
+                      <ChevronsRight className="w-3 h-4" />{" "}
+                    </Button>
+                  </div>
+                </div>
+              </div>
       </div>
     </>
   );
 };
 
-export default VehicleTable;
+export default MaintenanceTasksTable;

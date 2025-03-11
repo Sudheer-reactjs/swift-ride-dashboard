@@ -1,14 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
-  Calendar,
-  Clock,
   Filter,
   Globe,
   Lock,
   Plus,
   Search,
-  TableProperties,
   Users,
   X,
 } from "lucide-react";
@@ -25,55 +22,47 @@ import {
 } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import WorkOrdersTable from "@/components/maintenance/work-oders/WorkOrdersTable";
-import VehicleStatus from "@/components/table-filter/VehicleStatusFilter";
-import VehicleFilter from "@/components/table-filter/VehicleFilter";
-import VehicleGroup from "@/components/table-filter/VehicleGroup";
 import DropdownSingleFilter from "@/components/table-filter/DropdownSingleFilter";
 import DropdownListFilter from "@/components/table-filter/DropdownListFilter";
+import SelectOptionFilter from "@/components/table-filter/SelectFilter";
+import MaintenanceTasksTable from "@/components/maintenance/maintenance-tasks/MaintenanceTasksTable";
+
 const tabs = [{ label: "Active" }, { label: "Archived" }];
-const vehicleStatuses = [
-  { id: "active", label: "Active", color: "bg-green-500" },
-  { id: "in-shop", label: "In Shop", color: "bg-orange-500" },
-  { id: "inactive", label: "Inactive", color: "bg-blue-500" },
-  { id: "out-of-service", label: "Out of Service", color: "bg-red-500" },
-  { id: "sold", label: "Sold", color: "bg-gray-500" },
-];
 const vehicles = Array(15).fill({
-  vehicle: "2100 [2016 Ford F-150]",
-  number: "#1",
-  status: "Open",
-  repairPriorityClass: "Emergency",
-  maintenanceTasks: "—",
-  issueDate: "02.01.2025",
-  expectedDate: "02.01.2025",
-  assignedTo: "Jacob Silva",
-  watchers: "1",
+  name: "A/c System Test",
+  description: "-",
+  entries: "0",
+  reminders: "0",
+
+  programsnanceTasks: "0",
+  orders: "02.01.0",
+  repairCode: "-",
+  categoryCode: "Chassis 1",
+  systemCode: "Brakes 013",
+  assemblyCode:"ABS, Anti-Lock System 011",
 });
-type Vehicle = {
-  id: string;
-  name: string;
-  status: string;
-};
 type code = {
   id: string;
   name: string;
 };
-const vehiclesdrop: Vehicle[] = [
-  { id: "1", name: "2100 [2016 Ford F-150]", status: "Active" },
-  { id: "2", name: "2100 [2016 SUV F-150]", status: "Inactive" },
-];
-const vehicleGroup = [
-  { id: "V005", country: "USA", region: "Southeast Region", state: "Atlanta" },
-  { id: "V006", country: "USA", region: "Southeast Region", state: "Miami" },
-];
 const categoryCode: code[] = [
+  {
+    id: "1",
+    name: "Air Conditioning, Heating & Ventilating System",
+  },
+  { id: "2", name: "Chassis" },
+  { id: "3", name: "Electrical" },
+];
+const systemCode: code[] = [
   {
     id: "1",
     name: "Cab, Climate Control, Instrumentation, & Aerodynamic Devices",
   },
-  { id: "2", name: "Chassis" },
-  { id: "3", name: "Electrical" },
+  { id: "2", name: "Cab & Sheet Metal" },
+  {
+    id: "3",
+    name: "Instruments, Gauges, Warning & Shutdown Devices, & Meters",
+  },
 ];
 
 const maintenanceTasksType = ["Standard Tasks", "Custom Tasks"];
@@ -89,14 +78,11 @@ const Page = () => {
   const [selectedWorkCategoryCode, setSelectedWorkCategoryCode] = useState<
     code[]
   >([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<
-    { id: string; label: string; color: string }[]
-  >([]);
-  const [selectedTypesGroup, setSelectedTypesGroup] = useState<
-    { id: string; country: string; region: string; state: string }[]
-  >([]);
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle[]>([]);
-  const [activeView, setActiveView] = useState("");
+  useState<string | null>(null);
+  const [selectedWorkSystemCode, setSelectedWorkSystemCode] = useState<code[]>(
+    []
+  );
+  const [reminders, setReminders] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [open, setOpen] = useState(false);
   const toggleFilterPanel = () => {
@@ -179,25 +165,24 @@ const Page = () => {
               selectedItems={selectedWorkCategoryCode}
               setSelectedItems={setSelectedWorkCategoryCode}
             />
+            <DropdownListFilter
+              label="Default System Code"
+              items={systemCode}
+              selectedItems={selectedWorkSystemCode}
+              setSelectedItems={setSelectedWorkSystemCode}
+            />
 
-            <VehicleStatus
-              label="Status"
-              items={vehicleStatuses}
-              selectedItems={selectedStatuses}
-              setSelectedItems={setSelectedStatuses}
+            <SelectOptionFilter
+              label="Gas Service Reminders"
+              options={[
+                { value: "yes", label: "Yes" },
+                { value: "no", label: "No" },
+              ]}
+              selectedItem={reminders}
+              setSelectedItem={setReminders}
             />
-            <VehicleFilter
-              label="Vehicle"
-              items={vehiclesdrop}
-              selectedItems={selectedVehicle}
-              setSelectedItems={setSelectedVehicle}
-            />
-            <VehicleGroup
-              label="Vehicle Groups"
-              items={vehicleGroup}
-              selectedItems={selectedTypesGroup}
-              setSelectedItems={setSelectedTypesGroup}
-            />
+
+          
           </div>
           <Button
             variant="outline"
@@ -208,40 +193,8 @@ const Page = () => {
             Filters
           </Button>
         </div>
-        <div className="flex h-10 border gap-0.5 rounded-md p-0.5 items-center justify-center max-w-max">
-          <Button
-            variant="ghost"
-            className={cn(
-              "py-1 px-3.5 rounded-md transition-all text-zinc-500 h-8",
-              activeView === "list" ? "bg-neutral-800 text-white" : ""
-            )}
-            onClick={() => setActiveView("list")}
-          >
-            <TableProperties className="!w-5 !h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            className={cn(
-              "py-1 px-3.5 rounded-md transition-all text-zinc-500 h-8",
-              activeView === "calendar" ? "bg-neutral-800 text-white" : ""
-            )}
-            onClick={() => setActiveView("calendar")}
-          >
-            <Calendar className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            className={cn(
-              "py-1 px-3.5 rounded-md transition-all text-zinc-500 h-8",
-              activeView === "history" ? "bg-neutral-800 text-white" : ""
-            )}
-            onClick={() => setActiveView("history")}
-          >
-            <Clock className="w-5 h-5" />
-          </Button>
-        </div>
       </div>
-      <WorkOrdersTable
+      <MaintenanceTasksTable
         vehicles={vehicles}
         isOpen={isOpen}
         toggleFilterPanel={toggleFilterPanel}
