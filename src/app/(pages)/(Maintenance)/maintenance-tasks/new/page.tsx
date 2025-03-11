@@ -274,12 +274,13 @@ const Page = () => {
                     </SelectContent>
                   </Select>
                   <p className="text-zinc-400 text-sm font-normal">
-                  Category Code: a one-digit number that identifies the category involved in the repair (chassis, for example).
-                </p>
+                    Category Code: a one-digit number that identifies the
+                    category involved in the repair (chassis, for example).
+                  </p>
                 </div>
                 <div className="col-span-12 w-full space-y-1">
                   <Label className="text-sm font-medium text-gray-100">
-                  System Code
+                    System Code
                   </Label>
                   <Select>
                     <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10">
@@ -287,19 +288,25 @@ const Page = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="instrumentation">
-                        1 Cab, Climate Control, Instrumentation, & Aerodynamic Devices
+                        1 Cab, Climate Control, Instrumentation, & Aerodynamic
+                        Devices
                       </SelectItem>
                       <SelectItem value="metal">2 Cab & Sheet Metal</SelectItem>
-                      <SelectItem value="instruments">3 Instruments, Gauges, Warning & Shutdown Devices, & Meters</SelectItem>
+                      <SelectItem value="instruments">
+                        3 Instruments, Gauges, Warning & Shutdown Devices, &
+                        Meters
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-zinc-400 text-sm font-normal">
-                  Code Key 31: System Level Codes -- a three-digit number that identifies the system involved in the repair (brakes, for example).
-              </p>
+                    Code Key 31: System Level Codes -- a three-digit number that
+                    identifies the system involved in the repair (brakes, for
+                    example).
+                  </p>
                 </div>
                 <div className="col-span-12 w-full space-y-1">
                   <Label className="text-sm font-medium text-gray-100">
-                  Assembly Code
+                    Assembly Code
                   </Label>
                   <Select>
                     <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10">
@@ -307,19 +314,24 @@ const Page = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="instrumentation">
-                        1 Cab, Climate Control, Instrumentation, & Aerodynamic Devices
+                        1 Cab, Climate Control, Instrumentation, & Aerodynamic
+                        Devices
                       </SelectItem>
                       <SelectItem value="metal">2 Cab & Sheet Metal</SelectItem>
-                      <SelectItem value="instruments">3 Instruments, Gauges, Warning & Shutdown Devices, & Meters</SelectItem>
+                      <SelectItem value="instruments">
+                        3 Instruments, Gauges, Warning & Shutdown Devices, &
+                        Meters
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-zinc-400 text-sm font-normal">
-                  Code Key 32: Assembly Level Codes -- used to further define the system (front brakes, for example).
-              </p>
+                    Code Key 32: Assembly Level Codes -- used to further define
+                    the system (front brakes, for example).
+                  </p>
                 </div>
                 <div className="col-span-12 w-full space-y-1">
                   <Label className="text-sm font-medium text-gray-100">
-                  Reason for Repair Code
+                    Reason for Repair Code
                   </Label>
                   <Select>
                     <SelectTrigger className="bg-zinc-950 text-zinc-400 border-zinc-800 h-10">
@@ -327,15 +339,22 @@ const Page = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="instrumentation">
-                        1 Cab, Climate Control, Instrumentation, & Aerodynamic Devices
+                        1 Cab, Climate Control, Instrumentation, & Aerodynamic
+                        Devices
                       </SelectItem>
                       <SelectItem value="metal">2 Cab & Sheet Metal</SelectItem>
-                      <SelectItem value="instruments">3 Instruments, Gauges, Warning & Shutdown Devices, & Meters</SelectItem>
+                      <SelectItem value="instruments">
+                        3 Instruments, Gauges, Warning & Shutdown Devices, &
+                        Meters
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-zinc-400 text-sm font-normal">
-                  Code Key 14: Divided into the subcategories of maintenance, management decision and outside influence, Reason for Repair codes indicate why the asset has been sent to the shop (breakdown, for example).
-              </p>
+                    Code Key 14: Divided into the subcategories of maintenance,
+                    management decision and outside influence, Reason for Repair
+                    codes indicate why the asset has been sent to the shop
+                    (breakdown, for example).
+                  </p>
                 </div>
               </div>
             </div>
@@ -343,13 +362,15 @@ const Page = () => {
         </div>
       </div>
       <div className="flex flex-col-reverse max-w-3xl m-auto w-full md:flex-row justify-center md:justify-between">
-        <Button variant="outline" className="border-0 h-10 text-xs md:text-sm">
+        <Button
+          variant="outline"
+          className="border-0 h-10 text-xs md:text-sm"
+          onClick={() => router.back()}
+        >
           Cancel
         </Button>
         <div className="space-x-2 m:dspace-x-4 flex justify-center ">
-          <Button variant="outline" className="h-10 text-xs md:text-sm"
-           onClick={() => router.back()}
-          >
+          <Button variant="outline" className="h-10 text-xs md:text-sm">
             Save & Add Another
           </Button>
           <Button className="bg-emerald-800 text-white hover:bg-emerald-700 h-10 text-xs md:text-sm">

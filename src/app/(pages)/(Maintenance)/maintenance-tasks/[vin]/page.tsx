@@ -1,19 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Pen } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+     const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-      <Link
-        href="/maintenance-history"
-        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal"
-      >
-        <ChevronLeft size={24} className="text-[#A1A1AA]" /> Maintenance Tasks
-      </Link>
+            <Button
+              className="justify-start items-center max-w-max gap-2.5 inline-flex text-neutral-50 text-sm font-normal bg-transparent hover:bg-transparent p-0 border-0"
+              onClick={() => router.back()}
+            >
+              <ChevronLeft size={24} className="text-[#A1A1AA] !w-6 !h-6" />  Maintenance Tasks
+            </Button>
 
       <div className="flex justify-between items-center flex-wrap gap-2">
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">

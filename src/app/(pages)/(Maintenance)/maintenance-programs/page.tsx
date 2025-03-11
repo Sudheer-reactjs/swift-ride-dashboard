@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -12,12 +11,11 @@ import SelectOptionFilter from "@/components/table-filter/SelectFilter";
 import { Filter, Plus, Search } from "lucide-react";
 import MaintenanceProgramsTable from "@/components/maintenance/maintenance-programs/MaintenanceProgramsTable";
 const vehicles = Array(15).fill({
-program: "Swift Ride",
-vehicle: "-",
-schedules: "-",
-primaryMeter: "-",
-secondaryMeter: "-",
-
+  program: "Swift Ride",
+  vehicle: "-",
+  schedules: "-",
+  primaryMeter: "-",
+  secondaryMeter: "-",
 });
 
 type Vehicle = {
@@ -41,13 +39,12 @@ const Pages = () => {
   const [selectedTypesGroup, setSelectedTypesGroup] = useState<
     { id: string; country: string; region: string; state: string }[]
   >([]);
-    const [isOpen, setIsOpen] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [open, setOpen] = useState(false);
-    const toggleFilterPanel = () => {
-      setIsOpen((prev) => !prev);
-    };
-
+  const [isOpen, setIsOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [open, setOpen] = useState(false);
+  const toggleFilterPanel = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const router = useRouter();
   return (
@@ -58,16 +55,21 @@ const Pages = () => {
           Maintenance Programs
         </h2>
         <div className="flex items-center gap-4">
-         <Link href="#" className="justify-center text-teal-500 text-sm font-medium leading-[14px]">Learn More</Link>
-        <Button
-        variant="outline"
-        className="flex items-center h-10"
-        onClick={() => router.push("/maintenance-programs/new")}
-      >
-        <Plus className="mr-2 h-4 w-4" />
-        Add Maintenance Entry
-      </Button>
-      </div>
+          <Link
+            href="#"
+            className="justify-center text-teal-500 text-sm font-medium leading-[14px]"
+          >
+            Learn More
+          </Link>
+          <Button
+            variant="outline"
+            className="flex items-center h-10"
+            onClick={() => router.push("/maintenance-programs/new")}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Maintenance Entry
+          </Button>
+        </div>
       </div>
 
       {/* Filters & Search */}
@@ -94,32 +96,30 @@ const Pages = () => {
             selectedItems={selectedTypesGroup}
             setSelectedItems={setSelectedTypesGroup}
           />
-                      <SelectOptionFilter
-                        label="OEM Maintenance Programs"
-                        options={[
-                          { value: "yes", label: "Yes" },
-                          { value: "no", label: "No" },
-                        ]}
-                        selectedItem={reminders}
-                        setSelectedItem={setReminders}
-                      />
-      
+          <SelectOptionFilter
+            label="OEM Maintenance Programs"
+            options={[
+              { value: "yes", label: "Yes" },
+              { value: "no", label: "No" },
+            ]}
+            selectedItem={reminders}
+            setSelectedItem={setReminders}
+          />
         </div>
         <Button
-            variant="outline"
-            className="flex items-center gap-2 h-10"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <Filter />
-            Filters
-          </Button>
+          variant="outline"
+          className="flex items-center gap-2 h-10"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <Filter />
+          Filters
+        </Button>
       </div>
-       <MaintenanceProgramsTable
-              vehicles={vehicles}
-              isOpen={isOpen}
-              toggleFilterPanel={toggleFilterPanel}
-            />
-
+      <MaintenanceProgramsTable
+        vehicles={vehicles}
+        isOpen={isOpen}
+        toggleFilterPanel={toggleFilterPanel}
+      />
     </>
   );
 };
