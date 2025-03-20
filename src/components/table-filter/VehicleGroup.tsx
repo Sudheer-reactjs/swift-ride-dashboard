@@ -111,7 +111,8 @@ const VehicleGroup: React.FC<VehicleGroupProps> = ({
                 <span className="opacity-60 text-neutral-50 text-xs font-normal">
                   {item.country} / {item.region}
                 </span>
-                <span className="text-neutral-50 text-sm font-normal">{item.state}</span>
+                <span className="flex items-center gap-2 text-[#fff] font-medium">{item.state} 
+                <span className="text-xs px-2 py-0.5 rounded-full bg-[#A3A3A3] text-[#18181B] ">Sample</span></span> 
               </div>
               {selectedItems.some((selected) => selected.id === item.id) && (
                 <X className="w-4 h-4 text-gray-400" />
