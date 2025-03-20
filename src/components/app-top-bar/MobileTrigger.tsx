@@ -8,10 +8,10 @@ const MobileTrigger = () => {
             <SidebarTrigger />
             <Link href="/">
                 <Image
-                    src="/images/mobile-logo.png"
-                    alt="Mobile Logo"
-                    width={48}
-                    height={48}
+                    src="/images/logo.png"  
+                    alt="Logo"
+                    width={111}
+                    height={32}
                     priority                     
                 />
             </Link>

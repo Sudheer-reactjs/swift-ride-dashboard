@@ -53,7 +53,7 @@ export function NavMain({
                   <SidebarMenuButton tooltip={item.title} className={`px-[8px] py-[6px] h-auto ${isActive ? "bg-greenColor" : "font-normal"}`}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                    <ChevronRight className={`ml-auto transition-transform duration-200 ${isActive ? "rotate-90" : ""}`} />
+                    <ChevronRight className={`ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 ${isActive ? "rotate-[90deg]" : "rotate-0"}`} />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -80,7 +80,7 @@ export function NavMain({
                 <a href={item.url} className={`px-[8px] py-[6px] h-auto flex items-center gap-2  ${isActive ? "bg-greenColor" : "font-normal"}`}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200" />
+                  <ChevronRight className={`ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 ${isActive ? "rotate-[90deg]" : "rotate-0"}`} />
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>

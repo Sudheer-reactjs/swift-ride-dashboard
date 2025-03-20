@@ -65,7 +65,7 @@ const SelectOptionFilter: React.FC<DropdownFilterProps> = ({
             className="w-full h-10 bg-[#171717] text-white border border-gray-600 hover:bg-[#262626]"
             onClick={() => setSelectedItem(null)}
           >
-            Clear
+            Cancel
           </Button>
           <Button
             size="sm"

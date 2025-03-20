@@ -92,8 +92,8 @@ const DropdownSingleFilter: React.FC<DropdownFilterProps> = ({
                 selectedItem === item ? "bg-[#262626]" : "hover:bg-[#262626]"
               }`}
               onClick={() => handleSelection(item)}
-            >
-              {item}
+            > 
+              {item} 
              
             </div>
           ))}
