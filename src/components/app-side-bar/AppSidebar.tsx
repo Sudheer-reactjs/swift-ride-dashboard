@@ -34,8 +34,14 @@ const data = {
     },
     {
       title: "Inspections",
-      url: "/inspections",
+      url: "#",
       icon: InspectionsIcon,
+      items: [
+        { title: "Inspection History", url: "/inspection-history" },
+        { title: "Items Failure", url: "/items-failure" },
+        { title: "Schedules", url: "/schedules" },
+        { title: "Forms", url: "/forms" },
+      ],
     },
     {
       title: "Issues",
@@ -56,8 +62,6 @@ const data = {
         { title: "Work Orders", url: "/work-orders" },
         { title: "Maintenance Tasks", url: "/maintenance-tasks" },
         { title: "Maintenance Programs", url: "/maintenance-programs" },
-        // { title: "Replacement Analysis", url: "/replacement-analysis" },
-        // { title: "Shop Directory", url: "/shop-directory" },
       ],
     },
     {

@@ -83,7 +83,7 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
            )}
 
           <Input
-            placeholder={selectedItems.length > 0 ? "" : "Select vehicle(s)"}
+            placeholder={selectedItems.length > 0 ? "" : "Search..."}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-[#171717] text-white border-0 h-10  focus:ring-0 focus:outline-none"
