@@ -18,7 +18,6 @@ import {
   TriangleAlert,
   UserPlus,
   Wrench,
-  X,
 } from "lucide-react";
 
 import Image from "next/image";
@@ -50,15 +49,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import InspectionPopup from "@/components/inspection/InspectionPopup";
 
 const allTabs = [
   { id: "overview", label: "Overview" },
@@ -222,14 +213,14 @@ const VehicleDetail = () => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
-                onClick={() => router.push("/vehicle-list/fuel-entry")}
+                onClick={() => router.push("/fuel-history/new")}
               >
                 <Fuel size={16} className="text-white" />
                 <span>Add Fuel Entry</span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
-                onClick={() => router.push("/vehicle-list/expense-entry")}
+                onClick={() => router.push("/expense-history/new")}
               >
                 <CreditCard size={16} className="text-white" />
                 <span>Add Expense Entry</span>
@@ -243,7 +234,7 @@ const VehicleDetail = () => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
-                onClick={() => router.push("/vehicle-list/add-issue")}
+                onClick={() => router.push("/issues/new")}
               >
                 <TriangleAlert size={16} className="text-white" />
                 <span>Add Issue</span>
@@ -256,6 +247,7 @@ const VehicleDetail = () => {
                 <TextSearch size={16} className="text-white" />
                 <span>Add Inspection Submission</span>
               </DropdownMenuItem>
+              
 
               <DropdownMenuItem className="flex items-center gap-3 py-2 cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800"
               onClick={() => router.push("/work-orders/new")}>
@@ -361,57 +353,7 @@ const VehicleDetail = () => {
         {activeTab === "parts-history" && <PartsHistory />}
       </div>
 
-      {submissionOpen && (
-        <Dialog open={submissionOpen} onOpenChange={setSubmissionOpen}>
-          <DialogContent className=" bg-[#171717] text-white rounded-lg shadow-none border-none max-w-2xl w-[96%] p-0 gap-0">
-            <DialogHeader className="p-4 flex justify-between items-center gap-2 flex-row border-b-[1px] border-neutral-800">
-              <DialogTitle className="text-neutral-50 text-lg font-semibold">
-                Select Inspection Form
-              </DialogTitle>
-              <Button
-                onClick={() => setSubmissionOpen(false)}
-                className="bg-transparent hover:bg-transparent text-neutral-400 p-0 !mt-0 w-6 h-6 !border-0"
-              >
-                <X className="!w-6 !h-6" />
-              </Button>
-              <DialogDescription className="hidden">
-                 Submission
-              </DialogDescription>
-            </DialogHeader>
-            <div className="py-6 px-5 space-y-6">
-               <Label className="text-neutral-50 text-sm font-medium">All</Label>
-                <div className="w-full spark-stack-item">
-                  <div className="overflow-hidden rounded w-full scrollbar-hide">
-                    <div className="overflow-y-auto max-h-80">
-                        <div className="rounded-xl flex flex-col">
-                           <div className="flex flex-col fl-list-item rounded-md border border-zinc-800 p-2">
-                           <Link
-                            href="/vehicle-list/vehicle-inspection"
-                            className="text-emerald-500 text-sm font-normal"
-                          >
-                           Driver Vehicle Inspection Report (Simple)
-                          </Link>
-                           </div>
-                        </div>
-                     </div>
-                  </div> 
-                </div>
-            </div>
-
-            {/* Buttons */}
-            <DialogFooter className="p-4 flex !justify-between space-x-3 py-6">
-            <Button className="px-4 py-3 bg-white/0 rounded-md  text-neutral-50 text-sm font-normal h-10 hover:bg-zinc-800">Add Inspection Form</Button>
-              <Button
-                variant="ghost"
-                onClick={() => setSubmissionOpen(false)}
-                className="py-2 bg-zinc-800 rounded-md text-neutral-50 text-sm font-normal h-10" 
-              >
-                Cancel
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+      <InspectionPopup open={submissionOpen} setOpen={setSubmissionOpen} />
     </div>
   );
 };

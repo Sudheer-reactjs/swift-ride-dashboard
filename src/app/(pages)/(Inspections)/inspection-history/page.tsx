@@ -17,12 +17,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import DropdownFilter from "../../../../components/table-filter/VehicleTypeFilter";
 import VehicleFilter from "@/components/table-filter/VehicleFilter";
 import VehicleGroup from "@/components/table-filter/VehicleGroup";
 import InspectionHistoryTable from "@/components/inspection/InspectionHistoryTable";
+import InspectionPopup from "@/components/inspection/InspectionPopup";
 
 const vehicles = Array(15).fill({
   vehicle: "2100 [2016 Ford F-150]",
@@ -56,6 +56,7 @@ const intenanceTasks = [
   "Drive Vehicle Inspection Report (Simple)",
 ];
 const Pages = () => {
+  const [submissionOpen, setSubmissionOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
   const [selectedIntenanceTasks, setSelectedIntenanceTasks] = useState<
@@ -73,8 +74,8 @@ const Pages = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const router = useRouter();
   return (
+
     <>
       <Breadcrumb>
         <BreadcrumbList>
@@ -99,7 +100,7 @@ const Pages = () => {
         <Button
           variant="outline"
           className="flex items-center h-10"
-          onClick={() => router.push("/inspection-history/new")}
+          onClick={() => setSubmissionOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
           Start Inspection
@@ -201,6 +202,7 @@ const Pages = () => {
         isOpen={isOpen}
         toggleFilterPanel={toggleFilterPanel}
       />
+      <InspectionPopup open={submissionOpen} setOpen={setSubmissionOpen} />
     </>
   );
 };

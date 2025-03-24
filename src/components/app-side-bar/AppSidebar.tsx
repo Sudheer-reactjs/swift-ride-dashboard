@@ -40,13 +40,16 @@ const data = {
         { title: "Inspection History", url: "/inspection-history" },
         { title: "Items Failure", url: "/items-failure" },
         { title: "Schedules", url: "/schedules" },
-        { title: "Forms", url: "/forms" },
+        { title: "Forms", url: "/inspection-forms" },
       ],
     },
     {
       title: "Issues",
-      url: "/issues",
+      url: "#",
       icon: IssuesIcon,
+      items: [
+        { title: "Issues", url: "/issues" },
+      ],
     },
     {
       title: "Reminders",
@@ -71,8 +74,11 @@ const data = {
     },
     {
       title: "Fuel History",
-      url: "/fuel-history",
+      url: "#",
       icon: FuelHistoryIcon,
+      items: [
+        { title: "Fuel History", url: "/fuel-history" },
+      ],
     },
     {
       title: "Parts",

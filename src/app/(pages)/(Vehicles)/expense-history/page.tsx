@@ -144,7 +144,7 @@ const Page = () => {
       <div className="flex flex-wrap justify-between items-start md:items-center gap-2">
         <h2 className="text-2xl font-semibold">Expense History</h2>
         <Button variant="outline" className="flex items-center h-10 "
-        onClick={() => router.push("/expense-history/add-expense-history")}
+        onClick={() => router.push("/expense-history/new")}
         >
           <Plus className="mr-2 h-4 w-4" />
           Add Expense History

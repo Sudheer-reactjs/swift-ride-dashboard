@@ -22,10 +22,10 @@ import {
   CalendarIcon,
   ChevronLeft,
 } from "lucide-react";
-import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
 import { FileIcon } from "@/lib/svg";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [selectedOption, setSelectedOption] = useState("singleexpense");
@@ -102,15 +102,17 @@ const Page = () => {
   const removeDocumentFile = (index: number) => {
     setDocumentFiles(documentFiles.filter((_, i) => i !== index));
   };
-
+const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-      <Link
-        href="/vehicle-list"
-        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal"
-      >
-        <ChevronLeft size={24} className="text-[#A1A1AA]" /> Expense History
-      </Link>
+            <Button
+              variant="ghost"
+              className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal max-w-max hover:bg-transparent px-0"
+              onClick={() => router.back()}
+            >
+              <ChevronLeft size={24} className="text-[#A1A1AA]" />
+              Expense History
+            </Button>
       <div className="flex justify-between items-center flex-wrap gap-2">
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
           New Expense Entry

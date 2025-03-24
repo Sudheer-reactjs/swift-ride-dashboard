@@ -46,7 +46,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+// import Link from "next/link";
 import { CommentsTooltipIcon, ImageTooltipIcon, ImportantIcon, VehicleGroupIcon } from "@/lib/svg";
 
 interface Vehicle {
@@ -139,12 +139,12 @@ const InspectionHistoryTable: React.FC<VehicleTableProps> = ({
             </TableHeader>
             <TableBody>
               {paginatedVehicles.map((vehicle, index) => (
-                <Link
-                  key={index}
-                  href={`/inspection-history/${vehicle.vin}`}
-                  passHref
-                  legacyBehavior
-                >
+                // <Link
+                //   key={index}
+                //   href={`/inspection-history/${vehicle.vin}`}
+                //   passHref
+                //   legacyBehavior
+                // >
                   <TableRow key={index} className="bg-black-800 text-xs">
                     <TableCell className="min-w-64">
                       <div className="flex items-center gap-2 ">
@@ -263,7 +263,7 @@ const InspectionHistoryTable: React.FC<VehicleTableProps> = ({
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                </Link>
+                // </Link>
               ))}
             </TableBody>
           </Table>
