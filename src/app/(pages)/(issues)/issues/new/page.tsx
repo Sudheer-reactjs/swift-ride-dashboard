@@ -133,17 +133,17 @@ const Page = () => {
   const removeDocumentFile = (index: number) => {
     setDocumentFiles(documentFiles.filter((_, i) => i !== index));
   };
-const router = useRouter();
+  const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-6 size-span">
-                  <Button
-                    variant="ghost"
-                    className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal max-w-max hover:bg-transparent px-0"
-                    onClick={() => router.back()}
-                  >
-                    <ChevronLeft size={24} className="text-[#A1A1AA]" />
-                    Issue
-                  </Button>
+      <Button
+        variant="ghost"
+        className="justify-start items-center gap-2.5 inline-flex text-neutral-50 text-sm font-normal max-w-max hover:bg-transparent px-0"
+        onClick={() => router.back()}
+      >
+        <ChevronLeft size={24} className="text-[#A1A1AA]" />
+        Issue
+      </Button>
       <div className="flex justify-between items-center flex-wrap gap-2">
         <h2 className="text-neutral-50 font-sans text-[20px] md:text-[30px] font-bold leading-[36px] tracking-tight">
           New Issue
@@ -343,7 +343,7 @@ const router = useRouter();
             </div>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-              Reported By
+                Reported By
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
@@ -360,7 +360,7 @@ const router = useRouter();
             </div>
             <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-              Assigned to
+                Assigned to
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
@@ -381,37 +381,39 @@ const router = useRouter();
           <h3>Overdue Settings</h3>
           <hr className="my-5"></hr>
           <div className="grid grid-cols-12 gap-4 md:gap-6">
-          <div className="col-span-12 w-full space-y-1">
-              <Label className="text-sm font-medium text-gray-100">Reported Date</Label>
+            <div className="col-span-12 w-full space-y-1">
+              <Label className="text-sm font-medium text-gray-100">
+                Reported Date
+              </Label>
               <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-normal bg-black text-white border-zinc-800 h-10",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon />
-                      {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <p className="text-zinc-400 text-sm font-normal">
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-black text-white border-zinc-800 h-10",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <p className="text-zinc-400 text-sm font-normal">
                 Considered overdue after this date (Optional)
               </p>
-          </div>
-          <div className="col-span-12 w-full space-y-1">
+            </div>
+            <div className="col-span-12 w-full space-y-1">
               <Label className="text-sm font-medium text-gray-100">
-              Primary Meter Due
+                Primary Meter Due
               </Label>
               <Select>
                 <SelectTrigger className="bg-black text-zinc-400 border-zinc-800 h-10">
@@ -426,123 +428,123 @@ const router = useRouter();
                 </SelectContent>
               </Select>
               <p className="text-zinc-400 text-sm font-normal">
-              Considered overdue above this value (Optional)
+                Considered overdue above this value (Optional)
               </p>
             </div>
-            </div>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Photo Upload */}
-                  <div className="bg-[#171717] p-4 rounded-lg text-white">
-                    <h3>Photos</h3>
-                    <hr className="my-5"></hr>
-                    <div
-                      className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-                      onDrop={handlePhotoDrop}
-                      onDragOver={handleDragOver}
-                      onClick={handlePhotoClick}
-                    >
-                      <input
-                        type="file"
-                        ref={photoInputRef}
-                        className="hidden"
-                        accept="image/*"
-                        multiple
-                        onChange={handlePhotoInputChange}
-                      />
-                      <div className="flex items-center justify-center">
-                        <div className="flex items-center justify-center">
-                          <FileIcon />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                          Drag and drop files to upload
-                        </p>
-                        <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                          or click to pick files
-                        </p>
-                      </div>
-                    </div>
-                    {photoFiles.length > 0 && (
-                      <div className="mt-4 space-y-2">
-                        {photoFiles.map((file, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between bg-black p-2 rounded-md"
-                          >
-                            <div className="flex items-center">
-                              <span className="ml-2 text-sm truncate w-full">
-                                {file.name}
-                              </span>
-                            </div>
-                            <button
-                              className="text-red-500 hover:text-red-400"
-                              onClick={() => removePhotoFile(index)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-        
-                  {/* Document Upload */}
-                  <div className="bg-[#171717] p-4 rounded-lg text-white">
-                    <h3>Documents</h3>
-                    <hr className="my-5"></hr>
-                    <div
-                      className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
-                      onDrop={handleDocumentDrop}
-                      onDragOver={handleDragOver}
-                      onClick={handleDocumentClick}
-                    >
-                      <input
-                        type="file"
-                        ref={documentInputRef}
-                        className="hidden"
-                        multiple
-                        onChange={handleDocumentInputChange}
-                      />
-                      <div className="flex items-center justify-center">
-                        <div className="flex items-center justify-center">
-                          <FileIcon />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
-                          Drag and drop files to upload
-                        </p>
-                        <p className="text-[#a1a1aa] text-sm font-light leading-tight">
-                          or click to pick files
-                        </p>
-                      </div>
-                    </div>
-                    {documentFiles.length > 0 && (
-                      <div className="mt-4 space-y-2">
-                        {documentFiles.map((file, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between bg-black p-2 rounded-md"
-                          >
-                            <div className="flex items-center">
-                              <span className="ml-2 text-sm truncate max-w-[180px]">
-                                {file.name}
-                              </span>
-                            </div>
-                            <button
-                              className="text-red-500 hover:text-red-400"
-                              onClick={() => removeDocumentFile(index)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+          {/* Photo Upload */}
+          <div className="bg-[#171717] p-4 rounded-lg text-white">
+            <h3>Photos</h3>
+            <hr className="my-5"></hr>
+            <div
+              className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+              onDrop={handlePhotoDrop}
+              onDragOver={handleDragOver}
+              onClick={handlePhotoClick}
+            >
+              <input
+                type="file"
+                ref={photoInputRef}
+                className="hidden"
+                accept="image/*"
+                multiple
+                onChange={handlePhotoInputChange}
+              />
+              <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center">
+                  <FileIcon />
                 </div>
+              </div>
+              <div>
+                <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                  Drag and drop files to upload
+                </p>
+                <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                  or click to pick files
+                </p>
+              </div>
+            </div>
+            {photoFiles.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {photoFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between bg-black p-2 rounded-md"
+                  >
+                    <div className="flex items-center">
+                      <span className="ml-2 text-sm truncate w-full">
+                        {file.name}
+                      </span>
+                    </div>
+                    <button
+                      className="text-red-500 hover:text-red-400"
+                      onClick={() => removePhotoFile(index)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Document Upload */}
+          <div className="bg-[#171717] p-4 rounded-lg text-white">
+            <h3>Documents</h3>
+            <hr className="my-5"></hr>
+            <div
+              className="px-6 py-4 bg-base-background border-dashed rounded-lg border bor border-tailwind-colors-neutral-700 justify-start items-end gap-[7px] cursor-pointer inline-flex bg-black w-full"
+              onDrop={handleDocumentDrop}
+              onDragOver={handleDragOver}
+              onClick={handleDocumentClick}
+            >
+              <input
+                type="file"
+                ref={documentInputRef}
+                className="hidden"
+                multiple
+                onChange={handleDocumentInputChange}
+              />
+              <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center">
+                  <FileIcon />
+                </div>
+              </div>
+              <div>
+                <p className="text-base-foreground text-base font-semibold leading-normal mb-2">
+                  Drag and drop files to upload
+                </p>
+                <p className="text-[#a1a1aa] text-sm font-light leading-tight">
+                  or click to pick files
+                </p>
+              </div>
+            </div>
+            {documentFiles.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {documentFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between bg-black p-2 rounded-md"
+                  >
+                    <div className="flex items-center">
+                      <span className="ml-2 text-sm truncate max-w-[180px]">
+                        {file.name}
+                      </span>
+                    </div>
+                    <button
+                      className="text-red-500 hover:text-red-400"
+                      onClick={() => removeDocumentFile(index)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
       <div className="flex flex-col-reverse max-w-3xl m-auto w-full md:flex-row justify-center md:justify-between">
         <Button variant="outline" className="border-0 h-10 text-xs md:text-sm">
