@@ -32,7 +32,7 @@ const InspectionPopup: React.FC<InspectionPopupProps> = ({ open, setOpen }) => {
               <div className="overflow-y-auto max-h-80">
                 <div className="rounded-xl flex flex-col">
                   <div className="flex flex-col fl-list-item rounded-md border border-zinc-800 p-2">
-                    <Link href="/inspection-forms" className="text-emerald-500 text-sm font-normal">
+                    <Link href="/inspection-forms/new" className="text-emerald-500 text-sm font-normal">
                       Driver Vehicle Inspection Report (Simple)
                     </Link>
                   </div>

@@ -111,6 +111,7 @@ const VehicleFilter: React.FC<VehicleGroupProps> = ({
                 </span>
                 <span className="text-sm text-gray-400 flex items-center gap-1">
                   <div className={`justify-start text-neutral-50 text-xs font-normal w-1.5 h-1.5 rounded-full ${vehicle.status === 'Active' ? 'bg-green-700' : 'bg-red-700'}`} /> {vehicle.status}
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[#A3A3A3] text-[#18181B] ">Sample</span>
                 </span>
               </div>
             </div>
