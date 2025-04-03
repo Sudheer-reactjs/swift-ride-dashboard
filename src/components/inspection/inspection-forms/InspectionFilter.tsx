@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
+  Ellipsis,
   ListFilter,
   Plus,
   Search,
@@ -15,7 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SettingCard from "./SettingCard";
 interface Vehicle {
   vehicle: string;
   inspectionForm: string;
@@ -29,15 +31,19 @@ interface Vehicle {
   meter: string;
   vin: string;
 }
-
 interface VehicleTableProps {
   vehicles: Vehicle[];
   isOpen: boolean;
   toggleFilterPanel: () => void;
 }
+const stats = [
+  { label: "Items", count: 23, link: "inspection-forms/current_inspection_items" },
+  { label: "Workflows", count: 23, link: "/workflows" },
+  { label: "Vehicles", count: 23, link: "/vehicles" },
+  { label: "Submissions", count: 23, link: "/submissions" },
+];
 
 const InspectionSchedulesTable: React.FC<VehicleTableProps> = ({
- 
   isOpen,
   toggleFilterPanel,
 }) => {
@@ -47,12 +53,40 @@ const InspectionSchedulesTable: React.FC<VehicleTableProps> = ({
   const addNewFilter = () => {
     setFilters([...filters, { id: filters.length + 1, field: "" }]);
   };
-
-
+ 
   return (
     <>
       <div className="w-full relative overflow-hidden min-h-screen">
-        {/* Table Container */}
+        <div className="grid grid-cols-12 gap-4 w-full">
+          <div className="col-span-12 lg:col-span-4 md:max-w-[320px]">
+            <div className="outline outline-1 outline-offset-[-1px] outline-neutral-800 border shadow bg-[#171717] border-none text-white rounded-md">
+              <Card className="col-span-full lg:col-span-1 bg-bgCard shadow-none border-0 ">
+                <CardHeader className="p-4">
+                  <CardTitle>
+                    <div className="flex gap-2 justify-between items-center">
+                      <div className="text-base font-medium">Settings</div>
+                      <Button
+                        variant="outline"
+                        className="flex items-center h-10 px-3"
+                      >
+                        <Ellipsis className="h-4 w-2" />
+                      </Button>
+                    </div>
+                    <p className="text-neutral-500 text-sm font-normal leading-[18px] mt-2 truncate block w-full">
+                      As required by the US Dept. of Transportation Federal
+                      Motor Carrier Safety Regulations in FMCSA 396.11.a.1
+                    </p>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 pt-3">
+                  {stats.map((stat, index) => (
+                    <SettingCard key={index} {...stat} />
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
 
         {/* Filter Panel - Positioned Absolutely */}
         <div

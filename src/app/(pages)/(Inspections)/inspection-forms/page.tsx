@@ -122,7 +122,7 @@ const Pages = () => {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex space-x-2 mb-1 flex-wrap">
+      <div className="flex space-x-2 mb-1 flex-wrap border-b border-zinc-800 pb-2">
         <div className="relative w-full md:w-1/4 lg:w-1/5 mb-2">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <Input
@@ -162,7 +162,7 @@ const Pages = () => {
           Filters
         </Button>
       </div>
-      <InspectionFilter
+ <InspectionFilter
         vehicles={vehicles}
         isOpen={isOpen}
         toggleFilterPanel={toggleFilterPanel}
